@@ -1,7 +1,7 @@
 __author__ = 'David'
 import time
 import os
-from GlobalCommunicationNetwork import GlobalCommunicationNetwork
+from GlobalClientCommunicationNetwork import GlobalClientCommunicationNetwork
 #TO BE DELETED LATER
 
 class ClientFileUpdateManager():
@@ -40,6 +40,7 @@ class ClientFileUpdateManager():
         self.Global.GlobalClientFileIgnore = ""
         #call Operator.unlock(updateID) when finished
 
+    """
     def test_process_events_for_updates(self, updateID):
         print self.Global.GlobalClientUpdateEventQueue
         for event in self.Global.GlobalClientUpdateEventQueue:
@@ -73,6 +74,7 @@ class ClientFileUpdateManager():
                 print "delete dir"
                 #DeleteDir
         #call Operator.unlock(updateID) when finished
+    """
 
     def getFilePath(self, event):
         return event[event.find("=") + 1:-1]

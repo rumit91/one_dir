@@ -1,7 +1,7 @@
 __author__ = 'David'
 import time
 import os
-from GlobalCommunicationNetwork import GlobalCommunicationNetwork
+from GlobalServerCommunicationNetwork import GlobalServerCommunicationNetwork
 from ClientFileUpdateManager import ClientFileUpdateManager
 
 class ServerFileUpdateManager():
@@ -40,6 +40,7 @@ class ServerFileUpdateManager():
                 #DeleteDir
         #call Operator.unlock(updateID) when finished
 
+    """
     def test_process_events_for_updates(self, updateID):
         print self.Global.GlobalClientEventQueue
         for event in self.Global.GlobalClientEventQueue:
@@ -78,6 +79,7 @@ class ServerFileUpdateManager():
                 #DeleteDir
         self.Global.GlobalClientEventQueue = []
         #call Operator.unlock(updateID) when finished
+    """
 
     def getServerFilePath(self, event):
         return event[event.find("=") + 1:-1]

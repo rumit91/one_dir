@@ -3,7 +3,7 @@ import time
 from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
 import datetime
-from GlobalCommunicationNetwork import GlobalCommunicationNetwork
+from GlobalClientCommunicationNetwork import GlobalClientCommunicationNetwork
 
 class DirectoryWatcherEventHandler(FileSystemEventHandler):
     def __init__(self, observer, Global):
