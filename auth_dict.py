@@ -54,7 +54,7 @@ while True:
         usernameCreate = line[:line.find(' ')]
         passwordCreate = line[line.find(' ')+1:]
         if createUser(usernameCreate, passwordCreate):
-            print 'User Created\n'
+            print 'User Created.\n'
         else:
             print 'ERR. User exists\n'
     elif command == 'exit':
