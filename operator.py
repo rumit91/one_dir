@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 import socket
 import sys
-from thread import thread
+from threading import Thread
 	
 #super class
 class Operator:
@@ -32,7 +32,7 @@ class Reciever(Operator):
 	
 	def setup(self):
 		self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-		self.sock.bind(host,port)
+		self.sock.bind(self.host_name,self.port)
 	
 	def client_handle(self, connection):
 		#message list
@@ -59,7 +59,6 @@ class Reciever(Operator):
 		while 1:
 			#fire off a thread to accept and handle incoming messages
 			conn, addr = self.sock.accept()
-			start_new_thread(client_handle,((conn,))
-			
-		s.close()
+			ClientHandleThread = Thread(target = self.client_handle(conn))
+		self.sock.close()
 		
