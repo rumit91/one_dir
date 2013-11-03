@@ -8,7 +8,7 @@ import threading
 class Global:
     def __init__(self):
         self.GlobalClientEventQueue = Queue.Queue()
-        self.GlobalClientDirectory = "C:/Users/Timur/Desktop/OneDir"
+        self.GlobalClientDirectory = "C:\\Users\\Timur\\Desktop\\OneDir"
         self.GlobalClientFileIgnore = ""
 
 
