@@ -33,6 +33,6 @@ print 'about to run the directoryWatcher'
 ClientDirectoryWatcherThread = myThread(clientDirectoryWatcher)
 ClientDirectoryWatcherThread.start()
 print 'about to run the clientOperator'
-ClientOperatorThread = myThread(clientOperator)
+ClientOperatorThread = myThread(clientOperator.myEventDispatcher)
 ClientOperatorThread.start()
 

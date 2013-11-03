@@ -13,7 +13,7 @@ class Communicator:
 class Messenger(Communicator):
     def _connect(self):
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self.sock.connect(self.host_name, self.port)
+        self.sock.connect((self.host_name, self.port))
 
     #returns true if message is sent completely
     def send(self, message):
@@ -28,10 +28,10 @@ class Messenger(Communicator):
         return True
 
 
-class Reciever(Communicator):
+class Receiver(Communicator):
     def setup(self):
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self.sock.bind(self.host_name, self.port)
+        self.sock.bind((self.host_name, self.port))
 
     def client_handle(self, connection):
         #message list
@@ -50,6 +50,9 @@ class Reciever(Communicator):
 
         #parse in dispatch function
         self.dispatch(message)
+
+    def dispatch(self, message):
+        print message
 
     #begins listening
     def spin(self):
