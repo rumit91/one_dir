@@ -9,8 +9,8 @@ class Global:
     def __init__(self):
         self.GlobalClientEventQueue = Queue.Queue()
         self.GlobalClientDirectory = "C:/Users/Timur/Desktop/OneDir/1"
-        self.GlobalServerDirectory = "C:/Users/Timur/Desktop/ServerFolder/1"
-        self.GlobalUserID = 1
+        self.GlobalServerDirectory = "C:/Users/Timur/Desktop/ServerFolder/"
+        self.GlobalUserID = '1'
         self.GlobalClientFileIgnore = ""
 
 
