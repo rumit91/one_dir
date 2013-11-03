@@ -23,8 +23,8 @@ class myThread(threading.Thread):
         print "Ending"
 
 
-serverPort = 4564
-serverHostName = '127.1.1.1'
+serverPort = 12345
+serverHostName = '192.168.20.11'
 
 localGlobal = Global()
 clientOperator = Operator.Operator(serverPort, serverHostName, localGlobal.GlobalClientEventQueue)

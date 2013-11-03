@@ -22,8 +22,8 @@ class myThread(threading.Thread):
         print "Ending"
 
 
-clientPort = 4564
-clientHostName = '127.1.1.1'
+clientPort = 12345
+clientHostName = '192.168.20.11'
 serverGlobal = Global()
 serverOperator = Operator.Operator(clientPort, clientHostName, serverGlobal.GlobalClientEventQueue)
 print 'about to run the serverOperator'

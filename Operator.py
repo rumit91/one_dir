@@ -4,6 +4,7 @@ import Queue
 from threading import Thread
 
 
+#local
 class EventDispatcher:
     def __init__(self, port, host_name, GlobalEventQueue):
         self.port = port
@@ -30,11 +31,78 @@ class EventDispatcher:
             #self.GlobalClientEventQueue.join()       # block until all tasks are done
 
 
+#server
 class EventListener:
+    class myReceiver(communicator.Receiver):
+        def dispatch(self, message):
+            print ["New Event: ", message]
+
     def __init__(self, port, host_name):
         self.port = port
         self.host_name = host_name
-        self.myReceiver = communicator.Receiver(self.host_name, self.port)
+        self.myReceiver = self.myReceiver(self.host_name, self.port)
+
+    def run(self):
+        self.myReceiver.setup()
+        self.myReceiver.spin()
+
+
+#server
+class FileRequestDispatcher:
+    def __init__(self, port, host_name, filePath, fileUpdateManager):
+        self.port = port
+        self.host_name = host_name
+        self.num_worker_threads = 1
+        self.myFilePath = filePath
+        self.myMessenger = communicator.Messenger(self.host_name, self.port)
+        self.myFileUpdateManager = fileUpdateManager
+
+    def get_file(self):
+        myFile = self.myFileUpdateManager.get_file(self.myFilePath)
+        self.myMessenger.send(myFile)
+
+
+#local
+class FileRequestListener:
+    class myReceiver(communicator.Receiver):
+        def dispatch(self, message):
+            print ["New File Request: ", message]
+
+    def __init__(self, port, host_name):
+        self.port = port
+        self.host_name = host_name
+        self.myReceiver = self.myReceiver(self.host_name, self.port)
+
+    def run(self):
+        self.myReceiver.setup()
+        self.myReceiver.spin()
+
+
+#local
+class FileDispatcher:
+    def __init__(self, port, host_name, filePath, fileUpdateManager):
+        self.port = port
+        self.host_name = host_name
+        self.num_worker_threads = 1
+        self.myFilePath = filePath
+        self.myMessenger = communicator.Messenger(self.host_name, self.port)
+        self.myFileUpdateManager = fileUpdateManager
+
+    def get_file(self):
+        myFile = self.myFileUpdateManager.get_file(self.myFilePath)
+        self.myMessenger.send(myFile)
+
+
+#sever
+class FileListener:
+    class myReceiver(communicator.Receiver):
+        def dispatch(self, message):
+            print ["New File: ", message]
+
+    def __init__(self, port, host_name):
+        self.port = port
+        self.host_name = host_name
+        self.myReceiver = self.myReceiver(self.host_name, self.port)
 
     def run(self):
         self.myReceiver.setup()
