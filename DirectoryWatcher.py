@@ -21,7 +21,7 @@ class DirectoryWatcherEventHandler(FileSystemEventHandler):
             return
         newEvent = str(event).replace(self.Global.GlobalClientDirectory,"")
         newEvent = str(datetime.datetime.now()) + newEvent
-        self.Global.GlobalClientEventQueue.append(newEvent)
+        self.Global.GlobalClientEventQueue.put(newEvent)
         print newEvent
         #print self.eventQueue
         #Future: Make Directory Event Queue Optimizer - Might actually be a different construct and will be called
@@ -35,6 +35,7 @@ class DirectoryWatcher():
         observer = Observer()
         event_handler = DirectoryWatcherEventHandler(observer,self.Global)
         observer.schedule(event_handler, path=self.Global.GlobalClientDirectory, recursive=True)
+        print self.Global.GlobalClientDirectory
         observer.start()
         try:
             while True:
