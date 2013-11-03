@@ -24,7 +24,7 @@ class myThread(threading.Thread):
 
 
 clientPort = 12345
-clientHostName = '192.168.20.11'
+clientHostName = '172.27.99.116'
 serverGlobal = Global()
 serverOperator = Operator.Operator(clientPort, clientHostName, serverGlobal.GlobalClientEventQueue)
 serverFileUpdateManager = ServerFileUpdateManager.ServerFileUpdateManager(serverGlobal)
@@ -32,6 +32,6 @@ print 'about to run the serverOperator'
 ClientOperatorThread = myThread(serverOperator.myEventListener)
 ClientOperatorThread.start()
 print 'about to run the serverFileUpdateManager'
-serverFileUpdateManagerThread = myThread(serverOperator.myEventListener)
+serverFileUpdateManagerThread = myThread(serverFileUpdateManager)
 serverFileUpdateManagerThread.start()
 
