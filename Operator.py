@@ -42,10 +42,9 @@ class EventListener:
             print ["New Event: ", message]
             self.ServerEventQueue.put(message)
 
-    def __init__(self, port, host_name):
+    def __init__(self, port, host_name, ServerEventQueue):
         self.port = port
         self.host_name = host_name
-        ServerEventQueue = []
         self.myReceiver = self.myReceiver(self.host_name, self.port, ServerEventQueue)
 
     def run(self):
