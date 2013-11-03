@@ -121,4 +121,4 @@ class Operator:
         self.host_name = host_name
         self.GlobalEventQueue = GlobalClientEventQueue
         self.myEventDispatcher = EventDispatcher(self.port, self.host_name, self.GlobalEventQueue)
-        self.myEventListener = EventListener(self.port+1, self.host_name, self.GlobalEventQueue)
+        self.myEventListener = EventListener(self.port, self.host_name, self.GlobalEventQueue)
