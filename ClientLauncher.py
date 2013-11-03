@@ -24,7 +24,8 @@ class myThread(threading.Thread):
 
 
 serverPort = 12345
-serverHostName = '192.168.20.11'
+#serverHostName = '192.168.20.11'
+serverHostName = '172.27.99.53'
 
 localGlobal = Global()
 clientOperator = Operator.Operator(serverPort, serverHostName, localGlobal.GlobalClientEventQueue)
