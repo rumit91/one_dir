@@ -40,6 +40,7 @@ class EventListener:
 
         def dispatch(self, message):
             print ["New Event: ", message]
+            self.ServerEventQueue.put(message)
 
     def __init__(self, port, host_name):
         self.port = port
