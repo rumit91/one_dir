@@ -35,7 +35,8 @@ class EventDispatcher:
 class EventListener:
     class myReceiver(communicator.Receiver):
         def __init__(self, host_name, port, ServerEventQueue):
-            communicator.Receiver.__init__(self, host_name, port)
+            self.host_name = host_name
+            self.port = port
             self.ServerEventQueue = ServerEventQueue
 
         def dispatch(self, message):
