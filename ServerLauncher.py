@@ -2,6 +2,7 @@ __author__ = 'Timur'
 import Queue
 import Operator
 import threading
+import ServerFileUpdateManager
 
 
 class Global:
@@ -26,7 +27,11 @@ clientPort = 12345
 clientHostName = '192.168.20.11'
 serverGlobal = Global()
 serverOperator = Operator.Operator(clientPort, clientHostName, serverGlobal.GlobalClientEventQueue)
+serverFileUpdateManager = ServerFileUpdateManager.ServerFileUpdateManager(serverGlobal)
 print 'about to run the serverOperator'
 ClientOperatorThread = myThread(serverOperator.myEventListener)
 ClientOperatorThread.start()
+print 'about to run the serverFileUpdateManager'
+serverFileUpdateManagerThread = myThread(serverOperator.myEventListener)
+serverFileUpdateManagerThread.start()
 
