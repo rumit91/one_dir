@@ -8,7 +8,7 @@ import ServerFileUpdateManager
 class Global:
     def __init__(self):
         self.GlobalClientEventQueue = Queue.Queue()
-        self.GlobalClientDirectory = "C:/Users/Timur/Desktop/OneDir/1"
+        self.GlobalClientDirectory = "C:/Users/Timur/Desktop/OneDir"
         self.GlobalServerDirectory = "C:/Users/Timur/Desktop/ServerFolder/"
         self.GlobalUserID = '1'
         self.GlobalClientFileIgnore = ""
