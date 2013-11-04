@@ -2,12 +2,16 @@
 import socket
 import sys
 from threading import Thread
+from ClientGlobal import ClientGlobal
+from ServerGlobal import ServerGlobal
+
 
 #super class
 class Communicator:
-    def __init__(self, host_name, port):
+    def __init__(self, host_name, port, globalInfo = None):
         self.port = port
         self.host_name = host_name
+        self.globalInfo = globalInfo
 
 
 class Messenger(Communicator):

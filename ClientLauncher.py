@@ -3,14 +3,7 @@ import Queue
 import Operator
 import DirectoryWatcher
 import threading
-
-
-class Global:
-    def __init__(self):
-        self.GlobalClientEventQueue = Queue.Queue()
-        self.GlobalClientDirectory = "C:\\Users\\Timur\\Desktop\\OneDir"
-        self.GlobalClientFileIgnore = ""
-
+from ClientGlobal import ClientGlobal
 
 class myThread(threading.Thread):
     def __init__(self, run_object):
@@ -23,17 +16,23 @@ class myThread(threading.Thread):
         print "Ending"
 
 
-serverPort = 12345
+serverEventPort = 12345
+serverFileRequestPort = 12346
+serverFilePort = 12347
 #serverHostName = '192.168.20.11'
-serverHostName = '172.27.99.53'
+serverHostName = '192.168.56.1'
 
-localGlobal = Global()
-clientOperator = Operator.Operator(serverPort, serverHostName, localGlobal.GlobalClientEventQueue)
+localGlobal = ClientGlobal()
+clientOperator = Operator.Operator(serverEventPort, serverFileRequestPort, serverFilePort, serverHostName, localGlobal)
+localGlobal.ClientOperator = clientOperator
 clientDirectoryWatcher = DirectoryWatcher.DirectoryWatcher(localGlobal)
 print 'about to run the directoryWatcher'
 ClientDirectoryWatcherThread = myThread(clientDirectoryWatcher)
 ClientDirectoryWatcherThread.start()
 print 'about to run the clientOperator'
-ClientOperatorThread = myThread(clientOperator.myEventDispatcher)
-ClientOperatorThread.start()
+ClientOperatorThread1 = myThread(clientOperator.myEventDispatcher)
+ClientOperatorThread1.start()
+ClientOperatorThread2 = myThread(clientOperator.myFileRequestListener)
+ClientOperatorThread2.start()
+
 

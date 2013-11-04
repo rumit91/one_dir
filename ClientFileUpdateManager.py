@@ -18,18 +18,23 @@ class ClientFileUpdateManager():
             self.Global.GlobalClientFileIgnore = self.Global.GlobalClientDirectory + srcPath
             #Call Correct Method Depending On Event Tye
             if eventType == "FileCreatedEvent":
+                srcPath = self.getFilePath(event)
                 open(self.Global.GlobalClientDirectory + srcPath, 'a').close()
             elif eventType == "FileModifiedEvent":
                 print "request file"
+                srcPath = self.getFilePath(event)
                 self.requestFile(srcPath)
             elif eventType == "FileMovedEvent":
                 print "delete file"
+                srcPath = self.getFilePathMoved(event)
                 os.remove(self.Global.GlobalClientDirectory + srcPath)
             elif eventType == "FileDeletedEvent":
                 print "delete file"
+                srcPath = self.getFilePath(event)
                 os.remove(self.Global.GlobalClientDirectory + srcPath)
             elif eventType == "DirCreatedEvent":
                 print "create dir"
+                srcPath = self.getFilePath(event)
                 #CreateDir
             elif eventType == "DirMovedEvent":
                 print "TBD"
@@ -89,9 +94,7 @@ class ClientFileUpdateManager():
         return content
 
     def requestFile(self, srcPath):
-        #NEED TO REQUEST FILE FROM OPERATOR
-        #file = operator.request_file(src_path)
-        return file
+        self.Global.ClientOperator.request_file(srcPath)
 
     def getEventType(self, event):
         return event[event.find("<") + 1:event.find(": ")]

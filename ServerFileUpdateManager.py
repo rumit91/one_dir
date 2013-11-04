@@ -25,23 +25,26 @@ class ServerFileUpdateManager():
         with open(self.Global.GlobalServerDirectory + self.Global.GlobalUserID + "\\EventLog.txt", "a") as f:
             f.write("\n" + event)
         eventType = self.getEventType(event)
-        srcPath = self.getServerFilePath(event)
         #Call Correct Method Depending On Event Tye
         if eventType == "FileCreatedEvent":
+            srcPath = self.getServerFilePath(event)
             open(self.Global.GlobalServerDirectory + self.Global.GlobalUserID + "\\OneDir\\" + srcPath, 'a').close()
         elif eventType == "FileModifiedEvent":
             print "request file"
-            myFile = self.requestFile(srcPath)
-            with open(self.Global.GlobalServerDirectory + self.Global.GlobalUserID + "\\OneDir\\" + srcPath, "wb") as f:
-                f.write(myFile)
+            srcPath = self.getServerFilePath(event)
+            self.Global.GlobalCurSrcPath = srcPath
+            self.requestFile(srcPath)
         elif eventType == "FileMovedEvent":
             print "delete file"
+            srcPath = self.getServerFilePathMoved(event)
             os.remove(self.Global.GlobalServerDirectory + self.Global.GlobalUserID + "\\OneDir\\" + srcPath)
         elif eventType == "FileDeletedEvent":
             print "delete file"
+            srcPath = self.getServerFilePath(event)
             os.remove(self.Global.GlobalServerDirectory + self.Global.GlobalUserID + "\\OneDir\\" + srcPath)
         elif eventType == "DirCreatedEvent":
             print "create dir"
+            srcPath = self.getServerFilePath(event)
             os.mkdir(self.Global.GlobalServerDirectory + self.Global.GlobalUserID + "\\OneDir\\" + srcPath)
         elif eventType == "DirMovedEvent":
             print "TBD"
@@ -99,12 +102,7 @@ class ServerFileUpdateManager():
         return event[event.find("=") + 1: event.find(",")]
 
     def requestFile(self, srcPath):
-        #For Testing Only
-        #CFUM = ClientFileUpdateManager(self.Global)
-        #file = CFUM.get_file(srcPath)
-        #NEED TO REQUEST FILE FROM OPERATOR
-        #file = operator.request_file(src_path)
-        #return file
+        self.Global.ServerOperator.request_file(srcPath)
         print "requesting file"
 
     def getEventType(self, event):

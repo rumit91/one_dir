@@ -1,6 +1,7 @@
 __author__ = 'Timur'
 import communicator
 import Queue
+from ClientFileUpdateManager import ClientFileUpdateManager
 from threading import Thread
 
 
@@ -55,17 +56,15 @@ class EventListener:
 
 #server
 class FileRequestDispatcher:
-    def __init__(self, port, host_name, filePath, fileUpdateManager):
+    def __init__(self, port, host_name, filePath):
         self.port = port
         self.host_name = host_name
         self.num_worker_threads = 1
         self.myFilePath = filePath
         self.myMessenger = communicator.Messenger(self.host_name, self.port)
-        self.myFileUpdateManager = fileUpdateManager
 
-    def get_file(self):
-        myFile = self.myFileUpdateManager.get_file(self.myFilePath)
-        self.myMessenger.send(myFile)
+    def request_file(self):
+        self.myMessenger.send(self.myFilePath)
 
 
 #local
@@ -73,11 +72,16 @@ class FileRequestListener:
     class myReceiver(communicator.Receiver):
         def dispatch(self, message):
             print ["New File Request: ", message]
+            CFUM = ClientFileUpdateManager(self.globalInfo)
+            myFileDispatcher = FileDispatcher(self.port + 1, self.host_name, message, CFUM)
+            myFileDispatcher.get_file()
 
-    def __init__(self, port, host_name):
+
+    def __init__(self, port, host_name, clientGlobal):
+        self.clientGlobal = clientGlobal
         self.port = port
         self.host_name = host_name
-        self.myReceiver = self.myReceiver(self.host_name, self.port)
+        self.myReceiver = self.myReceiver(self.host_name, self.port, clientGlobal)
 
     def run(self):
         self.myReceiver.setup()
@@ -104,11 +108,14 @@ class FileListener:
     class myReceiver(communicator.Receiver):
         def dispatch(self, message):
             print ["New File: ", message]
+            with open(self.globalInfo.GlobalServerDirectory + self.globalInfo.GlobalUserID + "\\OneDir\\" + self.globalInfo.GlobalCurSrcPath, "wb") as f:
+                f.write(message)
 
-    def __init__(self, port, host_name):
+    def __init__(self, port, host_name, serverGlobal):
         self.port = port
         self.host_name = host_name
-        self.myReceiver = self.myReceiver(self.host_name, self.port)
+        self.serverGlobal = serverGlobal
+        self.myReceiver = self.myReceiver(self.host_name, self.port, self.serverGlobal)
 
     def run(self):
         self.myReceiver.setup()
@@ -116,9 +123,21 @@ class FileListener:
 
 
 class Operator:
-    def __init__(self, port, host_name, GlobalClientEventQueue):
-        self.port = port
+    def __init__(self, event_port, file_request_port, file_port, host_name, clientGlobal):
         self.host_name = host_name
-        self.GlobalEventQueue = GlobalClientEventQueue
-        self.myEventDispatcher = EventDispatcher(self.port, self.host_name, self.GlobalEventQueue)
-        self.myEventListener = EventListener(self.port, self.host_name, self.GlobalEventQueue)
+        self.event_port = event_port
+        self.file_request_port = file_request_port
+        self.file_port = file_port
+        self.clientGlobal = clientGlobal
+        self.GlobalEventQueue = clientGlobal.GlobalClientEventQueue
+        self.myEventDispatcher = EventDispatcher(self.event_port, self.host_name, self.GlobalEventQueue)
+        self.myEventListener = EventListener(self.event_port, self.host_name, self.GlobalEventQueue)
+        self.myFileListener = FileListener(self.file_port, self.host_name, self.clientGlobal)
+        self.myFileRequestListener = FileRequestListener(self.file_request_port, self.host_name, self.clientGlobal)
+
+
+    def request_file(self, srcPath):
+        myFileRequestDispatcher = FileRequestDispatcher(self.file_request_port, self.host_name, srcPath)
+        myFileRequestDispatcher.request_file()
+        print "Requesting File"
+
