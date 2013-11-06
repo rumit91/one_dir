@@ -20,11 +20,16 @@ class myThread(threading.Thread):
 serverEventPort = 12345
 serverFileRequestPort = 12346
 serverFilePort = 12347
+<<<<<<< HEAD
 
 #serverHostName = 172.27.99.193
 serverHostName = socket.gethostbyname(socket.getfqdn())
 clientHostName = '172.27.99.194'
 
+=======
+#serverHostName = '192.168.20.11'
+serverHostName = '172.25.109.182'
+>>>>>>> a189faea11397c50131bf346baf42ee39a347be9
 
 localGlobal = ClientGlobal()
 clientOperator = Operator.Operator(serverEventPort, serverFileRequestPort, serverFilePort, serverHostName, clientHostName, localGlobal)
