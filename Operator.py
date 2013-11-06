@@ -124,18 +124,18 @@ class FileListener:
 
 
 class Operator:
-	def __init__(self, event_port, file_request_port, file_port, local_host_name, target_host_name, clientGlobal):
+	def __init__(self, event_port, file_request_port, file_port, local_host_name, target_host_name, sourceGlobal):
 		self.local_host_name = local_host_name
 		self.target_host_name = target_host_name
 		self.event_port = event_port
 		self.file_request_port = file_request_port
 		self.file_port = file_port
-		self.clientGlobal = clientGlobal
-		self.GlobalEventQueue = clientGlobal.GlobalClientEventQueue
+		self.sourceGlobal = sourceGlobal
+		self.GlobalEventQueue = sourceGlobal.GlobalClientEventQueue
 		self.myEventDispatcher = EventDispatcher(self.event_port, self.target_host_name, self.GlobalEventQueue)
 		self.myEventListener = EventListener(self.event_port, self.local_host_name, self.GlobalEventQueue)
-		self.myFileListener = FileListener(self.file_port, self.target_host_name, self.clientGlobal)
-		self.myFileRequestListener = FileRequestListener(self.file_request_port, self.local_host_name, self.clientGlobal)
+		self.myFileListener = FileListener(self.file_port, self.target_host_name, self.sourceGlobal)
+		self.myFileRequestListener = FileRequestListener(self.file_request_port, self.local_host_name, self.sourceGlobal)
 
 
 	def request_file(self, srcPath):
