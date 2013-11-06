@@ -20,7 +20,7 @@ serverEventPort = 12345
 serverFileRequestPort = 12346
 serverFilePort = 12347
 #serverHostName = '192.168.20.11'
-serverHostName = '192.168.56.1'
+serverHostName = '172.25.109.182'
 
 localGlobal = ClientGlobal()
 clientOperator = Operator.Operator(serverEventPort, serverFileRequestPort, serverFilePort, serverHostName, localGlobal)
