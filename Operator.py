@@ -73,7 +73,7 @@ class FileRequestListener:
 		def dispatch(self, message):
 			print ["New File Request: ", message]
 			CFUM = ClientFileUpdateManager(self.globalInfo)
-			myFileDispatcher = FileDispatcher(self.port + 1, self.host_name, message, CFUM)
+			myFileDispatcher = FileDispatcher(self.port + 1, '172.27.99.194', message, CFUM)
 			myFileDispatcher.get_file()
 
 
@@ -111,6 +111,7 @@ class FileListener:
 			print "WRITING"
 			with open(self.globalInfo.GlobalServerDirectory + self.globalInfo.GlobalUserID + "\\OneDir\\" + self.globalInfo.GlobalCurSrcPath, "wb") as f: 
 				f.write(message)
+			print "finished"
 
 	def __init__(self, port, host_name, serverGlobal):
 		self.port = port
@@ -121,6 +122,7 @@ class FileListener:
 	def run(self):
 		self.myReceiver.setup()
 		self.myReceiver.spin()
+
 
 
 class Operator:
@@ -134,12 +136,12 @@ class Operator:
 		self.GlobalEventQueue = sourceGlobal.GlobalClientEventQueue
 		self.myEventDispatcher = EventDispatcher(self.event_port, self.target_host_name, self.GlobalEventQueue)
 		self.myEventListener = EventListener(self.event_port, self.local_host_name, self.GlobalEventQueue)
-		self.myFileListener = FileListener(self.file_port, self.target_host_name, self.sourceGlobal)
+		self.myFileListener = FileListener(self.file_port, self.local_host_name, self.sourceGlobal)
 		self.myFileRequestListener = FileRequestListener(self.file_request_port, self.local_host_name, self.sourceGlobal)
 
 
 	def request_file(self, srcPath):
+		print self.target_host_name
 		myFileRequestDispatcher = FileRequestDispatcher(self.file_request_port, self.target_host_name, srcPath)
 		myFileRequestDispatcher.request_file()
 		print "Requesting File"
-
