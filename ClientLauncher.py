@@ -2,6 +2,7 @@ __author__ = 'Timur'
 import Queue
 import Operator
 import DirectoryWatcher
+import socket
 import threading
 from ClientGlobal import ClientGlobal
 
@@ -20,10 +21,11 @@ serverEventPort = 12345
 serverFileRequestPort = 12346
 serverFilePort = 12347
 #serverHostName = '192.168.20.11'
-serverHostName = '192.168.56.1'
+serverHostName = socket.gethostbyname(socket.getfqdn())
+clientHostName = socket.gethostbyname(socket.getfqdn())
 
 localGlobal = ClientGlobal()
-clientOperator = Operator.Operator(serverEventPort, serverFileRequestPort, serverFilePort, serverHostName, localGlobal)
+clientOperator = Operator.Operator(serverEventPort, serverFileRequestPort, serverFilePort, serverHostName, clientHostName, localGlobal)
 localGlobal.ClientOperator = clientOperator
 clientDirectoryWatcher = DirectoryWatcher.DirectoryWatcher(localGlobal)
 print 'about to run the directoryWatcher'

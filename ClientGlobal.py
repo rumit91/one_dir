@@ -3,6 +3,6 @@ import Queue
 class ClientGlobal:
     def __init__(self):
         self.GlobalClientEventQueue = Queue.Queue()
-        self.GlobalClientDirectory = "C:\\Users\\David\\Desktop\\OneDir\\"
+        self.GlobalClientDirectory = "D:\\dev\\one_dir\\one_dirc\\"
         self.GlobalClientFileIgnore = ""
         self.ClientOperator = None
