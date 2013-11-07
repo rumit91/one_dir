@@ -61,14 +61,14 @@ class ServerOperator:
         #                                                        target_port=self.target_comm.event_port,
         #                                                        global_info=self.my_global)
         self.my_file_listener = FileListener(self.my_comm.host_name,
-                                             self.my_comm.file_request_port,
+                                             self.my_comm.file_port,
                                              self.target_comm.host_name,
                                              self.target_comm.file_port,
                                              self.my_global)
         self.my_event_listener = EventListener(self.my_comm.host_name,
-                                               self.my_comm.file_request_port,
+                                               self.my_comm.event_port,
                                                self.target_comm.host_name,
-                                               self.target_comm.file_port,
+                                               self.target_comm.event_port,
                                                self.my_global)
 
     def run(self):

@@ -16,7 +16,7 @@ class Communicator:
 class Messenger(Communicator):
     def _connect(self):
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self.sock.connect((self.my_host_name, self.my_port))
+        self.sock.connect((self.target_host_name, self.target_port))
 
     #returns true if message is sent completely
     def send(self, message):

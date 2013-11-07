@@ -6,11 +6,13 @@ from communicator import CommUnit
 class ServerGlobal:
     def __init__(self):
         self.server_global_event_queue = Queue.Queue()
-        self.server_global_directory = "D:\\dev\\one_dir\\one_dirs\\"
+        #self.server_global_directory = "D:\\dev\\one_dir\\one_dirs\\"
+        #Timur's Test
+        self.server_global_directory = "C:\\Users\\Timur\\Desktop\\ServerFolder"
         self.global_user_id = '1'
         self.global_file_ignore = ""
         self.server_operator = None
-        self.my_host_name = ''
+        self.my_host_name = '192.168.20.11'
         self.my_event_port = 12345
         self.my_file_request_port = 12346
         self.my_file_port = 12347
@@ -18,7 +20,7 @@ class ServerGlobal:
                                 self.my_event_port,
                                 self.my_file_request_port,
                                 self.my_file_port)
-        self.target_host_name = ''
+        self.target_host_name = '192.168.20.13'
         self.target_event_port = 12345
         self.target_file_request_port = 12346
         self.target_file_port = 12347
