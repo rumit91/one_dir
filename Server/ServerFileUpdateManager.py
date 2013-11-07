@@ -32,7 +32,7 @@ class ServerFileUpdateManager():
         elif eventType == "FileModifiedEvent":
             print "request file"
             srcPath = self.getServerFilePath(event)
-            self.global_info.GlobalCurSrcPath = srcPath
+            self.global_info.global_cur_src_path = srcPath
             self.requestFile(srcPath)
         elif eventType == "FileMovedEvent":
             print "delete file"
