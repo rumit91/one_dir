@@ -40,10 +40,10 @@ class FileListener(communicator.Receiver):
         print "finished"
 
     def write_file(self, message):
-        with open(self.global_info.GlobalServerDirectory +
-                          self.global_info.GlobalUserID +
+        with open(self.global_info.server_global_directory +
+                          self.global_info.global_user_id +
                           "\\OneDir\\" +
-                          self.global_info.GlobalCurSrcPath,
+                          self.global_info.global_cur_src_path,
                   "wb") as f:
             f.write(message)
 

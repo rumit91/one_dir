@@ -11,6 +11,7 @@ class ServerGlobal:
         self.server_global_directory = "C:\\Users\\Timur\\Desktop\\ServerFolder\\"
         self.global_user_id = '1'
         self.global_file_ignore = ""
+        self.global_cur_src_path = ''
         self.server_operator = None
         self.my_host_name = '192.168.20.11'
         self.my_event_port = 12345
