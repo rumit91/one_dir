@@ -101,8 +101,8 @@ class ServerFileUpdateManager():
     def getServerFilePathMoved(self, event):
         return event[event.find("=") + 1: event.find(",")]
 
-    def requestFile(self, srcPath):
-        self.global_info.server_operator.request_file(srcPath)
+    def requestFile(self, src_path):
+        self.global_info.server_operator.request_file(src_path)
         print "requesting file"
 
     def getEventType(self, event):

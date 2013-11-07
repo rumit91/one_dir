@@ -76,3 +76,11 @@ class ServerOperator:
         self.server_operator_thread_1.start()
         self.server_operator_thread_2 = myThread(self.my_event_listener)
         self.server_operator_thread_2.start()
+
+    def request_file(self, src_path):
+        print self.target_comm.host_name
+        my_file_request_dispatcher = FileRequestDispatcher(target_host_name=self.target_comm.host_name,
+                                                           target_port=self.target_comm.file_request_port)
+        my_file_request_dispatcher.set_file_path(src_path)
+        my_file_request_dispatcher.request_file()
+        print "Requesting File"
