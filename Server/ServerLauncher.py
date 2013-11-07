@@ -18,7 +18,7 @@ class myThread(threading.Thread):
 
 server_global = ServerGlobal.ServerGlobal()
 server_operator = ServerOperator.ServerOperator(server_global.my_comm, server_global.target_comm, server_global)
-server_global.ServerOperator = server_operator
+server_global.server_operator = server_operator
 server_file_update_manager = ServerFileUpdateManager.ServerFileUpdateManager(server_global)
 print 'about to run the server_operator'
 server_operator.run()
