@@ -1,23 +1,22 @@
 #!/usr/bin/env python
 import socket
-import sys
 from threading import Thread
-from ClientGlobal import ClientGlobal
-from ServerGlobal import ServerGlobal
 
 
 #super class
 class Communicator:
-    def __init__(self, host_name, port, globalInfo = None):
-        self.port = port
-        self.host_name = host_name
-        self.globalInfo = globalInfo
+    def __init__(self, my_host_name='', my_port=-1, target_host_name='', target_port=-1, global_info=None):
+        self.my_host_name = my_host_name
+        self.my_port = my_port
+        self.target_host_name = target_host_name
+        self.target_port = target_port
+        self.global_info = global_info
 
 
 class Messenger(Communicator):
     def _connect(self):
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self.sock.connect((self.host_name, self.port))
+        self.sock.connect((self.my_host_name, self.my_port))
 
     #returns true if message is sent completely
     def send(self, message):
@@ -35,7 +34,7 @@ class Messenger(Communicator):
 class Receiver(Communicator):
     def setup(self):
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self.sock.bind((self.host_name, self.port))
+        self.sock.bind((self.my_host_name, self.my_port))
 
     def client_handle(self, connection):
         #message list
@@ -67,3 +66,12 @@ class Receiver(Communicator):
             conn, addr = self.sock.accept()
             ClientHandleThread = Thread(target=self.client_handle(conn))
         self.sock.close()
+
+
+class CommUnit:
+    def __init__(self, host_name, event_port=-1, file_request_port=-1, file_port=-1):
+        self.host_name = host_name
+        self.event_port = event_port
+        self.file_request_port = file_request_port
+        self.file_port = file_port
+

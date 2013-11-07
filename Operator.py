@@ -1,7 +1,7 @@
+from Client import ClientFileUpdateManager
+
 __author__ = 'Timur'
 import communicator
-import Queue
-from ClientFileUpdateManager import ClientFileUpdateManager
 from threading import Thread
 
 
