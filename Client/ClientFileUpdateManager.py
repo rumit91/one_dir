@@ -17,8 +17,9 @@ class ClientFileUpdateManager():
             self.global_info.client_global_file_ignore = self.global_info.client_global_directory + srcPath
             #Call Correct Method Depending On Event Tye
             if eventType == "FileCreatedEvent":
+                print "request file"
                 srcPath = self.getFilePath(event)
-                open(self.global_info.client_global_directory + srcPath, 'a').close()
+                self.requestFile(srcPath)
             elif eventType == "FileModifiedEvent":
                 print "request file"
                 srcPath = self.getFilePath(event)
@@ -88,8 +89,11 @@ class ClientFileUpdateManager():
 
     #Will Be Called By Outside Classes
     def get_file(self, srcPath):
-        with open(self.global_info.client_global_directory + srcPath, 'rb') as f:
-            content = f.read()
+        try:
+            with open(self.global_info.client_global_directory + srcPath, 'rb') as f:
+                content = f.read()
+        except:
+            content = ""
         return content
 
     def requestFile(self, srcPath):
@@ -97,9 +101,3 @@ class ClientFileUpdateManager():
 
     def getEventType(self, event):
         return event[event.find("<") + 1:event.find(": ")]
-
-    def testRun(self):
-        while(True):
-            print "Processing:"
-            self.test_process_events_for_updates(0)
-            time.sleep(1)

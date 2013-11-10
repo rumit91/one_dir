@@ -21,7 +21,7 @@ class DirectoryWatcherEventHandler(FileSystemEventHandler):
             #Special Directory Moved Handling Subroutine
             return
         newEvent = str(event).replace(self.global_info.client_global_directory,"")
-        newEvent = str(datetime.datetime.now()) + newEvent
+        newEvent = str(datetime.datetime.now('%Y-%m-%d %H:%M:%S.%f')) + newEvent
         self.global_info.client_global_event_queue.put(newEvent)
         print newEvent
         #print self.eventQueue

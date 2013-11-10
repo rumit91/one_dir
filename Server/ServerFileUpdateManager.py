@@ -1,7 +1,9 @@
 __author__ = 'David'
 import time
+import datetime
 import os
 from threading import Thread
+import Queue
 
 
 class ServerFileUpdateManager():
@@ -27,8 +29,8 @@ class ServerFileUpdateManager():
         #Call Correct Method Depending On Event Tye
         if eventType == "FileCreatedEvent":
             srcPath = self.getServerFilePath(event)
-            print "writing file"
-            open(self.global_info.server_global_directory + self.global_info.global_user_id + "\\OneDir\\" + srcPath, 'a').close()
+            self.global_info.global_cur_src_path = srcPath
+            self.requestFile(srcPath)
         elif eventType == "FileModifiedEvent":
             print "request file"
             srcPath = self.getServerFilePath(event)
@@ -101,15 +103,52 @@ class ServerFileUpdateManager():
     def getServerFilePathMoved(self, event):
         return event[event.find("=") + 1: event.find(",")]
 
+    def get_events_since_last_update(self, lastupdateptimestamp):
+        updateList = []
+        eventList = self.get_event_log()
+        timestampList = self.get_timestamp_log()
+        eventList = eventList[::-1]
+        timestampList = timestampList[::-1]
+        eventNum = 0
+        cmptimestamp = datetime.datetime.strptime(lastupdateptimestamp, '%Y-%m-%d %H:%M:%S.%f')
+        for timestamp in timestampList:
+            curtimestamp = datetime.datetime.strptime(timestamp, '%Y-%m-%d %H:%M:%S.%f')
+            if curtimestamp > cmptimestamp:
+                updateList.append(eventList[eventNum])
+                eventNum = eventNum + 1
+            else:
+                break
+        updateList = updateList[::-1]
+        return updateList
+
+    def get_event_log(self):
+        eventList = []
+        with open(self.global_info.server_global_directory + self.global_info.global_user_id + "\\EventLog.txt", "r") as f:
+            for event in f:
+                if (event != ""):
+                    eventList.append(event[event.find("<") + 1:event.find(">")])
+        return eventList
+
+    def get_timestamp_log(self):
+        timestampList = []
+        count = 0;
+        with open(self.global_info.server_global_directory + self.global_info.global_user_id + "\\EventLog.txt", "r") as f:
+            for event in f:
+                if (event != ""):
+                    timestampList.append(event[:event.find("<")])
+                    count = count + 1
+        return timestampList
+
+    def get_file(self, srcPath):
+        try:
+            with open(self.global_info.server_global_directory + self.global_info.global_user_id + "\\OneDir\\" + srcPath, 'rb') as f:
+                content = f.read()
+        except:
+            content = ""
+        return content
+
     def requestFile(self, src_path):
         self.global_info.server_operator.request_file(src_path)
-        print "requesting file"
 
     def getEventType(self, event):
         return event[event.find("<") + 1:event.find(": ")]
-
-    def testRun(self):
-        while (True):
-            print "Processing:"
-            self.test_process_events_for_updates(0)
-            time.sleep(1)
