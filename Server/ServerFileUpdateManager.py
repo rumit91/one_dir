@@ -126,7 +126,7 @@ class ServerFileUpdateManager():
         with open(self.global_info.server_global_directory + self.global_info.global_user_id + "\\EventLog.txt", "r") as f:
             for event in f:
                 if (event != ""):
-                    eventList.append(event[event.find("<") + 1:event.find(">")])
+                    eventList.append(event[:event.find(">")+1])
         return eventList
 
     def get_timestamp_log(self):
