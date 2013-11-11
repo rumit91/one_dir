@@ -10,7 +10,9 @@ class ClientGlobal:
         #Timur's Test
         #self.client_global_directory = "C:\\Users\\Timur\\Desktop\\OneDir"
         #David's Test
-        self.client_global_directory = "C:\\Users\\David\\Desktop\\OneDir"
+        #self.client_global_directory = "C:\\Users\\David\\Desktop\\OneDir"
+        #Alex's Test
+        self.client_global_directory = "Users/AlexQu/Desktop/OneDir"
         self.client_global_file_ignore = ""
         self.client_operator = None
         self.my_host_name = '192.168.56.1'
