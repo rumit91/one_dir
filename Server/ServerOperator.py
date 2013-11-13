@@ -1,6 +1,7 @@
 __author__ = 'Timur'
 import communicator
 import threading
+import GateKeeper
 
 
 class myThread(threading.Thread):
@@ -84,3 +85,10 @@ class ServerOperator:
         my_file_request_dispatcher.set_file_path(src_path)
         my_file_request_dispatcher.request_file()
         print "Requesting File"
+
+    def initiateGateKeeper(self):
+        #take in user id and credentials
+        print "I will work on this"
+        """initiate"""
+
+        """send token back to the client"""

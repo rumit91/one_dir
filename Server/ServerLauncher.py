@@ -24,6 +24,8 @@ server_file_update_manager = ServerFileUpdateManager.ServerFileUpdateManager(ser
 print server_file_update_manager.get_events_since_last_update("2013-11-10 11:58:48.335000")
 print 'about to run the server_operator'
 server_operator.run()
+print 'about to run the GateKeeper'
+server_operator.initiateGateKeeper()
 print 'about to run the server_file_update_manager'
 serverFileUpdateManagerThread = myThread(server_file_update_manager)
 serverFileUpdateManagerThread.start()

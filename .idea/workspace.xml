@@ -1,18 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="2e05ff41-41e6-49b9-b413-51483c6d87b1" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Client/ClientGlobal.py" afterPath="$PROJECT_DIR$/Client/ClientGlobal.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Server/ServerGlobal.py" afterPath="$PROJECT_DIR$/Server/ServerGlobal.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/one_dir.iml" afterPath="$PROJECT_DIR$/.idea/one_dir.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-    </list>
+    <list default="true" id="2e05ff41-41e6-49b9-b413-51483c6d87b1" name="Default" comment="" />
     <ignored path="one_dir.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/Dummy.txt" changelist="2e05ff41-41e6-49b9-b413-51483c6d87b1" time="1384139227547" ignored="false" />
+    <file path="/Dummy.txt" changelist="2e05ff41-41e6-49b9-b413-51483c6d87b1" time="1384325726002" ignored="false" />
     <file path="/auth_dict.py" changelist="2e05ff41-41e6-49b9-b413-51483c6d87b1" time="1383164898183" ignored="false" />
     <file path="/ClientGlobal.py" changelist="2e05ff41-41e6-49b9-b413-51483c6d87b1" time="1384140351245" ignored="false" />
     <file path="/ServerGlobal.py" changelist="2e05ff41-41e6-49b9-b413-51483c6d87b1" time="1384140391607" ignored="false" />
+    <file path="/ServerOperator.py" changelist="2e05ff41-41e6-49b9-b413-51483c6d87b1" time="1384327192956" ignored="false" />
+    <file path="/ServerLauncher.py" changelist="2e05ff41-41e6-49b9-b413-51483c6d87b1" time="1384326145309" ignored="false" />
+    <file path="/GateKeeper.py" changelist="2e05ff41-41e6-49b9-b413-51483c6d87b1" time="1384327127220" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -32,33 +30,6 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="ClientGlobal.py" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Client/ClientGlobal.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="14" column="68" selection-start="437" selection-end="497" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ServerLauncher.py" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/Server/ServerLauncher.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="17" column="0" selection-start="359" selection-end="359" vertical-scroll-proportion="0.47945204">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ServerGlobal.py" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Server/ServerGlobal.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="13" column="20" selection-start="472" selection-end="472" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="ClientLauncher.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Client/ClientLauncher.py">
           <provider selected="true" editor-type-id="text-editor">
@@ -70,10 +41,61 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ClientOperator.py" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Client/ClientOperator.py">
+      <file leaf-file-name="ServerLauncher.py" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Server/ServerLauncher.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="12" column="18" selection-start="286" selection-end="286" vertical-scroll-proportion="0.0">
+            <state line="27" column="36" selection-start="921" selection-end="921" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ServerOperator.py" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/Server/ServerOperator.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="90" column="35" selection-start="3346" selection-end="3346" vertical-scroll-proportion="0.86790264">
+              <folding>
+                <element signature="e#21#40#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="GateKeeper.py" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Server/GateKeeper.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="56" column="0" selection-start="1743" selection-end="1743" vertical-scroll-proportion="0.0">
+              <folding>
+                <element signature="e#41#51#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="userinfo.pickle" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Server/userinfo.pickle">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="5" column="10" selection-start="35" selection-end="35" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="auth_dict.py" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/auth_dict.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="9" column="49" selection-start="231" selection-end="231" vertical-scroll-proportion="0.0">
+              <folding>
+                <element signature="e#41#51#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ClientInfoObj.py" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Server/ClientInfoObj.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="5" column="8" selection-start="174" selection-end="174" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -102,14 +124,16 @@
         <option value="$PROJECT_DIR$/ClientLauncher.py" />
         <option value="$PROJECT_DIR$/Client/ClientGlobal.py" />
         <option value="$PROJECT_DIR$/Server/ServerGlobal.py" />
+        <option value="$PROJECT_DIR$/Server/ServerLauncher.py" />
+        <option value="$PROJECT_DIR$/Server/GateKeeper.py" />
+        <option value="$PROJECT_DIR$/Server/ServerOperator.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="102" />
-    <option name="y" value="22" />
-    <option name="width" value="1319" />
-    <option name="height" value="813" />
+    <option name="x" value="44" />
+    <option name="width" value="1876" />
+    <option name="height" value="1050" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -191,11 +215,12 @@
   <component name="PropertiesComponent">
     <property name="options.splitter.main.proportions" value="0.3" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="options.lastSelected" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
     <property name="recentsLimit" value="5" />
-    <property name="options.lastSelected" value="com.jetbrains.python.configuration.PythonSdkConfigurable" />
+    <property name="restartRequiresConfirmation" value="true" />
     <property name="FullScreen" value="false" />
-    <property name="options.splitter.details.proportions" value="0.2" />
     <property name="options.searchVisible" value="true" />
+    <property name="options.splitter.details.proportions" value="0.2" />
   </component>
   <component name="PyConsoleOptionsProvider">
     <option name="myPythonConsoleState">
@@ -205,102 +230,12 @@
       <PyConsoleSettings />
     </option>
   </component>
-  <component name="RunManager" selected="Python.ServerLauncher">
-    <configuration default="false" name="operator" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="one_dir" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/operator.py" />
-      <option name="PARAMETERS" value="" />
-      <RunnerSettings RunnerId="PythonRunner" />
-      <ConfigurationWrapper RunnerId="PythonRunner" />
-      <method />
-    </configuration>
-    <configuration default="false" name="ClientLauncher" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="/usr/local/bin/python2.7" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="false" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="one_dir" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/ClientLauncher.py" />
-      <option name="PARAMETERS" value="" />
-      <RunnerSettings RunnerId="PythonRunner" />
-      <ConfigurationWrapper RunnerId="PythonRunner" />
-      <method />
-    </configuration>
-    <configuration default="false" name="GlobalClientCommunicationNetwork" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="one_dir" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/GlobalClientCommunicationNetwork.py" />
-      <option name="PARAMETERS" value="" />
-      <RunnerSettings RunnerId="PythonRunner" />
-      <ConfigurationWrapper RunnerId="PythonRunner" />
-      <method />
-    </configuration>
-    <configuration default="false" name="ServerFileUpdateManager" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="one_dir" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/ServerFileUpdateManager.py" />
-      <option name="PARAMETERS" value="" />
-      <RunnerSettings RunnerId="PythonRunner" />
-      <ConfigurationWrapper RunnerId="PythonRunner" />
-      <method />
-    </configuration>
-    <configuration default="false" name="ServerLauncher" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Server" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="one_dir" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Server/ServerLauncher.py" />
-      <option name="PARAMETERS" value="" />
-      <RunnerSettings RunnerId="PythonRunner" />
-      <ConfigurationWrapper RunnerId="PythonRunner" />
-      <method />
-    </configuration>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Alex Qu\Documents\GitHub\one_dir\Server" />
+    </key>
+  </component>
+  <component name="RunManager">
     <configuration default="true" type="tests" factoryName="Nosetests">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -360,22 +295,7 @@
       <option name="USE_PATTERN" value="false" />
       <method />
     </configuration>
-    <list size="5">
-      <item index="0" class="java.lang.String" itemvalue="Python.operator" />
-      <item index="1" class="java.lang.String" itemvalue="Python.ClientLauncher" />
-      <item index="2" class="java.lang.String" itemvalue="Python.GlobalClientCommunicationNetwork" />
-      <item index="3" class="java.lang.String" itemvalue="Python.ServerFileUpdateManager" />
-      <item index="4" class="java.lang.String" itemvalue="Python.ServerLauncher" />
-    </list>
-    <recent_temporary>
-      <list size="5">
-        <item index="0" class="java.lang.String" itemvalue="Python.ServerLauncher" />
-        <item index="1" class="java.lang.String" itemvalue="Python.ClientLauncher" />
-        <item index="2" class="java.lang.String" itemvalue="Python.ServerFileUpdateManager" />
-        <item index="3" class="java.lang.String" itemvalue="Python.GlobalClientCommunicationNetwork" />
-        <item index="4" class="java.lang.String" itemvalue="Python.operator" />
-      </list>
-    </recent_temporary>
+    <list size="0" />
   </component>
   <component name="ShelveChangesManager" show_recycled="false" />
   <component name="SvnConfiguration" maxAnnotateRevisions="500" myUseAcceleration="nothing" myAutoUpdateAfterCommit="false" cleanupOnStartRun="false" SSL_PROTOCOLS="sslv3">
@@ -417,18 +337,18 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="102" y="22" width="1319" height="813" extended-state="0" />
+    <frame x="44" y="0" width="1876" height="1050" extended-state="1" />
     <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2914863" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.21838178" sideWeight="0.6724387" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.15986769" sideWeight="0.6724387" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32756132" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32713348" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.27705628" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -503,30 +423,56 @@
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/Operator.py">
+    <entry file="file://$PROJECT_DIR$/Client/ClientLauncher.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="28" selection-start="28" selection-end="28" vertical-scroll-proportion="0.0">
+        <state line="1" column="0" selection-start="21" selection-end="21" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="e#21#40#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Client/ClientOperator.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="12" column="0" selection-start="295" selection-end="295" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/auth_dict.py">
+    <entry file="file://$PROJECT_DIR$/Operator.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+        <state line="0" column="28" selection-start="28" selection-end="28" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Client/DirectoryWatcher.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Client/ClientGlobal.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="16" column="35" selection-start="577" selection-end="577" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Server/ServerGlobal.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="15" column="20" selection-start="568" selection-end="568" vertical-scroll-proportion="0.31742242">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Client/ClientOperator.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="12" column="18" selection-start="286" selection-end="286" vertical-scroll-proportion="0.0">
+        <state line="10" column="0" selection-start="230" selection-end="230" vertical-scroll-proportion="0.022673031">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Client/DirectoryWatcher.py">
+    <entry file="file://$PROJECT_DIR$/Client/ClientFileUpdateManager.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+        <state line="3" column="20" selection-start="63" selection-end="63" vertical-scroll-proportion="0.06604867">
           <folding />
         </state>
       </provider>
@@ -540,24 +486,51 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Server/ServerGlobal.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="13" column="20" selection-start="472" selection-end="472" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Client/ClientGlobal.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="14" column="68" selection-start="437" selection-end="497" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Server/ServerLauncher.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="17" column="0" selection-start="359" selection-end="359" vertical-scroll-proportion="0.47945204">
+        <state line="27" column="36" selection-start="921" selection-end="921" vertical-scroll-proportion="0.0">
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Server/ClientInfoObj.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="5" column="8" selection-start="174" selection-end="174" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Server/userinfo.pickle">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="5" column="10" selection-start="35" selection-end="35" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/auth_dict.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="9" column="49" selection-start="231" selection-end="231" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="e#41#51#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Server/GateKeeper.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="56" column="0" selection-start="1743" selection-end="1743" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="e#41#51#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Server/ServerOperator.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="90" column="35" selection-start="3346" selection-end="3346" vertical-scroll-proportion="0.86790264">
+          <folding>
+            <element signature="e#21#40#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
