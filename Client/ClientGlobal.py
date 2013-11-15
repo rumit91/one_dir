@@ -12,22 +12,26 @@ class ClientGlobal:
         #David's Test
         #self.client_global_directory = "C:\\Users\\David\\Desktop\\OneDir"
         #Alex's Test
-        self.client_global_directory = "Users/AlexQu/Desktop/OneDir"
+        self.client_global_directory = "C:\\Users\\Alex Qu\\Desktop\\OneDir"
         self.client_global_file_ignore = ""
         self.client_operator = None
-        self.my_host_name = '192.168.56.1'
+        self.my_host_name = '192.168.1.40'
         self.my_event_port = 12345
         self.my_file_request_port = 12346
         self.my_file_port = 12347
+        self.my_gatekeeper_port = 12348
         self.my_comm = CommUnit(self.my_host_name,
                                 self.my_event_port,
                                 self.my_file_request_port,
-                                self.my_file_port)
-        self.target_host_name = '192.168.56.1'
+                                self.my_file_port,
+                                self.my_gatekeeper_port)
+        self.target_host_name = '192.168.1.40'
         self.target_event_port = 12345
         self.target_file_request_port = 12346
         self.target_file_port = 12347
+        self.target_gatekeeper_port = 12348
         self.target_comm = CommUnit(self.target_host_name,
                                     self.target_event_port,
                                     self.target_file_request_port,
-                                    self.target_file_port)
+                                    self.target_file_port,
+                                    self.target_gatekeeper_port)

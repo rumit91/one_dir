@@ -1,9 +1,9 @@
 __author__ = 'Timur'
 import communicator
 import threading
-import GateKeeper
+#import GateKeeper
 
-
+#GlobalMessage = ''
 class myThread(threading.Thread):
     def __init__(self, run_object):
         threading.Thread.__init__(self)
@@ -52,8 +52,18 @@ class FileListener(communicator.Receiver):
         self.setup()
         self.spin()
 
+class HandShakerListener(communicator.Receiver):
+    def get_login_info(self,message):
+        print 'Getting message: '+message
+        self.user_info = message
+        return self.user_info
+
+    def run(self):
+        self.setup()
+        self.spin()
 
 class ServerOperator:
+    GlobalMessage = ''
     def __init__(self, my_comm, target_comm, global_info):
         self.my_comm = my_comm
         self.target_comm = target_comm
@@ -71,12 +81,18 @@ class ServerOperator:
                                                self.target_comm.host_name,
                                                self.target_comm.event_port,
                                                self.my_global)
-
+        self.my_handshaker_listener = HandShakerListener(self.my_comm.host_name,
+                                          self.my_comm.gatekeeper_port,
+                                          self.target_comm.host_name,
+                                          self.target_comm.gatekeeper_port,
+                                          self.my_global)
     def run(self):
         self.server_operator_thread_1 = myThread(self.my_file_listener)
         self.server_operator_thread_1.start()
         self.server_operator_thread_2 = myThread(self.my_event_listener)
         self.server_operator_thread_2.start()
+        self.server_operator_thread_3 = myThread(self.my_handshaker_listener)
+        self.server_operator_thread_3.start()
 
     def request_file(self, src_path):
         print self.target_comm.host_name
@@ -87,8 +103,9 @@ class ServerOperator:
         print "Requesting File"
 
     def initiateGateKeeper(self):
+
         #take in user id and credentials
-        print "I will work on this"
+
         """initiate"""
 
         """send token back to the client"""

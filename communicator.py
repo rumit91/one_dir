@@ -69,9 +69,10 @@ class Receiver(Communicator):
 
 
 class CommUnit:
-    def __init__(self, host_name, event_port=-1, file_request_port=-1, file_port=-1):
+    def __init__(self, host_name, event_port=-1, file_request_port=-1, file_port=-1, gatekeeper_port=-1):
         self.host_name = host_name
         self.event_port = event_port
         self.file_request_port = file_request_port
         self.file_port = file_port
+        self.gatekeeper_port = gatekeeper_port
 
