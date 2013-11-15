@@ -1,7 +1,7 @@
 __author__ = 'Timur'
 import communicator
 import threading
-#import GateKeeper
+import GateKeeper
 
 #GlobalMessage = ''
 class myThread(threading.Thread):
@@ -103,9 +103,10 @@ class ServerOperator:
         print "Requesting File"
 
     def initiateGateKeeper(self):
+        my_gatekeeper = GateKeeper.Authentication()
+        #below will return the token number
+        print "token number is: ",my_gatekeeper.run("wrong login")
+        print "token number is: ",my_gatekeeper.run("alex Qu")
 
-        #take in user id and credentials
-
-        """initiate"""
 
         """send token back to the client"""

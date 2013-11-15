@@ -4,17 +4,17 @@
     <list default="true" id="2e05ff41-41e6-49b9-b413-51483c6d87b1" name="Default" comment="" />
     <ignored path="one_dir.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/Dummy.txt" changelist="2e05ff41-41e6-49b9-b413-51483c6d87b1" time="1384445203129" ignored="false" />
+    <file path="/Dummy.txt" changelist="2e05ff41-41e6-49b9-b413-51483c6d87b1" time="1384494868419" ignored="false" />
     <file path="/auth_dict.py" changelist="2e05ff41-41e6-49b9-b413-51483c6d87b1" time="1384493759349" ignored="false" />
     <file path="/ClientGlobal.py" changelist="2e05ff41-41e6-49b9-b413-51483c6d87b1" time="1384447561606" ignored="false" />
     <file path="/ServerGlobal.py" changelist="2e05ff41-41e6-49b9-b413-51483c6d87b1" time="1384447526252" ignored="false" />
-    <file path="/ServerOperator.py" changelist="2e05ff41-41e6-49b9-b413-51483c6d87b1" time="1384494175214" ignored="false" />
+    <file path="/ServerOperator.py" changelist="2e05ff41-41e6-49b9-b413-51483c6d87b1" time="1384497426012" ignored="false" />
     <file path="/ServerLauncher.py" changelist="2e05ff41-41e6-49b9-b413-51483c6d87b1" time="1384494152721" ignored="false" />
-    <file path="/GateKeeper.py" changelist="2e05ff41-41e6-49b9-b413-51483c6d87b1" time="1384493206757" ignored="false" />
+    <file path="/GateKeeper.py" changelist="2e05ff41-41e6-49b9-b413-51483c6d87b1" time="1384497194502" ignored="false" />
     <file path="/ClientOperator.py" changelist="2e05ff41-41e6-49b9-b413-51483c6d87b1" time="1384456357425" ignored="false" />
     <file path="/communicator.py" changelist="2e05ff41-41e6-49b9-b413-51483c6d87b1" time="1384449367368" ignored="false" />
     <file path="/ClientLauncher.py" changelist="2e05ff41-41e6-49b9-b413-51483c6d87b1" time="1384456420219" ignored="false" />
-    <file path="/test.py" changelist="2e05ff41-41e6-49b9-b413-51483c6d87b1" time="1384491546398" ignored="false" />
+    <file path="/test.py" changelist="2e05ff41-41e6-49b9-b413-51483c6d87b1" time="1384495819593" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -34,30 +34,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="ClientLauncher.py" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Client/ClientLauncher.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="28" column="9" selection-start="918" selection-end="918" vertical-scroll-proportion="0.0">
-              <folding>
-                <element signature="e#21#40#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ServerGlobal.py" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Server/ServerGlobal.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="31" column="45" selection-start="1298" selection-end="1298" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ServerLauncher.py" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="ServerLauncher.py" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Server/ServerLauncher.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="27" column="1" selection-start="886" selection-end="886" vertical-scroll-proportion="0.0">
+            <state line="15" column="22" selection-start="357" selection-end="357" vertical-scroll-proportion="0.4973822">
               <folding>
                 <element signature="e#21#51#0" expanded="true" />
               </folding>
@@ -65,10 +45,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ServerOperator.py" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="ServerOperator.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Server/ServerOperator.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="19" column="30" selection-start="452" selection-end="452" vertical-scroll-proportion="0.63001746">
+            <state line="102" column="31" selection-start="4009" selection-end="4009" vertical-scroll-proportion="0.0">
               <folding>
                 <element signature="e#21#40#0" expanded="true" />
               </folding>
@@ -79,25 +59,7 @@
       <file leaf-file-name="ClientInfoObj.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Server/ClientInfoObj.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="4" column="41" selection-start="165" selection-end="165" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="auth_dict.py" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/auth_dict.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="3" column="10" selection-start="51" selection-end="51" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="userinfo.pickle" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/userinfo.pickle">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="18" column="2" selection-start="109" selection-end="109" vertical-scroll-proportion="0.0">
+            <state line="5" column="8" selection-start="174" selection-end="174" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -106,7 +68,7 @@
       <file leaf-file-name="GateKeeper.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Server/GateKeeper.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="64" column="7" selection-start="1711" selection-end="1711" vertical-scroll-proportion="0.0">
+            <state line="42" column="23" selection-start="1255" selection-end="1255" vertical-scroll-proportion="0.0">
               <folding>
                 <element signature="e#41#51#0" expanded="true" />
               </folding>
@@ -114,22 +76,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="test.py" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Server/test.py">
+      <file leaf-file-name="info.pickle" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Server/info.pickle">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="8" column="11" selection-start="134" selection-end="307" vertical-scroll-proportion="0.0">
+            <state line="15" column="8" selection-start="93" selection-end="93" vertical-scroll-proportion="0.0">
               <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ClientFileUpdateManager.py" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Client/ClientFileUpdateManager.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="44" column="55" selection-start="1826" selection-end="1826" vertical-scroll-proportion="0.0">
-              <folding>
-                <element signature="e#21#32#0" expanded="true" />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -159,17 +110,18 @@
         <option value="$PROJECT_DIR$/communicator.py" />
         <option value="$PROJECT_DIR$/Client/ClientLauncher.py" />
         <option value="$PROJECT_DIR$/Client/ClientOperator.py" />
-        <option value="$PROJECT_DIR$/Server/test.py" />
-        <option value="$PROJECT_DIR$/Server/GateKeeper.py" />
         <option value="$PROJECT_DIR$/userinfo.pickle" />
         <option value="$PROJECT_DIR$/auth_dict.py" />
+        <option value="$PROJECT_DIR$/Server/info.pickle" />
+        <option value="$PROJECT_DIR$/Server/test.py" />
         <option value="$PROJECT_DIR$/Server/ServerLauncher.py" />
+        <option value="$PROJECT_DIR$/Server/GateKeeper.py" />
         <option value="$PROJECT_DIR$/Server/ServerOperator.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="422" />
+    <option name="x" value="14" />
     <option name="width" value="1906" />
     <option name="height" value="1050" />
   </component>
@@ -253,12 +205,12 @@
   <component name="PropertiesComponent">
     <property name="options.splitter.main.proportions" value="0.3" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="options.lastSelected" value="com.jetbrains.python.configuration.PythonSdkConfigurable" />
     <property name="recentsLimit" value="5" />
+    <property name="options.lastSelected" value="com.jetbrains.python.configuration.PythonSdkConfigurable" />
     <property name="restartRequiresConfirmation" value="true" />
     <property name="FullScreen" value="false" />
-    <property name="options.searchVisible" value="true" />
     <property name="options.splitter.details.proportions" value="0.2" />
+    <property name="options.searchVisible" value="true" />
   </component>
   <component name="PyConsoleOptionsProvider">
     <option name="myPythonConsoleState">
@@ -438,10 +390,10 @@
     <recent_temporary>
       <list size="5">
         <item index="0" class="java.lang.String" itemvalue="Python.ServerLauncher" />
-        <item index="1" class="java.lang.String" itemvalue="Python.ClientLauncher" />
-        <item index="2" class="java.lang.String" itemvalue="Python.auth_dict" />
-        <item index="3" class="java.lang.String" itemvalue="Python.GateKeeper" />
-        <item index="4" class="java.lang.String" itemvalue="Python.test" />
+        <item index="1" class="java.lang.String" itemvalue="Python.GateKeeper" />
+        <item index="2" class="java.lang.String" itemvalue="Python.test" />
+        <item index="3" class="java.lang.String" itemvalue="Python.ClientLauncher" />
+        <item index="4" class="java.lang.String" itemvalue="Python.auth_dict" />
       </list>
     </recent_temporary>
   </component>
@@ -485,24 +437,24 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="422" y="0" width="1906" height="1050" extended-state="0" />
+    <frame x="14" y="0" width="1906" height="1050" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2914863" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3295838" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.16106291" sideWeight="0.67379075" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.1626898" sideWeight="0.67379075" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32620922" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.27705628" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="true" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32620922" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.27705628" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -573,36 +525,19 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/communicator.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="21" column="10" selection-start="662" selection-end="662" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Client/ClientGlobal.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="20" column="33" selection-start="739" selection-end="739" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="e#21#33#0" expanded="true" />
-          </folding>
-        </state>
+        <state line="20" column="33" selection-start="739" selection-end="739" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Server/ServerFileUpdateManager.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="22" column="21" selection-start="594" selection-end="594" vertical-scroll-proportion="0.5968586">
-          <folding />
-        </state>
+        <state line="22" column="21" selection-start="594" selection-end="594" vertical-scroll-proportion="0.5968586" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Client/ClientLauncher.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="28" column="9" selection-start="918" selection-end="918" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="e#21#40#0" expanded="true" />
-          </folding>
-        </state>
+        <state line="28" column="9" selection-start="918" selection-end="918" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Client/ClientOperator.py">
@@ -616,9 +551,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Client/DirectoryWatcher.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-0.591623">
-          <folding />
-        </state>
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-0.591623" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Server/ServerGlobal.py">
@@ -628,73 +561,66 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Server/ClientInfoObj.py">
+    <entry file="file://$PROJECT_DIR$/userinfo.pickle">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="4" column="41" selection-start="165" selection-end="165" vertical-scroll-proportion="0.0">
+        <state line="11" column="8" selection-start="0" selection-end="210" vertical-scroll-proportion="0.36474696">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Client/ClientFileUpdateManager.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="44" column="55" selection-start="1826" selection-end="1826" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="e#21#32#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Server/userinfo.pickle">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+        <state line="44" column="55" selection-start="1826" selection-end="1826" vertical-scroll-proportion="0.033158813">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Server/test.py">
+    <entry file="file://$PROJECT_DIR$/Server/info.pickle">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="8" column="11" selection-start="134" selection-end="307" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/userinfo.pickle">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="18" column="2" selection-start="109" selection-end="109" vertical-scroll-proportion="0.0">
+        <state line="15" column="8" selection-start="93" selection-end="93" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/auth_dict.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="3" column="10" selection-start="51" selection-end="51" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Server/GateKeeper.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="64" column="7" selection-start="1711" selection-end="1711" vertical-scroll-proportion="0.0">
+        <state line="45" column="0" selection-start="1397" selection-end="1534" vertical-scroll-proportion="0.63001746">
           <folding>
             <element signature="e#41#51#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Server/ServerLauncher.py">
+    <entry file="file://$PROJECT_DIR$/Server/ClientInfoObj.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="27" column="1" selection-start="886" selection-end="886" vertical-scroll-proportion="0.0">
+        <state line="5" column="8" selection-start="174" selection-end="174" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Server/GateKeeper.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="42" column="23" selection-start="1255" selection-end="1255" vertical-scroll-proportion="0.0">
           <folding>
-            <element signature="e#21#51#0" expanded="true" />
+            <element signature="e#41#51#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Server/ServerOperator.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="19" column="30" selection-start="452" selection-end="452" vertical-scroll-proportion="0.63001746">
+        <state line="102" column="31" selection-start="4009" selection-end="4009" vertical-scroll-proportion="0.0">
           <folding>
             <element signature="e#21#40#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Server/ServerLauncher.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="15" column="22" selection-start="357" selection-end="357" vertical-scroll-proportion="0.4973822">
+          <folding>
+            <element signature="e#21#51#0" expanded="true" />
           </folding>
         </state>
       </provider>
