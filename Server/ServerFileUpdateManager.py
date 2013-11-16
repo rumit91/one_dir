@@ -14,7 +14,7 @@ class ServerFileUpdateManager():
         def worker():
             while True:
                 item = self.global_info.server_global_event_queue.get()
-                self.process_event_for_updates(item, 1)
+                self.process_event_for_updates(item)
                 self.global_info.server_global_event_queue.task_done()
 
         for i in range(1):
@@ -22,39 +22,45 @@ class ServerFileUpdateManager():
             t.daemon = True
             t.start()
 
-    def process_event_for_updates(self, event, updateID):
-        with open(self.global_info.server_global_directory + self.global_info.global_user_id + "\\EventLog.txt", "a") as f:
-            f.write("\n" + event)
-        eventType = self.getEventType(event)
-        #Call Correct Method Depending On Event Tye
-        if eventType == "FileCreatedEvent":
-            srcPath = self.getServerFilePath(event)
-            self.global_info.global_cur_src_path = srcPath
-            self.requestFile(srcPath)
-        elif eventType == "FileModifiedEvent":
-            print "request file"
-            srcPath = self.getServerFilePath(event)
-            self.global_info.global_cur_src_path = srcPath
-            self.requestFile(srcPath)
-        elif eventType == "FileMovedEvent":
-            print "delete file"
-            srcPath = self.getServerFilePathMoved(event)
-            os.remove(self.global_info.server_global_directory + self.global_info.global_user_id + "\\OneDir\\" + srcPath)
-        elif eventType == "FileDeletedEvent":
-            print "delete file"
-            srcPath = self.getServerFilePath(event)
-            os.remove(self.global_info.server_global_directory + self.global_info.global_user_id + "\\OneDir\\" + srcPath)
-        elif eventType == "DirCreatedEvent":
-            print "create dir"
-            srcPath = self.getServerFilePath(event)
-            os.mkdir(self.global_info.server_global_directory + self.global_info.global_user_id + "\\OneDir\\" + srcPath)
-        elif eventType == "DirMovedEvent":
-            print "TBD"
-        #TBD
-        elif eventType == "DirDeletedEvent":
-            print "delete dir"
-            #DeleteDir
-            #call Operator.unlock(updateID) when finished
+    def process_event_for_updates(self, item):
+        item = item.split("|")
+        event = item[1]
+        token = item[0]
+        self.global_info.global_cur_user_id = self.global_info.active_user_directory[token].user_id
+        if(event == "~UPDATE~"):
+            self.send_update_list(item[2], token)
+        else:
+            with open(self.global_info.server_global_directory + self.global_info.global_cur_user_id + "\\EventLog.txt", "a") as f:
+                f.write("\n" + event[:event.find(">") + 1])
+            eventType = self.getEventType(event)
+            #Call Correct Method Depending On Event Tye
+            if eventType == "FileCreatedEvent":
+                srcPath = self.getServerFilePath(event)
+                self.global_info.global_cur_src_path = srcPath
+                self.requestFile(srcPath, token)
+            elif eventType == "FileModifiedEvent":
+                print "request file"
+                srcPath = self.getServerFilePath(event)
+                self.global_info.global_cur_src_path = srcPath
+                self.requestFile(srcPath, token)
+            elif eventType == "FileMovedEvent":
+                print "delete file"
+                srcPath = self.getServerFilePathMoved(event)
+                os.remove(self.global_info.server_global_directory + self.global_info.global_cur_user_id + "\\OneDir\\" + srcPath)
+            elif eventType == "FileDeletedEvent":
+                print "delete file"
+                srcPath = self.getServerFilePath(event)
+                os.remove(self.global_info.server_global_directory + self.global_info.global_cur_user_id + "\\OneDir\\" + srcPath)
+            elif eventType == "DirCreatedEvent":
+                print "create dir"
+                srcPath = self.getServerFilePath(event)
+                os.mkdir(self.global_info.server_global_directory + self.global_info.global_cur_user_id + "\\OneDir\\" + srcPath)
+            elif eventType == "DirMovedEvent":
+                print "TBD"
+            #TBD
+            elif eventType == "DirDeletedEvent":
+                print "delete dir"
+                #DeleteDir
 
     """
     def test_process_events_for_updates(self, updateID):
@@ -98,15 +104,25 @@ class ServerFileUpdateManager():
 	"""
 
     def getServerFilePath(self, event):
-        return event[event.find("=") + 1:-1]
+        return event[event.find("=") + 1: event.find(">")]
 
     def getServerFilePathMoved(self, event):
         return event[event.find("=") + 1: event.find(",")]
 
+    def send_update_list(self, timestamp, token):
+        updateList = self.get_events_since_last_update(timestamp)
+        eventListString = ""
+        for event in updateList:
+            eventListString += event
+            eventListString += "|"
+        self.global_info.server_operator.send_update_list(eventListString, token)
+
+    #include in processeventsforupdates()
     def get_events_since_last_update(self, lastupdateptimestamp):
         updateList = []
         eventList = self.get_event_log()
         timestampList = self.get_timestamp_log()
+        print timestampList
         eventList = eventList[::-1]
         timestampList = timestampList[::-1]
         eventNum = 0
@@ -123,32 +139,30 @@ class ServerFileUpdateManager():
 
     def get_event_log(self):
         eventList = []
-        with open(self.global_info.server_global_directory + self.global_info.global_user_id + "\\EventLog.txt", "r") as f:
+        with open(self.global_info.server_global_directory + self.global_info.global_cur_user_id + "\\EventLog.txt", "r") as f:
             for event in f:
-                if (event != ""):
+                if (event != "" and len(event) > 15):
                     eventList.append(event[:event.find(">")+1])
         return eventList
 
     def get_timestamp_log(self):
         timestampList = []
-        count = 0;
-        with open(self.global_info.server_global_directory + self.global_info.global_user_id + "\\EventLog.txt", "r") as f:
+        with open(self.global_info.server_global_directory + self.global_info.global_cur_user_id + "\\EventLog.txt", "r") as f:
             for event in f:
-                if (event != ""):
+                if (event != "" and len(event) > 15):
                     timestampList.append(event[:event.find("<")])
-                    count = count + 1
         return timestampList
 
-    def get_file(self, srcPath):
+    def get_file(self, token, srcPath):
         try:
-            with open(self.global_info.server_global_directory + self.global_info.global_user_id + "\\OneDir\\" + srcPath, 'rb') as f:
+            with open(self.global_info.server_global_directory + self.global_info.active_user_directory[token].user_id + "\\OneDir\\" + srcPath, 'rb') as f:
                 content = f.read()
         except:
             content = ""
         return content
 
-    def requestFile(self, src_path):
-        self.global_info.server_operator.request_file(src_path)
+    def requestFile(self, src_path, token):
+        self.global_info.server_operator.request_file(src_path, token)
 
     def getEventType(self, event):
         return event[event.find("<") + 1:event.find(": ")]

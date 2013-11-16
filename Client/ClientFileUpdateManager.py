@@ -1,6 +1,7 @@
 __author__ = 'David'
 import time
 import os
+from threading import Thread
 #TO BE DELETED LATER
 
 class ClientFileUpdateManager():
@@ -8,42 +9,61 @@ class ClientFileUpdateManager():
     def __init__(self, global_info):
         self.global_info = global_info
 
-    def process_events_for_updates(self, eventUpdateList, updateID):
-        print eventUpdateList
-        for event in eventUpdateList:
-            eventType = self.getEventType(event)
-            srcPath = self.getFilePath(event)
-            #Sets up file for DW to ignore
-            self.global_info.client_global_file_ignore = self.global_info.client_global_directory + srcPath
-            #Call Correct Method Depending On Event Tye
-            if eventType == "FileCreatedEvent":
-                print "request file"
-                srcPath = self.getFilePath(event)
-                self.requestFile(srcPath)
-            elif eventType == "FileModifiedEvent":
-                print "request file"
-                srcPath = self.getFilePath(event)
-                self.requestFile(srcPath)
-            elif eventType == "FileMovedEvent":
-                print "delete file"
-                srcPath = self.getFilePathMoved(event)
+    def run(self):
+        def worker():
+            while True:
+                item = self.global_info.client_global_update_queue.get()
+                self.process_event_for_updates(item)
+                time.sleep(.5)
+                self.global_info.client_global_update_queue.task_done()
+
+        for i in range(1):
+            t = Thread(target=worker())
+            t.daemon = True
+            t.start()
+
+    def process_event_for_updates(self, item):
+        self.global_info.updating = True
+        eventType = self.getEventType(item)
+        srcPath = self.getFilePath(item)
+        #Sets up file for DW to ignore
+        self.global_info.client_global_file_ignore = self.global_info.client_global_directory + srcPath
+        #Call Correct Method Depending On Event Tye
+        if eventType == "FileCreatedEvent":
+            print "request file"
+            srcPath = self.getFilePath(item)
+            self.global_info.global_cur_src_path = srcPath
+            self.requestFile(srcPath)
+        elif eventType == "FileModifiedEvent":
+            print "request file"
+            srcPath = self.getFilePath(item)
+            self.global_info.global_cur_src_path = srcPath
+            self.requestFile(srcPath)
+        elif eventType == "FileMovedEvent":
+            print "delete file"
+            srcPath = self.getFilePathMoved(item)
+            try:
                 os.remove(self.global_info.client_global_directory + srcPath)
-            elif eventType == "FileDeletedEvent":
-                print "delete file"
-                srcPath = self.getFilePath(event)
+            except:
+                print ""
+        elif eventType == "FileDeletedEvent":
+            print "delete file"
+            srcPath = self.getFilePath(item)
+            try:
                 os.remove(self.global_info.client_global_directory + srcPath)
-            elif eventType == "DirCreatedEvent":
-                print "create dir"
-                srcPath = self.getFilePath(event)
-                #CreateDir
-            elif eventType == "DirMovedEvent":
-                print "TBD"
-                #TBD
-            elif eventType == "DirDeletedEvent":
-                print "delete dir"
-                #DeleteDir
+            except:
+                print ""
+        elif eventType == "DirCreatedEvent":
+            print "create dir"
+            srcPath = self.getFilePath(item)
+            os.mkdir(self.global_info.client_global_directory + srcPath)
+        elif eventType == "DirMovedEvent":
+            print "TBD"
+            #TBD
+        elif eventType == "DirDeletedEvent":
+            print "delete dir"
+            #DeleteDir
         self.global_info.client_global_file_ignore = ""
-        #call Operator.unlock(updateID) when finished
 
     """
     def test_process_events_for_updates(self, updateID):
@@ -82,7 +102,7 @@ class ClientFileUpdateManager():
     """
 
     def getFilePath(self, event):
-        return event[event.find("=") + 1:-1]
+        return event[event.find("=") + 1: event.find(">")]
 
     def getFilePathMoved(self, event):
         return event[event.find("=") + 1: event.find(",")]
@@ -97,7 +117,7 @@ class ClientFileUpdateManager():
         return content
 
     def requestFile(self, srcPath):
-        self.global_info.ClientOperator.request_file(srcPath)
+        self.global_info.client_operator.request_file(srcPath)
 
     def getEventType(self, event):
         return event[event.find("<") + 1:event.find(": ")]

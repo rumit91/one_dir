@@ -13,8 +13,6 @@ class DirectoryWatcherEventHandler(FileSystemEventHandler):
 
     def on_any_event(self, event):
         #Event Handler Ignores DirModifiedEvents
-        if event.src_path == self.global_info.client_global_file_ignore:
-            return
         if event.event_type == "modified" and event.is_directory == True:
             return
         if event.event_type == "moved" and event.is_directory == True:

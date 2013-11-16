@@ -3,16 +3,15 @@ __author__ = 'AlexQu'
 
 import sys
 import pickle
-import ClientInfoObj
+from ClientInfoObj import ClientInfoObj
 from random import randint
 
-class ActiveUser:
-    ActiveUserDirectory = {}
+class AuthenticationHelper:
+    def __init__(self, server_global):
+        self.my_global = server_global
 
-class Authentication:
     def matchpasswd(self,login,passwd):
-        saveActiveUser = ActiveUser()
-        self.my_ClientInfo = ClientInfoObj
+        """
         with open('info.pickle', 'rb') as handle:
             reader = pickle.load(handle)
             handle.close()
@@ -20,9 +19,20 @@ class Authentication:
                 return '#'
             else:
                 token = randint(1,65565)
-                saveActiveUser.ActiveUserDirectory[token] = self.my_ClientInfo
+                self.my_global.active_user_directory[token] = self.my_ClientInfo
                 return token.to_s()
+        """
+        #Using for testing since above won't work...
+        try:
+            if (self.my_global.test_login_database[login] == passwd):
+                token = randint(1,65565)
+                return token
+            else:
+                return -1
+        except:
+            return -1
 
+"""
     def createUser(self,login,passwd):
         saveActiveUser = ActiveUser()
         self.my_ClientInfo = ClientInfoObj
@@ -44,7 +54,5 @@ class Authentication:
                 saveActiveUser.ActiveUserDirectory[token] = self.my_ClientInfo
                 return token.to_s()
                 ## return True if user created
+"""
 
-#my_run = Authentication()
-#print my_run.run("alex Qu1")
-#print my_run.run("alex Qu")

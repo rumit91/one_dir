@@ -10,30 +10,34 @@ class ServerGlobal:
         #Timur's Test
         #self.server_global_directory = "C:\\Users\\Timur\\Desktop\\ServerFolder\\"
         #David's Test
-        #self.server_global_directory = "C:\\Users\\David\\Desktop\\ServerFolder\\"
+        self.server_global_directory = "C:\\Users\\David\\Desktop\\ServerFolder\\"
         #Alex's Test
-        self.server_global_directory = "C:\\Users\\Alex Qu\\Desktop\\ServerFolder\\"
-        self.global_user_id = '1'
-        self.global_file_ignore = ""
+        #self.server_global_directory = "C:\\Users\\Alex Qu\\Desktop\\ServerFolder\\"
+        self.global_cur_user_id = ''
         self.global_cur_src_path = ''
         self.server_operator = None
-        self.my_host_name = '192.168.1.40'
-        self.my_event_port = 12345
-        self.my_file_request_port = 12346
-        self.my_file_port = 12347
-        self.my_gatekeeper_port = 12348
+        self.my_host_name = '192.168.56.1'
+        self.my_event_port = 22345
+        self.my_file_request_port = 22346
+        self.my_file_port = 22347
+        self.my_authentication_port = 22348
         self.my_comm = CommUnit(self.my_host_name,
                                 self.my_event_port,
                                 self.my_file_request_port,
                                 self.my_file_port,
-                                self.my_gatekeeper_port)
-        self.target_host_name = '192.168.1.40'
+                                self.my_authentication_port)
+        self.target_host_name = '192.168.56.1'
         self.target_event_port = 12345
         self.target_file_request_port = 12346
         self.target_file_port = 12347
-        self.target_gatekeeper_port = 12348
+        self.target_authentication_port = 12348
+        self.target_update_port = 12349
         self.target_comm = CommUnit(self.target_host_name,
                                     self.target_event_port,
                                     self.target_file_request_port,
                                     self.target_file_port,
-                                    self.target_gatekeeper_port)
+                                    self.target_authentication_port,
+                                    self.target_update_port)
+        self.active_user_directory = {}
+        #Using for testing since pickle won't work
+        self.test_login_database = {'david': 'pass', 'david1' : 'pass2'}
