@@ -52,16 +52,40 @@ class FileListener(communicator.Receiver):
         self.setup()
         self.spin()
 
-class HandShakerListener(communicator.Receiver):
-    def get_login_info(self,message):
-        print 'Getting message: '+message
-        self.user_info = message
-        return self.user_info
+class AuthenticationListener(communicator.Receiver):
+	def client_handle(self,connection,addr):
+		message_raw = []
+		while True:
+			data = connection.recv(4096)
+			if not data:
+				break
+			#append message to list
+			message_raw.append(data)
 
-    def run(self):
-        self.setup()
-        self.spin()
+		#concatenate to single string
+		message = ''.join(message_raw)
 
+		saveActiveUser = ActiveUser()
+		self.my_ClientInfo = ClientInfoObj
+		self.token = -1
+		
+		parsed = message.split('|')
+		if message[0] == '0':
+			self.dispatch(GateKeeper.Authentication.createUser(message[1],message[2]),addr)
+		else:
+			self.dispatch(GateKeeper.Autentication.matchpasswd(message[1],message[2]),addr)
+		
+		def dispatch(self, message,addr):
+			nsock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+			auth_messenger = nsock.connect(addr,12349)
+			try:
+				status = nsock.sendall(message)
+			except socket.error:
+		  #in case of failure, intiate a resend protocol
+				dispatch(message,addr)		
+				
+			nsock.close()
+		
 class ServerOperator:
     GlobalMessage = ''
     def __init__(self, my_comm, target_comm, global_info):
@@ -81,7 +105,7 @@ class ServerOperator:
                                                self.target_comm.host_name,
                                                self.target_comm.event_port,
                                                self.my_global)
-        self.my_handshaker_listener = HandShakerListener(self.my_comm.host_name,
+        self.authentication_listener = AuthenticationListener(self.my_comm.host_name,
                                           self.my_comm.gatekeeper_port,
                                           self.target_comm.host_name,
                                           self.target_comm.gatekeeper_port,
@@ -102,11 +126,4 @@ class ServerOperator:
         my_file_request_dispatcher.request_file()
         print "Requesting File"
 
-    def initiateGateKeeper(self):
-        my_gatekeeper = GateKeeper.Authentication()
-        #below will return the token number
-        print "token number is: ",my_gatekeeper.run("wrong login")
-        print "token number is: ",my_gatekeeper.run("alex Qu")
 
-
-        """send token back to the client"""

@@ -67,7 +67,37 @@ class Receiver(Communicator):
 		  ClientHandleThread = Thread(target=self.client_handle(conn,addr))
 		self.sock.close()
 
+class AuthReceiver(Receiver):
+	def client_handle(self,connection,addr):
+		message_raw = []
+		while True:
+			data = connection.recv(4096)
+			if not data:
+				break
+			#append message to list
+			message_raw.append(data)
 
+		#concatenate to single string
+		message = ''.join(message_raw)
+
+		saveActiveUser = ActiveUser()
+		self.my_ClientInfo = ClientInfoObj
+		self.token = -1
+		
+		parsed = message.split('|')
+		if message[0] == '0':
+			self.dispatch(GateKeeper.Authentication.createUser(message[1],message[2]),addr)
+		else:
+			self.dispatch(GateKeeper.Autentication.matchpasswd(message[1],message[2]),addr)
+		
+		def dispatch(self, message,addr):
+			nsock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+			auth_messenger = nsock.connect(addr,12349)
+			try:
+				status = nsock.sendall(message)
+			except socket.error:
+		  #in case of failure, intiate a resend protocol
+				dispatch(message,addr)
 				
 
 class CommUnit:

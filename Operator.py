@@ -123,7 +123,19 @@ class FileListener:
 		self.myReceiver.setup()
 		self.myReceiver.spin()
 
-
+class AuthenticationListener:
+	class myReceiver(communicator.AuthReceiver):
+		def distpatch(self,message):
+			
+		def __init__(self, port, host_name, serverGlobal)
+			self.port = port
+			self.host_name = host_name
+			self.serverGlobal = serverGlobal
+			self.myReceiver = self.myReceiver(self.host_name, self.port, self.serverGlobal)
+			
+		def run(self):
+			self.myReceiver.setup()
+			self.myReceiver.spin()
 
 class Operator:
 	def __init__(self, event_port, file_request_port, file_port, local_host_name, target_host_name, sourceGlobal):

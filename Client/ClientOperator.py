@@ -67,18 +67,10 @@ class FileDispatcher(communicator.Messenger):
         my_file = self.my_file_update_manager.get_file(self.my_file_path)
         self.send(my_file)
 
-"""modification starts here"""
-class HandShaker(communicator.Messenger):
-#    login_info = 'test'
-    def get_input(self):
-        print "Type in 'Username Password'"
-        self.login_info  = sys.stdin.readline()
+def clsas authentication_listener(commincator.Receiver)
 
-    def send_login_info(self):
-        self.get_input()
-        self.send(self.login_info)
-        print "send: " + self.login_info
-"""end"""
+	def dispatch(self,message):
+		self.global_info.token = message
 
 class ClientOperator:
     def __init__(self, my_comm, target_comm, global_info):
@@ -93,16 +85,17 @@ class ClientOperator:
                                                             self.target_comm.host_name,
                                                             self.target_comm.file_port,
                                                             self.my_global)
-        self.my_handshaker = HandShaker(self.my_comm.host_name,
+        self.authentication_listener = HandShaker(self.my_comm.host_name,
                                           self.my_comm.gatekeeper_port,
                                           self.target_comm.host_name,
                                           self.target_comm.gatekeeper_port,
                                           self.my_global)
+										  
 
     def run(self):
         self.client_operator_thread_1 = myThread(self.my_file_request_listener)
         self.client_operator_thread_1.start()
         self.client_operator_thread_2 = myThread(self.my_event_dispatcher)
         self.client_operator_thread_2.start()
-        self.client_operator_thread_3 = myThread(self.my_handshaker)
-        #self.client_operator_thread_3.start()
+        self.client_operator_thread_3 = myThread(self.authentication_listener)
+        self.client_operator_thread_3.start()

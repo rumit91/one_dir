@@ -15,6 +15,7 @@ class ClientGlobal:
         self.client_global_directory = "C:\\Users\\Alex Qu\\Desktop\\OneDir"
         self.client_global_file_ignore = ""
         self.client_operator = None
+		self.token = None
         self.my_host_name = '192.168.1.40'
         self.my_event_port = 12345
         self.my_file_request_port = 12346
@@ -33,5 +34,4 @@ class ClientGlobal:
         self.target_comm = CommUnit(self.target_host_name,
                                     self.target_event_port,
                                     self.target_file_request_port,
-                                    self.target_file_port,
-                                    self.target_gatekeeper_port)
+                                    self.target_file_port)
