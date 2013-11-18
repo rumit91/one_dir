@@ -13,7 +13,7 @@ class ClientGlobal:
         #David's Test
         #self.client_global_directory = "C:\\Users\\David\\Desktop\\OneDir"
         #David's Test 2
-        self.client_global_directory = "C:\\Users\\David\\Desktop\\OneDir1"
+        self.client_global_directory = "C:\Users\David\Desktop\OneDir1"
         #Alex's Test
         #self.client_global_directory = "C:\\Users\\Alex Qu\\Desktop\\OneDir"
         self.client_global_file_ignore = ""

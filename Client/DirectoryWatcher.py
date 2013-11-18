@@ -19,7 +19,8 @@ class DirectoryWatcherEventHandler(FileSystemEventHandler):
             #Special Directory Moved Handling Subroutine
             return
         newEvent = str(event).replace(self.global_info.client_global_directory,"")
-        newEvent = str(datetime.datetime.now()) + newEvent + self.global_info.token #I think this should do the trick
+        print self.global_info.client_global_directory
+        newEvent = str(datetime.datetime.now()) + newEvent
         self.global_info.client_global_event_queue.put(newEvent)
         print newEvent
         #print self.eventQueue
