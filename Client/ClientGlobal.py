@@ -21,7 +21,7 @@ class ClientGlobal:
         self.client_operator = None
         self.token = None
         self.updating = False
-        self.my_host_name = '192.168.56.1'
+        self.my_host_name = '172.25.108.47'
         self.my_event_port = 12345
         self.my_file_request_port = 12346
         self.my_file_port = 12347
@@ -33,7 +33,7 @@ class ClientGlobal:
                                 self.my_file_port,
                                 self.my_authentication_port,
                                 self.my_update_port)
-        self.target_host_name = '192.168.56.1'
+        self.target_host_name = '172.27.109.117'
         self.target_event_port = 22345
         self.target_file_request_port = 22346
         self.target_file_port = 22347

@@ -165,7 +165,7 @@ class ClientOperator:
 
 
     def request_file(self, src_path):
-        my_file_request_dispatcher = FileRequestDispatcher(target_host_name=self.my_global.my_host_name,
+        my_file_request_dispatcher = FileRequestDispatcher(target_host_name=self.my_global.target_host_name,
                                                            target_port=self.target_comm.file_request_port,
                                                             global_info = self.my_global)
         my_file_request_dispatcher.set_file_path(src_path)

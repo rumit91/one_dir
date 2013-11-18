@@ -39,10 +39,10 @@ update_messenger = communicator.Messenger(target_host_name=client_global.target_
 update_messenger.send(update_message)
 print "WAITING 10 SECONDS TO START DIRECTORY WATCHER AFTER UPDATING ENDS"
 time.sleep(10)
-
+"""
 print 'about to run the directoryWatcher'
 client_directory_watcher_thread = myThread(client_directory_watcher)
 client_directory_watcher_thread.start()
-
+"""
 
 
