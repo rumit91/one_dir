@@ -57,7 +57,7 @@ class FileListener(communicator.Receiver):
 
 class FileRequestListener(communicator.Receiver):
     def dispatch(self, message):
-        print ["New File Request: ", message]
+        print "New File Request: " + message
         my_server_file_update_manager = ServerFileUpdateManager(self.global_info)
         #set up the file dispatcher
         message = message.split("|")
@@ -88,18 +88,36 @@ class FileDispatcher(communicator.Messenger):
         my_file = self.my_file_update_manager.get_file(self.token, self.my_file_path)
         self.send(my_file)
 
+
 class AuthenticationListener(communicator.Receiver):
     def dispatch(self, message):
-        message = message.split("|")
-        myAuthenticator = AuthenticationHelper(self.global_info)
-        myToken = myAuthenticator.matchpasswd(message[0],message[1])
+        print "New Login Request: " + message
+        #message = message.split("|")
+        my_authenticator = AuthenticationHelper(self.global_info, message, self.addr[0])
+        my_authenticator.print_out()
+        auth_message = my_authenticator.authenticate()
+        if(auth_message == "Authenticated"):
+            print "Authenticated"
+            print "User Token: " + str(my_authenticator.user_token)
+            print self.global_info.active_user_directory[str(my_authenticator.user_token)].print_out()
+            myAuthenticationDispatcher = communicator.Messenger(target_host_name=self.target_host_name,
+                                            target_port=self.global_info.target_comm.authentication_port)
+            myAuthenticationDispatcher.send(str(my_authenticator.user_token))
+        else:
+            print "Unable to Authenticate"
+            myAuthenticationDispatcher = communicator.Messenger(target_host_name=self.target_host_name,
+                                            target_port=self.global_info.target_comm.authentication_port)
+            myAuthenticationDispatcher.send(str(auth_message))
+
+        """
         client = ClientInfoObj(message[0], self.addr[0])
         print self.addr[0]
-        self.global_info.active_user_directory[str(myToken)] = client
+        self.global_info.active_user_directory[str(user_token)] = client
         print "authenticated"
         myAuthenticationDispatcher = communicator.Messenger(target_host_name=self.target_host_name,
         target_port=self.global_info.target_comm.authentication_port)
-        myAuthenticationDispatcher.send(str(myToken))
+        myAuthenticationDispatcher.send(str(user_token))
+        """
 
     def run(self):
         self.setup()
@@ -135,8 +153,11 @@ class AuthenticationListener(communicator.Receiver):
         dispatch(message,addr)
         nsock.close()
 """
+
+
 class ServerOperator:
     GlobalMessage = ''
+
     def __init__(self, my_comm, target_comm, global_info):
         self.my_comm = my_comm
         self.target_comm = target_comm

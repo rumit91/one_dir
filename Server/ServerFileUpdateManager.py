@@ -26,7 +26,7 @@ class ServerFileUpdateManager():
         item = item.split("|")
         event = item[1]
         token = item[0]
-        self.global_info.global_cur_user_id = self.global_info.active_user_directory[token].user_id
+        self.global_info.global_cur_user_id = str(self.global_info.active_user_directory[token].user_id)
         if(event == "~UPDATE~"):
             self.send_update_list(item[2], token)
         else:
@@ -139,7 +139,7 @@ class ServerFileUpdateManager():
 
     def get_event_log(self):
         eventList = []
-        with open(self.global_info.server_global_directory + self.global_info.global_cur_user_id + "\\EventLog.txt", "r") as f:
+        with open(self.global_info.server_global_directory + str(self.global_info.global_cur_user_id) + "\\EventLog.txt", "r") as f:
             for event in f:
                 if (event != "" and len(event) > 15):
                     eventList.append(event[:event.find(">")+1])
@@ -147,7 +147,7 @@ class ServerFileUpdateManager():
 
     def get_timestamp_log(self):
         timestampList = []
-        with open(self.global_info.server_global_directory + self.global_info.global_cur_user_id + "\\EventLog.txt", "r") as f:
+        with open(self.global_info.server_global_directory + str(self.global_info.global_cur_user_id) + "\\EventLog.txt", "r") as f:
             for event in f:
                 if (event != "" and len(event) > 15):
                     timestampList.append(event[:event.find("<")])
@@ -155,7 +155,7 @@ class ServerFileUpdateManager():
 
     def get_file(self, token, srcPath):
         try:
-            with open(self.global_info.server_global_directory + self.global_info.active_user_directory[token].user_id + "\\OneDir\\" + srcPath, 'rb') as f:
+            with open(self.global_info.server_global_directory + str(self.global_info.active_user_directory[token].user_id) + "\\OneDir\\" + srcPath, 'rb') as f:
                 content = f.read()
         except:
             content = ""

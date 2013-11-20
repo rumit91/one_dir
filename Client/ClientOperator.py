@@ -5,17 +5,16 @@ from ClientFileUpdateManager import ClientFileUpdateManager
 import threading
 import sys
 
-GlobalUser = 'test'
-GlobalPass = 'test'
+
 class myThread(threading.Thread):
     def __init__(self, run_object):
         threading.Thread.__init__(self)
         self.run_object = run_object
 
     def run(self):
-        print "Starting"
+        #print "Starting"
         self.run_object.run()
-        print "Ending"
+        #print "Ending"
 
 
 class EventDispatcher(communicator.Messenger):
@@ -68,6 +67,22 @@ class FileDispatcher(communicator.Messenger):
         my_file = self.my_file_update_manager.get_file(self.my_file_path)
         self.send(my_file)
 
+
+class AuthenticationDispatcher(communicator.Messenger):
+    def set_action(self, action):
+        self.action = action
+
+    def set_email(self, email):
+        self.email = email
+
+    def set_password(self, password):
+        self.password = password
+
+    def authenticate(self):
+        my_message = str(self.action) + "|" + self.email + "|" + self.password
+        self.send(my_message)
+
+
 class AuthenticationListener(communicator.Receiver):
     def dispatch(self,message):
         self.global_info.token = message
@@ -76,6 +91,19 @@ class AuthenticationListener(communicator.Receiver):
     def run(self):
         self.setup()
         self.spin()
+
+
+class UpdateDispatcher(communicator.Messenger):
+    def set_token(self, token):
+        self.token = token
+
+    def set_timestamp(self, timestamp):
+        self.timestamp = timestamp
+
+    def request_update(self):
+        my_message = str(self.token) + "|~UPDATE~|" + str(self.timestamp)
+        self.send(my_message)
+
 
 class UpdateListener(communicator.Receiver):
     def dispatch(self,message):
@@ -89,6 +117,7 @@ class UpdateListener(communicator.Receiver):
     def run(self):
         self.setup()
         self.spin()
+
 
 class FileRequestDispatcher(communicator.Messenger):
     def set_file_path(self, file_path):
@@ -129,45 +158,56 @@ class ClientOperator:
                                                             self.target_comm.file_request_port,
                                                             self.my_global)
         self.my_authentication_listener = AuthenticationListener(self.my_comm.host_name,
-                                          self.my_comm.authentication_port,
-                                          self.target_comm.host_name,
-                                          self.target_comm.authentication_port,
-                                          self.my_global)
-
+                                                                 self.my_comm.authentication_port,
+                                                                 self.target_comm.host_name,
+                                                                 self.target_comm.authentication_port,
+                                                                 self.my_global)
+        self.my_authentication_dispatcher = AuthenticationDispatcher(self.my_comm.host_name,
+                                                                     self.my_comm.authentication_port,
+                                                                     self.target_comm.host_name,
+                                                                     self.target_comm.authentication_port,
+                                                                     self.my_global)
         self.my_update_listener = UpdateListener(my_host_name = self.my_comm.host_name,
-                                          my_port = self.my_comm.update_port,
-                                          target_port = self.target_comm.host_name,
-                                          global_info = self.my_global)
-
+                                                 my_port = self.my_comm.update_port,
+                                                 target_port = self.target_comm.host_name,
+                                                 global_info = self.my_global)
+        self.my_update_dispatcher = UpdateDispatcher(self.my_comm.host_name,
+                                                     self.my_comm.event_port,
+                                                     self.target_comm.host_name,
+                                                     self.target_comm.event_port,
+                                                     self.my_global)
         self.my_file_listener = FileListener(self.my_comm.host_name,
-                                                            self.my_comm.file_port,
-                                                            self.target_comm.host_name,
-                                                            self.target_comm.file_port,
-                                                            self.my_global)
-										  
+                                             self.my_comm.file_port,
+                                             self.target_comm.host_name,
+                                             self.target_comm.file_port,
+                                             self.my_global)
 
     def run(self):
-        print "file request"
+        print "Starting the file_request_listener"
         self.client_operator_thread_1 = myThread(self.my_file_request_listener)
         self.client_operator_thread_1.start()
-        print "event"
+        print "Starting the event_dispatcher"
         self.client_operator_thread_2 = myThread(self.my_event_dispatcher)
         self.client_operator_thread_2.start()
-        print "authentication"
+        print "Starting the authentication_listener"
         self.client_operator_thread_3 = myThread(self.my_authentication_listener)
         self.client_operator_thread_3.start()
-        print "update"
+        print "Starting the update_listener"
         self.client_operator_thread_4 = myThread(self.my_update_listener)
         self.client_operator_thread_4.start()
-
+        print "Starting the file_listener"
         self.client_operator_thread_5 = myThread(self.my_file_listener)
         self.client_operator_thread_5.start()
 
+    def set_auth_message(self, action, email, password):
+        self.my_authentication_dispatcher.set_action(action)
+        self.my_authentication_dispatcher.set_email(email)
+        self.my_authentication_dispatcher.set_password(password)
 
     def request_file(self, src_path):
         my_file_request_dispatcher = FileRequestDispatcher(target_host_name=self.my_global.target_host_name,
                                                            target_port=self.target_comm.file_request_port,
-                                                            global_info = self.my_global)
+                                                           global_info = self.my_global)
         my_file_request_dispatcher.set_file_path(src_path)
         my_file_request_dispatcher.request_file()
         print "Requesting File From Server"
