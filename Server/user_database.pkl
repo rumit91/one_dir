@@ -1,0 +1,14 @@
+(dp0
+S'david1'
+p1
+(S'pass2'
+p2
+I2
+tp3
+sS'david'
+p4
+(S'pass'
+p5
+I1
+tp6
+s.
