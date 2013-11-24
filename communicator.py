@@ -38,12 +38,13 @@ class Receiver(Communicator):
 
     def client_handle(self, connection, addr):
         #message list
+        self.addr = addr
         message_raw = []
         while True:
             data = connection.recv(4096)
             if not data:
                 break
-                #append message to list
+            #append message to list
             message_raw.append(data)
 
         #concatenate to single string
@@ -69,10 +70,11 @@ class Receiver(Communicator):
 
 
 class CommUnit:
-    def __init__(self, host_name, event_port=-1, file_request_port=-1, file_port=-1, authentication_port=-1):
+    def __init__(self, host_name, event_port=-1, file_request_port=-1, file_port=-1, authentication_port=-1, update_port=-1):
         self.host_name = host_name
         self.event_port = event_port
         self.file_request_port = file_request_port
         self.file_port = file_port
         self.authentication_port = authentication_port
+        self.update_port = update_port
 

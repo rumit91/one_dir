@@ -40,5 +40,3 @@ class ServerGlobal:
                                     self.target_update_port)
         self.active_user_directory = {}
         self.user_database = {}
-        #Using for testing since pickle won't work
-        self.test_login_database = {'david': 'pass', 'david1' : 'pass2'}

@@ -95,64 +95,24 @@ class AuthenticationListener(communicator.Receiver):
         #message = message.split("|")
         my_authenticator = AuthenticationHelper(self.global_info, message, self.addr[0])
         my_authenticator.print_out()
-        auth_message = my_authenticator.authenticate()
-        if(auth_message == "Authenticated"):
+        my_authenticator.authenticate()
+        if my_authenticator.user_token != -1:
             print "Authenticated"
             print "User Token: " + str(my_authenticator.user_token)
-            print self.global_info.active_user_directory[str(my_authenticator.user_token)].print_out()
-            myAuthenticationDispatcher = communicator.Messenger(target_host_name=self.target_host_name,
-                                            target_port=self.global_info.target_comm.authentication_port)
-            myAuthenticationDispatcher.send(str(my_authenticator.user_token))
+            #add the newly authenticated user to the active_user_directory
+            client = ClientInfoObj(my_authenticator.user_id, self.addr[0])
+            self.global_info.active_user_directory[my_authenticator.user_token] = client
+            print self.global_info.active_user_directory[my_authenticator.user_token].print_out()
         else:
             print "Unable to Authenticate"
-            myAuthenticationDispatcher = communicator.Messenger(target_host_name=self.target_host_name,
-                                            target_port=self.global_info.target_comm.authentication_port)
-            myAuthenticationDispatcher.send(str(auth_message))
-
-        """
-        client = ClientInfoObj(message[0], self.addr[0])
-        print self.addr[0]
-        self.global_info.active_user_directory[str(user_token)] = client
-        print "authenticated"
+        #TO-DO: consider creating a dispatcher object in the ServerOperator
         myAuthenticationDispatcher = communicator.Messenger(target_host_name=self.target_host_name,
-        target_port=self.global_info.target_comm.authentication_port)
-        myAuthenticationDispatcher.send(str(user_token))
-        """
+                                                            target_port=self.global_info.target_comm.authentication_port)
+        myAuthenticationDispatcher.send(str(my_authenticator.user_token) + "|" + my_authenticator.auth_result_message)
 
     def run(self):
         self.setup()
         self.spin()
-
-"""
-class AuthenticationListener(communicator.Receiver):
-    def client_handle(self,connection,addr):
-        message_raw = []
-        while True:
-            data = connection.recv(4096)
-            if not data:
-                break
-            #append message to list
-            message_raw.append(data)
-
-        #concatenate to single string
-        message = ''.join(message_raw)
-
-        saveActiveUser = ActiveUser()
-        self.my_ClientInfo = ClientInfoObj
-        self.token = -1
-
-        parsed = message.split('|')
-        self.dispatch(Authentication.matchpasswd(parsed[1],message[2]))
-		
-    def dispatch(self, message,addr):
-        nsock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        auth_messenger = nsock.connect(addr,12349)
-        try:
-            status = nsock.sendall(message)
-        except socket.error:
-        dispatch(message,addr)
-        nsock.close()
-"""
 
 
 class ServerOperator:

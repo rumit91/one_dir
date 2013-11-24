@@ -21,6 +21,13 @@ class myThread(threading.Thread):
         self.run_object.run()
         print "Ending"
 
+
+class auth_message:
+    def __init__(self):
+        self.action = "-1"
+        self.email = ""
+        self.password = ""
+
 # on start up:
 # get the user's ip address
 # if a pickled file exists for ClientGlobal
@@ -55,74 +62,98 @@ def pickle_client_global(client_global):
     pickle.dump(client_global, output)
 
 
+def manual_log_in(client_global, my_auth_message):
+    print "Logging in:"
+    my_auth_message.email = raw_input("Please enter your email address: ")
+    my_auth_message.password = raw_input("Please enter your password: ")
+    save = ""
+    while save == "":
+        save = raw_input("Would you like your credentials to be saved (y or n): ")
+        if save == "y":
+            client_global.email = my_auth_message.email
+            client_global.password = my_auth_message.password
+        elif save == "n":
+            print "Please note that you will have to login again in the future."
+        else:
+            save = ""
+            print "Unable to process your input, please try again."
+    send_auth_message_to_server(my_auth_message)
+
+
+def automatic_log_in(client_global):
+    my_auth_message = auth_message()
+    my_auth_message.action = 0
+    my_auth_message.email = client_global.email
+    my_auth_message.password = client_global.password
+    send_auth_message_to_server(my_auth_message)
+
+
+def create_new_account(client_global, my_auth_message):
+    print "Creating a new account:"
+    my_auth_message.email = raw_input("Please enter an email address: ")
+    my_auth_message.password = 'x'
+    password_confirmation = 'y'
+    while my_auth_message.password != password_confirmation:
+        my_auth_message.password = raw_input("Please enter a password: ")
+        password_confirmation = raw_input("Please enter the password again: ")
+        if my_auth_message.password != password_confirmation:
+            print "Sorry your passwords did not match. Please try again."
+    send_auth_message_to_server(my_auth_message)
+
+
+def send_auth_message_to_server(my_auth_message):
+    print("Contacting server for authentication...")
+    # TO-DO: Might want to consider adding the client_operator as a parameter to this method
+    client_operator.set_auth_message_with_full_message(my_auth_message)
+    client_operator.my_authentication_dispatcher.authenticate()
+
+
+def process_user_input(client_global):
+    if client_global.email == "":
+        my_auth_message = auth_message()
+        while my_auth_message.action == "-1":
+            my_auth_message.action = raw_input("What would you like to do? (0 - login, 1 - create a new account): ")
+            if my_auth_message.action == "0":
+                manual_log_in(client_global, my_auth_message)
+            elif my_auth_message.action == "1":
+                create_new_account(client_global, my_auth_message)
+            else:
+                my_auth_message.action = "-1"
+                print "Unable to process your input, please try again."
+        #save the current global state
+        pickle_client_global(client_global)
+    else:
+        action = "-1"
+        while action == "-1":
+            action = raw_input("Hi {0}! What would you like to do? (0 - continue, 1 - logout): ".format(client_global.email))
+            if action == "0":
+                automatic_log_in(client_global)
+                #save the current global state
+                pickle_client_global(client_global)
+            elif action == "1":
+                os.remove("client_global.pkl")
+                print "The local user information was deleted. Please restart the application"
+                sys.exit(0)         # currently does not terminate the program because of multi threading
+            else:
+                action = "-1"
+                print "Unable to process your input, please try again."
+
+
 client_global = get_client_global()
-client_global.my_host_name = socket.gethostbyname(socket.getfqdn())
+#client_global.my_host_name = socket.gethostbyname(socket.getfqdn())
 client_operator = ClientOperator.ClientOperator(client_global.my_comm, client_global.target_comm, client_global)
 client_global.client_operator = client_operator
 client_operator.run()
 client_directory_watcher = DirectoryWatcher.DirectoryWatcher(client_global)
-if(client_global.email == ""):
-    action = "-1"
-    email = ''
-    password = ''
-    while(action == "-1"):
-        action = raw_input("What would you like to do? (0 - login, 1 - create a new account): ")
-        if(action == "0"):
-            print "Logging in:"
-            email = raw_input("Please enter your email address: ")
-            password = raw_input("Please enter your password: ")
-            save = ""
-            while(save == ""):
-                save = raw_input("Would you like your credentials to be saved (y or n): ")
-                if(save == "y"):
-                    client_global.email = email
-                    client_global.password = password
-                elif(save == "n"):
-                    print "Please note that you will have to login again in the future."
-                else:
-                    save = ""
-                    print "Unable to process your input, please try again."
-        elif(action == "1"):
-            print "Creating a new account:"
-            email = raw_input("Please enter an email address: ")
-            password = 'x'
-            password_confirmation = 'y'
-            while(password != password_confirmation):
-                password = raw_input("Please enter a password: ")
-                password_confirmation = raw_input("Please enter the password again: ")
-                if(password != password_confirmation):
-                    print "Sorry your passwords did not match. Please try again."
-        else:
-            action = "-1"
-            print "Unable to process your input, please try again."
 
-    client_operator.set_auth_message(action, email, password)
-    client_operator.my_authentication_dispatcher.authenticate()
-    #save the current global state
-    pickle_client_global(client_global)
-else:
-    action = "-1"
-    while(action == "-1"):
-        action = raw_input("Hi {0}! What would you like to do? (0 - continue, 1 - logout): ".format(client_global.email))
-        if(action == "0"):
-            #log in automatically
-            client_operator.set_auth_message(0, client_global.email, client_global.password)
-            client_operator.my_authentication_dispatcher.authenticate()
-            #save the current global state
-            pickle_client_global(client_global)
-        elif(action == "1"):
-            os.remove("client_global.pkl")
-            print "The local user information was deleted. Please restart the application"
-            sys.exit(0)         # currently does not terminate the program because of multi threading
-        else:
-            action = "-1"
-            print "Unable to process your input, please try again."
+process_user_input(client_global)
 
-while(client_global.token == None):
-    #Do Nothing - Waits for token to be returned
-    continue
+while client_global.token == None or client_global.token == -1:
+    if client_global.token != None and client_global.token == -1:
+        print "{0} Please try again.".format(client_global.auth_result_message)
+        process_user_input(client_global)
 
-print 'about to request updates from server'
+print 'Authenticated. About to request updates from server.'
 client_operator.my_update_dispatcher.set_token(client_global.token)
 client_operator.my_update_dispatcher.set_timestamp("2013-11-16 16:36:39.753000")
 client_operator.my_update_dispatcher.request_update()
@@ -133,4 +164,18 @@ print 'about to run the directoryWatcher'
 client_directory_watcher_thread = myThread(client_directory_watcher)
 client_directory_watcher_thread.start()
 
+action = "-1"
+while(action == "-1"):
+    action = raw_input("What would you like to do? (0 - update, 1 - logout): ")
+    if(action == "0"):
+        #trigger a manual update
+        print "Need to ask for an update"
+    elif(action == "1"):
+        #logout
+        os.remove("client_global.pkl")
+        print "The local user information was deleted. Please restart the application"
+        sys.exit(0)         # currently does not terminate the program because of multi threading
+    else:
+        action = "-1"
+        print "Unable to process your input, please try again."
 

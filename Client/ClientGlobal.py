@@ -22,6 +22,7 @@ class ClientGlobal:
         self.global_cur_src_path = ''
         self.client_operator = None
         self.token = None
+        self.auth_result_message = ''
         self.updating = False
         self.my_host_name = '192.168.20.13'
         self.my_event_port = 12345

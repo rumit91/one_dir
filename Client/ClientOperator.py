@@ -22,8 +22,8 @@ class EventDispatcher(communicator.Messenger):
         self.num_worker_threads= num_worker_threads
 
     def do_work(self, event):
-        self.send(self.global_info.token + "|" + event)
-        print "sent an event + token"
+        self.send(str(self.global_info.token) + "|" + event)
+        print "sent an token + event"
 
     def run(self):
         def worker():
@@ -78,15 +78,21 @@ class AuthenticationDispatcher(communicator.Messenger):
     def set_password(self, password):
         self.password = password
 
+    def set_message(self, auth_message):
+        self.action = auth_message.action
+        self.email = auth_message.email
+        self.password = auth_message.password
+
     def authenticate(self):
         my_message = str(self.action) + "|" + self.email + "|" + self.password
         self.send(my_message)
 
 
 class AuthenticationListener(communicator.Receiver):
-    def dispatch(self,message):
-        self.global_info.token = message
-        print message
+    def dispatch(self, message):
+        message = message.split("|")
+        self.global_info.token = int(message[0])
+        self.global_info.auth_result_message = message[1]
 
     def run(self):
         self.setup()
@@ -124,7 +130,7 @@ class FileRequestDispatcher(communicator.Messenger):
         self.my_file_path = file_path
 
     def request_file(self):
-        self.send(self.global_info.token + "|" + self.my_file_path)
+        self.send(str(self.global_info.token) + "|" + self.my_file_path)
 
 
 class FileListener(communicator.Receiver):
@@ -199,10 +205,13 @@ class ClientOperator:
         self.client_operator_thread_5 = myThread(self.my_file_listener)
         self.client_operator_thread_5.start()
 
-    def set_auth_message(self, action, email, password):
+    def set_auth_message_with_pieces(self, action, email, password):
         self.my_authentication_dispatcher.set_action(action)
         self.my_authentication_dispatcher.set_email(email)
         self.my_authentication_dispatcher.set_password(password)
+
+    def set_auth_message_with_full_message(self, auth_message):
+        self.my_authentication_dispatcher.set_message(auth_message)
 
     def request_file(self, src_path):
         my_file_request_dispatcher = FileRequestDispatcher(target_host_name=self.my_global.target_host_name,

@@ -25,7 +25,7 @@ class ServerFileUpdateManager():
     def process_event_for_updates(self, item):
         item = item.split("|")
         event = item[1]
-        token = item[0]
+        token = int(item[0])
         self.global_info.global_cur_user_id = str(self.global_info.active_user_directory[token].user_id)
         if(event == "~UPDATE~"):
             self.send_update_list(item[2], token)

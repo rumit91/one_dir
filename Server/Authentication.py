@@ -24,6 +24,7 @@ class LoginStrategy(AuthenticationStrategy):
 
     def match_passwd(self):
         self.my_auth_helper.my_global.user_database = self.get_user_database()
+        print self.my_auth_helper.my_global.user_database
         try:
             if (self.my_auth_helper.my_global.user_database[self.my_auth_helper.email][0] == self.my_auth_helper.password):
                 token = randint(1,65565)
@@ -38,18 +39,14 @@ class LoginStrategy(AuthenticationStrategy):
         return "Login Strategy"
 
     def get_user_database(self):
-        return {'david': ('pass', 1), 'david1': ('pass2', 2)}
-        """
-        with open('info.pickle', 'rb') as handle:
-            reader = pickle.load(handle)
-            handle.close()
-            if reader.has_key(login) and reader[login] == passwd:
-                return '#'
-            else:
-                token = randint(1,65565)
-                self.my_global.active_user_directory[token] = self.my_ClientInfo
-                return token.to_s()
-        """
+        user_database = {}
+        try:
+            with open('./Server/user_database.pkl'):
+                print "Found saved user database"
+                user_database = pickle.load(open('./Server/user_database.pkl', 'rb'))
+        except IOError:
+            print "No previous user database was found"
+        return user_database
 
 
 class CreateAccountStrategy(AuthenticationStrategy):
@@ -70,20 +67,22 @@ class AuthenticationHelper:
         self.user_hostname = user_hostname
         self.user_id = -1
         self.user_token = -1
-        self.auth_message = ""
+        self.auth_result_message = ""
 
     def authenticate(self):
         self.acquire_token()
-        if(self.user_token != -1):
+        if self.user_token != -1:
             self.acquire_user_id()
             self.create_client_info_object()
-        return self.auth_message
+            self.auth_result_message = "Authenticated."
+        else:
+            self.auth_result_message = "Unable to authenticate."
 
     def acquire_token(self):
         my_strategy = AuthenticationStrategy(self)
-        if(int(self.action) == 0):
+        if int(self.action) == 0:
             my_strategy = LoginStrategy(self)
-        elif(int(self.action) == 1):
+        elif int(self.action) == 1:
             my_strategy = CreateAccountStrategy(self)
         #print my_strategy.get_name()
         self.user_token = my_strategy.authenticate()
@@ -97,29 +96,6 @@ class AuthenticationHelper:
 
     def print_out(self):
         print "AuthHelper - action: {0} - email: {1} - password: {2}".format(self.action, self.email, self.password)
-
-    """
-    def match_passwd(self,login,passwd):
-
-        with open('info.pickle', 'rb') as handle:
-            reader = pickle.load(handle)
-            handle.close()
-            if reader.has_key(login) and reader[login] == passwd:
-                return '#'
-            else:
-                token = randint(1,65565)
-                self.my_global.active_user_directory[token] = self.my_ClientInfo
-                return token.to_s()
-        #Using for testing since above won't work...
-        try:
-            if (self.my_global.test_login_database[login] == passwd):
-                token = randint(1,65565)
-                return token
-            else:
-                return -1
-        except:
-            return -1
-    """
 
 """
     def createUser(self,login,passwd):
