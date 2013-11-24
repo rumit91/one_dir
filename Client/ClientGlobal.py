@@ -49,6 +49,8 @@ class ClientGlobal:
 
     def __getstate__(self):
         odict = self.__dict__.copy()    # copy the dict since we change it
+        del odict['token']
+        del odict['auth_result_message']
         del odict['my_comm']
         del odict['target_comm']
         del odict['client_operator']
@@ -60,6 +62,8 @@ class ClientGlobal:
         self.__dict__.update(dict)
         self.client_global_event_queue = Queue.Queue()
         self.client_global_update_queue = Queue.Queue()
+        self.token = None
+        self.auth_result_message = ''
         self.my_comm = CommUnit(self.my_host_name,
                                 self.my_event_port,
                                 self.my_file_request_port,

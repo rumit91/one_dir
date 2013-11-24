@@ -151,9 +151,11 @@ process_user_input(client_global)
 while client_global.token == None or client_global.token == -1:
     if client_global.token != None and client_global.token == -1:
         print "{0} Please try again.".format(client_global.auth_result_message)
+        client_global.token = None
+        client_global.auth_result_message = ''
         process_user_input(client_global)
 
-print 'Authenticated. About to request updates from server.'
+print '{0} About to request updates from server.'.format(client_global.auth_result_message)
 client_operator.my_update_dispatcher.set_token(client_global.token)
 client_operator.my_update_dispatcher.set_timestamp("2013-11-16 16:36:39.753000")
 client_operator.my_update_dispatcher.request_update()

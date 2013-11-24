@@ -91,7 +91,7 @@ class FileDispatcher(communicator.Messenger):
 
 class AuthenticationListener(communicator.Receiver):
     def dispatch(self, message):
-        print "New Login Request: " + message
+        print "New Auth Request: " + message
         #message = message.split("|")
         my_authenticator = AuthenticationHelper(self.global_info, message, self.addr[0])
         my_authenticator.print_out()

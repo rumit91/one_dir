@@ -1,10 +1,11 @@
-__author__ = 'AlexQu'
+__author__ = 'Timur'
 #!/usr/bin/python
 
 import sys
 import pickle
 from ClientInfoObj import ClientInfoObj
 from random import randint
+import os
 
 
 class AuthenticationStrategy:
@@ -17,27 +18,6 @@ class AuthenticationStrategy:
     def get_name(self):
         return "Generic Auth Strategy"
 
-
-class LoginStrategy(AuthenticationStrategy):
-    def authenticate(self):
-        return self.match_passwd()
-
-    def match_passwd(self):
-        self.my_auth_helper.my_global.user_database = self.get_user_database()
-        print self.my_auth_helper.my_global.user_database
-        try:
-            if (self.my_auth_helper.my_global.user_database[self.my_auth_helper.email][0] == self.my_auth_helper.password):
-                token = randint(1,65565)
-                self.my_auth_helper.auth_message = "Authenticated"
-                return token
-            else:
-                return -1
-        except:
-            return -1
-
-    def get_name(self):
-        return "Login Strategy"
-
     def get_user_database(self):
         user_database = {}
         try:
@@ -49,9 +29,62 @@ class LoginStrategy(AuthenticationStrategy):
         return user_database
 
 
+class LoginStrategy(AuthenticationStrategy):
+    def authenticate(self):
+        return self.match_passwd()
+
+    def match_passwd(self):
+        self.my_auth_helper.my_global.user_database = self.get_user_database()
+        print self.my_auth_helper.my_global.user_database
+        try:
+            if (self.my_auth_helper.my_global.user_database[self.my_auth_helper.email][0] == self.my_auth_helper.password):
+                token = randint(1,65565)
+                self.my_auth_helper.auth_result_message = "Authenticated."
+                return token
+            else:
+                self.my_auth_helper.auth_result_message = "Password is incorrect."
+                return -1
+        except:
+            self.my_auth_helper.auth_result_message = "User does not exist."
+            return -1
+
+    def get_name(self):
+        return "Login Strategy"
+
+
 class CreateAccountStrategy(AuthenticationStrategy):
     def authenticate(self):
+        self.my_auth_helper.my_global.user_database = self.get_user_database()
+        if self.my_auth_helper.email in self.my_auth_helper.my_global.user_database:
+            self.my_auth_helper.auth_result_message = "User already exists."
+            print self.my_auth_helper.auth_result_message
+        else:
+            self.add_new_user_to_database()
+            self.pickle_user_database()
+            self.allocate_space_for_new_user()
+            token = randint(1, 65565)
+            self.my_auth_helper.auth_result_message = "New User Created."
+            print self.my_auth_helper.auth_result_message
+            return token
         return -1
+
+    def pickle_user_database(self):
+        output = open('./Server/user_database.pkl', 'wb')
+        pickle.dump(self.my_auth_helper.my_global.user_database, output)
+
+    def add_new_user_to_database(self):
+        #could fail after deleting 10 users...
+        new_user_id = len(self.my_auth_helper.my_global.user_database)+10
+        password_id_tuple = (self.my_auth_helper.password, new_user_id)
+        self.my_auth_helper.my_global.user_database[self.my_auth_helper.email] = password_id_tuple
+        self.my_auth_helper.user_id = new_user_id
+
+    def allocate_space_for_new_user(self):
+        folder_path = self.my_auth_helper.my_global.server_global_directory + "\\" + str(self.my_auth_helper.user_id)
+        os.mkdir(folder_path)
+        os.mkdir(folder_path + "\\OneDir")
+        event_log = open(folder_path + "\\" + 'EventLog.txt', 'wb')
+        event_log.close()
 
     def get_name(self):
         return "Create Account Strategy"
@@ -74,9 +107,6 @@ class AuthenticationHelper:
         if self.user_token != -1:
             self.acquire_user_id()
             self.create_client_info_object()
-            self.auth_result_message = "Authenticated."
-        else:
-            self.auth_result_message = "Unable to authenticate."
 
     def acquire_token(self):
         my_strategy = AuthenticationStrategy(self)
