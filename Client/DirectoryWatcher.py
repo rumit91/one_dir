@@ -12,6 +12,9 @@ class DirectoryWatcherEventHandler(FileSystemEventHandler):
         self.global_info = global_info
 
     def on_any_event(self, event):
+        #If updates are still being processed, DW will ignore any changes
+        if self.global_info.updating != 0:
+            return
         #Event Handler Ignores DirModifiedEvents
         if event.event_type == "modified" and event.is_directory == True:
             return

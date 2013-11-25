@@ -10,9 +10,9 @@ class ServerGlobal:
         #Timur's Test
         #self.server_global_directory = "C:\\Users\\Timur\\Desktop\\ServerFolder\\"
         #David's Test
-        #self.server_global_directory = "C:\\Users\\David\\Desktop\\ServerFolder\\"
+        self.server_global_directory = "C:\\Users\\David\\Desktop\\ServerFolder\\"
         #Alex's Test
-        self.server_global_directory = "C:\\Users\\Chilaxus\\Desktop\\ServerFolder\\"
+        #self.server_global_directory = "C:\\Users\\Chilaxus\\Desktop\\ServerFolder\\"
         self.global_cur_user_id = ''
         self.global_cur_src_path = ''
         self.server_operator = None

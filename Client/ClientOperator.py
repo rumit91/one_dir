@@ -175,6 +175,7 @@ class FileListener(communicator.Receiver):
         with open(self.global_info.client_global_directory + self.global_info.global_cur_src_path,
                   "wb") as f:
             f.write(message)
+        self.global_info.updating = False
 
     def run(self):
         self.setup()

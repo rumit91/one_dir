@@ -11,10 +11,10 @@ class ClientFileUpdateManager():
 
     def run(self):
         def worker():
-            while True:
+            while not self.global_info.updating:
+                self.global_info.updating = True
                 item = self.global_info.client_global_update_queue.get()
                 self.process_event_for_updates(item)
-                time.sleep(.5)
                 self.global_info.client_global_update_queue.task_done()
 
         for i in range(1):
@@ -23,11 +23,8 @@ class ClientFileUpdateManager():
             t.start()
 
     def process_event_for_updates(self, item):
-        self.global_info.updating = True
         eventType = self.getEventType(item)
         srcPath = self.getFilePath(item)
-        #Sets up file for DW to ignore
-        self.global_info.client_global_file_ignore = self.global_info.client_global_directory + srcPath
         #Call Correct Method Depending On Event Tye
         if eventType == "FileCreatedEvent":
             print "request file"
@@ -46,6 +43,7 @@ class ClientFileUpdateManager():
                 os.remove(self.global_info.client_global_directory + srcPath)
             except:
                 print ""
+            self.global_info.updating = False
         elif eventType == "FileDeletedEvent":
             print "delete file"
             srcPath = self.getFilePath(item)
@@ -53,17 +51,20 @@ class ClientFileUpdateManager():
                 os.remove(self.global_info.client_global_directory + srcPath)
             except:
                 print ""
+            self.global_info.updating = False
         elif eventType == "DirCreatedEvent":
             print "create dir"
             srcPath = self.getFilePath(item)
             os.mkdir(self.global_info.client_global_directory + srcPath)
+            self.global_info.updating = False
         elif eventType == "DirMovedEvent":
             print "TBD"
+            self.global_info.updating = False
             #TBD
         elif eventType == "DirDeletedEvent":
             print "delete dir"
+            self.global_info.updating = False
             #DeleteDir
-        self.global_info.client_global_file_ignore = ""
 
     """
     def test_process_events_for_updates(self, updateID):

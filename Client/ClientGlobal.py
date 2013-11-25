@@ -11,19 +11,19 @@ class ClientGlobal:
         #Timur's Test
         #self.client_global_directory = "C:\\Users\\Timur\\Desktop\\OneDir"
         #David's Test
-        #self.client_global_directory = "C:\\Users\\David\\Desktop\\OneDir"
+        self.client_global_directory = "C:\\Users\\David\\Desktop\\OneDir"
         #David's Test 2
         #self.client_global_directory = "C:\Users\David\Desktop\OneDir1"
         #Alex's Test
-        self.client_global_directory = "C:\\Users\\Chilaxus\\Desktop\\OneDir"
+        #self.client_global_directory = "C:\\Users\\Chilaxus\\Desktop\\OneDir"
         self.email = ""
         self.password = ""
+        self.updating = 0
         self.client_global_file_ignore = ''
         self.global_cur_src_path = ''
         self.client_operator = None
         self.token = None
         self.auth_result_message = ''
-        self.updating = False
         self.my_host_name = '192.168.1.55'
         self.my_event_port = 12345
         self.my_file_request_port = 12346
