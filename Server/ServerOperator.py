@@ -20,6 +20,12 @@ DecodeAES = lambda c, e: c.decrypt(base64.b64decode(e)).rstrip(PADDING)
 #set encryption/decryption variables
 private_key = "CS-3240-team-No8"
 
+def encryt(data):
+    cipher = AES.new(private_key)
+    # encode a string
+    encoded = EncodeAES(cipher, data)
+    return encoded
+
 def decrypt(encoded):
     cipher = AES.new(private_key)
     decoded = DecodeAES(cipher, encoded)
@@ -39,6 +45,7 @@ class myThread(threading.Thread):
 
 class EventListener(communicator.Receiver):
     def dispatch(self, message):
+        message = decrypt(message)
         print ["New Event: ", message]
         self.global_info.server_global_event_queue.put(message)
 
@@ -52,11 +59,12 @@ class FileRequestDispatcher(communicator.Messenger):
         self.my_file_path = file_path
 
     def request_file(self):
-        self.send(self.my_file_path)
+        self.send(encryt(self.my_file_path))
 
 
 class FileListener(communicator.Receiver):
     def dispatch(self, message):
+        message = decrypt(message)
         print ["New File: ", message]
         print "WRITING"
         self.write_file(message)
@@ -76,6 +84,7 @@ class FileListener(communicator.Receiver):
 
 class FileRequestListener(communicator.Receiver):
     def dispatch(self, message):
+        message = decrypt(message)
         print "New File Request: " + message
         my_server_file_update_manager = ServerFileUpdateManager(self.global_info)
         #set up the file dispatcher
@@ -105,7 +114,7 @@ class FileDispatcher(communicator.Messenger):
 
     def get_file(self):
         my_file = self.my_file_update_manager.get_file(self.token, self.my_file_path)
-        self.send(my_file)
+        self.send(encryt(my_file))
 
 
 class AuthenticationListener(communicator.Receiver):
@@ -129,7 +138,7 @@ class AuthenticationListener(communicator.Receiver):
         #TO-DO: consider creating a dispatcher object in the ServerOperator
         myAuthenticationDispatcher = communicator.Messenger(target_host_name=self.target_host_name,
                                                             target_port=self.global_info.target_comm.authentication_port)
-        myAuthenticationDispatcher.send(str(my_authenticator.user_token) + "|" + my_authenticator.auth_result_message)
+        myAuthenticationDispatcher.send(encryt(str(my_authenticator.user_token) + "|" + my_authenticator.auth_result_message))
 
     def run(self):
         self.setup()
@@ -188,7 +197,7 @@ class ServerOperator:
     def send_update_list(self, updateListString, token):
         my_update_dispatcher = communicator.Messenger(target_host_name=self.my_global.active_user_directory[token].host_name,
                                                            target_port=self.target_comm.update_port)
-        my_update_dispatcher.send(updateListString)
+        my_update_dispatcher.send(encryt(updateListString))
         print "Sending Update List"
 
 

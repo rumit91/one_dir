@@ -5,9 +5,9 @@ p1
 p2
 I2
 tp3
-sS'timur'
+sS'alex'
 p4
-(S'pass'
+(S'qu'
 p5
 I12
 tp6

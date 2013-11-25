@@ -26,6 +26,10 @@ def encryt(data):
     encoded = EncodeAES(cipher, data)
     return encoded
 
+def decrypt(encoded):
+    cipher = AES.new(private_key)
+    decoded = DecodeAES(cipher, encoded)
+    return decoded
 
 class myThread(threading.Thread):
     def __init__(self, run_object):
@@ -43,7 +47,7 @@ class EventDispatcher(communicator.Messenger):
         self.num_worker_threads= num_worker_threads
 
     def do_work(self, event):
-        self.send(str(self.global_info.token) + "|" + event)
+        self.send(encryt(str(self.global_info.token) + "|" + event))
         print "sent an token + event"
 
     def run(self):
@@ -62,6 +66,7 @@ class EventDispatcher(communicator.Messenger):
 
 class FileRequestListener(communicator.Receiver):
     def dispatch(self, message):
+        message = decrypt(message)
         print ["New File Request: ", message]
         my_client_file_update_manager = ClientFileUpdateManager(self.global_info)
         #set up the file dispatcher
@@ -86,7 +91,7 @@ class FileDispatcher(communicator.Messenger):
 
     def get_file(self):
         my_file = self.my_file_update_manager.get_file(self.my_file_path)
-        self.send(my_file)
+        self.send(encryt(my_file))
 
 
 class AuthenticationDispatcher(communicator.Messenger):
@@ -111,6 +116,7 @@ class AuthenticationDispatcher(communicator.Messenger):
 
 class AuthenticationListener(communicator.Receiver):
     def dispatch(self, message):
+        message = decrypt(message)
         message = message.split("|")
         self.global_info.token = int(message[0])
         self.global_info.auth_result_message = message[1]
@@ -130,11 +136,12 @@ class UpdateDispatcher(communicator.Messenger):
 
     def request_update(self):
         my_message = str(self.token) + "|~UPDATE~|" + str(self.timestamp)
-        self.send(my_message)
+        self.send(encryt(my_message))
 
 
 class UpdateListener(communicator.Receiver):
     def dispatch(self,message):
+        message = decrypt(message)
         print message
         updateList = message.split("|")
         for event in updateList:
@@ -152,11 +159,12 @@ class FileRequestDispatcher(communicator.Messenger):
         self.my_file_path = file_path
 
     def request_file(self):
-        self.send(str(self.global_info.token) + "|" + self.my_file_path)
+        self.send(encryt(str(self.global_info.token) + "|" + self.my_file_path))
 
 
 class FileListener(communicator.Receiver):
     def dispatch(self, message):
+        message = decrypt(message)
         print ["New File: ", message]
         print "WRITING"
         self.write_file(message)

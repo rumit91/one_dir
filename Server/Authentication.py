@@ -21,9 +21,9 @@ class AuthenticationStrategy:
     def get_user_database(self):
         user_database = {}
         try:
-            with open('./Server/user_database.pkl'):
+            with open('user_database.pkl'):
                 print "Found saved user database"
-                user_database = pickle.load(open('./Server/user_database.pkl', 'rb'))
+                user_database = pickle.load(open('user_database.pkl', 'rb'))
         except IOError:
             print "No previous user database was found"
         return user_database
@@ -69,7 +69,7 @@ class CreateAccountStrategy(AuthenticationStrategy):
         return -1
 
     def pickle_user_database(self):
-        output = open('./Server/user_database.pkl', 'wb')
+        output = open('user_database.pkl', 'wb')
         pickle.dump(self.my_auth_helper.my_global.user_database, output)
 
     def add_new_user_to_database(self):
