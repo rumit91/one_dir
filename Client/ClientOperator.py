@@ -5,6 +5,27 @@ from ClientFileUpdateManager import ClientFileUpdateManager
 import threading
 import sys
 
+from Crypto.Cipher import AES
+import string
+import base64
+import time
+
+#import modules
+PADDING = '{'
+BLOCK_SIZE = 32
+pad = lambda s: s + (BLOCK_SIZE - len(s) % BLOCK_SIZE) * PADDING
+#prepare crypto method
+EncodeAES = lambda c, s: base64.b64encode(c.encrypt(pad(s)))
+DecodeAES = lambda c, e: c.decrypt(base64.b64decode(e)).rstrip(PADDING)
+#set encryption/decryption variables
+private_key = "CS-3240-team-No8"
+
+def encryt(data):
+    cipher = AES.new(private_key)
+    # encode a string
+    encoded = EncodeAES(cipher, data)
+    return encoded
+
 
 class myThread(threading.Thread):
     def __init__(self, run_object):
@@ -85,7 +106,7 @@ class AuthenticationDispatcher(communicator.Messenger):
 
     def authenticate(self):
         my_message = str(self.action) + "|" + self.email + "|" + self.password
-        self.send(my_message)
+        self.send(encryt(my_message))
 
 
 class AuthenticationListener(communicator.Receiver):

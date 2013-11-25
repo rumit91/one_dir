@@ -6,6 +6,25 @@ from ClientInfoObj import ClientInfoObj
 from ServerFileUpdateManager import ServerFileUpdateManager
 import socket
 
+from Crypto.Cipher import AES
+import string
+import base64
+import time
+#import modules
+PADDING = '{'
+BLOCK_SIZE = 32
+pad = lambda s: s + (BLOCK_SIZE - len(s) % BLOCK_SIZE) * PADDING
+#prepare crypto method
+EncodeAES = lambda c, s: base64.b64encode(c.encrypt(pad(s)))
+DecodeAES = lambda c, e: c.decrypt(base64.b64decode(e)).rstrip(PADDING)
+#set encryption/decryption variables
+private_key = "CS-3240-team-No8"
+
+def decrypt(encoded):
+    cipher = AES.new(private_key)
+    decoded = DecodeAES(cipher, encoded)
+    return decoded
+
 #GlobalMessage = ''
 class myThread(threading.Thread):
     def __init__(self, run_object):
@@ -91,7 +110,9 @@ class FileDispatcher(communicator.Messenger):
 
 class AuthenticationListener(communicator.Receiver):
     def dispatch(self, message):
-        print "New Auth Request: " + message
+        print "New encrypted Auth Request received: " + message
+        message = decrypt(message)
+        print "Decrpted Auth Request: " + message
         #message = message.split("|")
         my_authenticator = AuthenticationHelper(self.global_info, message, self.addr[0])
         my_authenticator.print_out()

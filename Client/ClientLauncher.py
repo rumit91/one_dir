@@ -10,7 +10,6 @@ import datetime
 import time
 import pickle
 
-
 class myThread(threading.Thread):
     def __init__(self, run_object):
         threading.Thread.__init__(self)
@@ -55,7 +54,6 @@ def get_client_global():
     except IOError:
         print "No previous user data was found"
     return client_global
-
 
 def pickle_client_global(client_global):
     output = open('client_global.pkl', 'wb')
