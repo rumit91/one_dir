@@ -18,7 +18,7 @@ class ClientGlobal:
         #self.client_global_directory = "C:\\Users\\Chilaxus\\Desktop\\OneDir"
         self.email = ""
         self.password = ""
-        self.updating = 0
+        self.updating = False
         self.client_global_file_ignore = ''
         self.global_cur_src_path = ''
         self.client_operator = None
