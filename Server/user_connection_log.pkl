@@ -6,4 +6,16 @@ p2
 S'timestamp'
 p3
 tp4
+sS'david'
+p5
+(S'192.168.1.9'
+p6
+cdatetime
+datetime
+p7
+(S'\x07\xdd\x0b\x1c\x15\x1c6\t\xa0\xd8'
+p8
+tp9
+Rp10
+tp11
 s.

@@ -29,6 +29,10 @@ class ServerFileUpdateManager():
         self.global_info.global_cur_user_id = str(self.global_info.active_user_directory[token].user_id)
         if(event == "~UPDATE~"):
             self.send_update_list(item[2], token)
+        elif event == "~SYNCON~":
+            print "Need to implement turning sync on!"
+        elif event == "~SYNCOFF~":
+            print "Need to implement turning sync off!"
         else:
             with open(self.global_info.server_global_directory + self.global_info.global_cur_user_id + "\\EventLog.txt", "a") as f:
                 f.write("\n" + event[:event.find(">") + 1])

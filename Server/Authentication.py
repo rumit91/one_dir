@@ -25,7 +25,8 @@ class AuthenticationStrategy:
                 print "Found saved user database"
                 user_database = pickle.load(open('user_database.pkl', 'rb'))
         except IOError:
-            print "No previous user database was found"
+            print "No previous user database was found. Using default"
+            user_database = {'david': ('pass', 1), 'david1': ('pass2', 2)}
         return user_database
 
 
@@ -71,6 +72,7 @@ class CreateAccountStrategy(AuthenticationStrategy):
     def pickle_user_database(self):
         output = open('user_database.pkl', 'wb')
         pickle.dump(self.my_auth_helper.my_global.user_database, output)
+        output.close()
 
     def add_new_user_to_database(self):
         #could fail after deleting 10 users...

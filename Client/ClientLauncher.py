@@ -137,7 +137,29 @@ def process_user_input(client_global):
                 print "Unable to process your input, please try again."
 
 
+def toggle_sync(client_global):
+    print "About to toggle sync"
+    if client_global.sync_on:
+        #send a message to turn sync off
+        print "Turning sync off"
+        sync_off_event = "~SYNCOFF~|" + str(datetime.datetime.now())
+        client_global.client_global_event_queue.put(sync_off_event)
+        client_global.sync_on = False
+    else:
+        print "Turning sync on"
+        sync_on_event = "~SYNCON~|" + str(datetime.datetime.now())
+        client_global.client_global_event_queue.put(sync_on_event)
+        client_global.sync_on = True
+
+
+def request_update(client_global, timestamp):
+    client_operator.my_update_dispatcher.set_token(client_global.token)
+    client_operator.my_update_dispatcher.set_timestamp(timestamp)
+    client_operator.my_update_dispatcher.request_update()
+
+
 client_global = get_client_global()
+#get the ip address automatically - may not work on all machines...
 #client_global.my_host_name = socket.gethostbyname(socket.getfqdn())
 client_operator = ClientOperator.ClientOperator(client_global.my_comm, client_global.target_comm, client_global)
 client_global.client_operator = client_operator
@@ -154,27 +176,33 @@ while client_global.token == None or client_global.token == -1:
         process_user_input(client_global)
 
 print '{0} About to request updates from server.'.format(client_global.auth_result_message)
-client_operator.my_update_dispatcher.set_token(client_global.token)
-client_operator.my_update_dispatcher.set_timestamp("2013-11-16 16:36:39.753000")
-client_operator.my_update_dispatcher.request_update()
-print "WAITING 10 SECONDS TO START DIRECTORY WATCHER AFTER UPDATING ENDS"
-time.sleep(10)
+request_update(client_global, "2013-11-16 16:36:39.753000")
+
+#print "WAITING 10 SECONDS TO START DIRECTORY WATCHER AFTER UPDATING ENDS"
+#time.sleep(10)
 
 print 'about to run the directoryWatcher'
 client_directory_watcher_thread = myThread(client_directory_watcher)
 client_directory_watcher_thread.start()
 
 action = "-1"
-while(action == "-1"):
-    action = raw_input("What would you like to do? (0 - update, 1 - logout): ")
-    if(action == "0"):
+while True:
+    action = raw_input("What would you like to do? (0 - update, 1 - logout, 2 - toggle sync, 3 - change password): ")
+    if action == "0":
         #trigger a manual update
-        print "Need to ask for an update"
-    elif(action == "1"):
+        print "Requesting an update..."
+        request_update(client_global, str(datetime.datetime.now()))
+    elif action == "1":
         #logout
         os.remove("client_global.pkl")
         print "The local user information was deleted. Please restart the application"
         sys.exit(0)         # currently does not terminate the program because of multi threading
+    elif action == "2":
+        #toggle sync
+        toggle_sync(client_global)
+    elif action == "3":
+        #change password
+        print "Changing passwords is not currently possible."
     else:
         action = "-1"
         print "Unable to process your input, please try again."

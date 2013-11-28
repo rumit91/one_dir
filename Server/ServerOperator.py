@@ -124,7 +124,6 @@ class AuthenticationListener(communicator.Receiver):
         print "New encrypted Auth Request received: " + message
         message = decrypt(message)
         print "Decrpted Auth Request: " + message
-        #message = message.split("|")
         my_authenticator = AuthenticationHelper(self.global_info, message, self.addr[0])
         my_authenticator.print_out()
         my_authenticator.authenticate()
@@ -132,23 +131,39 @@ class AuthenticationListener(communicator.Receiver):
             print "Authenticated"
             print "User Token: " + str(my_authenticator.user_token)
             #add the newly authenticated user to the active_user_directory
-            client = ClientInfoObj(my_authenticator.user_id, self.addr[0])
-            self.global_info.active_user_directory[my_authenticator.user_token] = client
-            print self.global_info.active_user_directory[my_authenticator.user_token].print_out()
+            self.add_user_to_active_user_directory(my_authenticator.user_id, self.addr[0], my_authenticator.user_token)
             #log connection in table
-            inputf = open('user_connection_log.pkl', 'rb')
-            log = pickle.load(inputf)
-            log[message.split("|")[1]].insert(0,(target_host_name,datetime.datetime.utcnow()))
-            inputf.close()
-            output = open('user_connection_.pkl', 'wb')
-            pickle.dump(log,output)
-            output.close()
+            self.log_connection_in_table(message, self.addr[0])
         else:
             print "Unable to Authenticate"
         #TO-DO: consider creating a dispatcher object in the ServerOperator
         myAuthenticationDispatcher = communicator.Messenger(target_host_name=self.target_host_name,
                                                             target_port=self.global_info.target_comm.authentication_port)
         myAuthenticationDispatcher.send(encryt(str(my_authenticator.user_token) + "|" + my_authenticator.auth_result_message))
+
+    def add_user_to_active_user_directory(self, user_id, user_hostname, user_token):
+        client = ClientInfoObj(user_id, user_hostname)
+        self.global_info.active_user_directory[user_token] = client
+        print self.global_info.active_user_directory[user_token].print_out()
+
+    def log_connection_in_table(self, message, user_hostname):
+        try:
+            with open('user_connection_log.pkl'):
+                print "Found saved user database"
+                inputf = open('user_connection_log.pkl', 'rb')
+                log = pickle.load(inputf)
+                inputf.close()
+        except IOError:
+            print "No previous log was found. Creating a new one"
+            log = {'user': (('address', 'timestamp'))}
+            #output = open('user_connection_log.pkl', 'wb')
+            #pickle.dump(log, output)
+            #output.close()
+        email = message.split("|")[1]
+        log[email] = (user_hostname, datetime.datetime.utcnow())
+        output = open('user_connection_log.pkl', 'wb')
+        pickle.dump(log, output)
+        output.close()
 
     def run(self):
         self.setup()
