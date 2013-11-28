@@ -135,14 +135,14 @@ class AuthenticationListener(communicator.Receiver):
             client = ClientInfoObj(my_authenticator.user_id, self.addr[0])
             self.global_info.active_user_directory[my_authenticator.user_token] = client
             print self.global_info.active_user_directory[my_authenticator.user_token].print_out()
-			#log connection in table
-			inputf = open('user_connection_log.pkl', 'rb')
-			log = pickle.load(inputf)
-			log[message.split("|")[1]].insert(0,(target_host_name,datetime.datetime.utcnow()))
-			inputf.close()
-			output = open('user_connection_.pkl', 'wb')
-			pickle.dump(log,output)
-			output.close()
+            #log connection in table
+            inputf = open('user_connection_log.pkl', 'rb')
+            log = pickle.load(inputf)
+            log[message.split("|")[1]].insert(0,(target_host_name,datetime.datetime.utcnow()))
+            inputf.close()
+            output = open('user_connection_.pkl', 'wb')
+            pickle.dump(log,output)
+            output.close()
         else:
             print "Unable to Authenticate"
         #TO-DO: consider creating a dispatcher object in the ServerOperator
