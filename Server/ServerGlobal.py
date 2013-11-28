@@ -6,7 +6,7 @@ from communicator import CommUnit
 class ServerGlobal:
     def __init__(self):
         self.server_global_event_queue = Queue.Queue()
-        #self.server_global_directory = "D:\\dev\\one_dir\\one_dirs\\"
+        self.server_global_directory = "D:\\dev\\one_dir\\one_dirs\\"
         #Timur's Test
         self.server_global_directory = "C:\\Users\\Timur\\Desktop\\ServerFolder\\"
         #David's Test
