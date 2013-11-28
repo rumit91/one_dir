@@ -1,14 +1,8 @@
 (dp0
-S'david1'
+S'david'
 p1
-(S'pass2'
-p2
-I2
-tp3
-sS'david'
-p4
 (S'pass'
-p5
+p2
 I1
-tp6
+tp3
 s.
