@@ -75,8 +75,8 @@ class CreateAccountStrategy(AuthenticationStrategy):
     def add_new_user_to_database(self):
         #could fail after deleting 10 users...
         new_user_id = len(self.my_auth_helper.my_global.user_database)+10
-        password_id_tuple = (self.my_auth_helper.password, new_user_id)
-        self.my_auth_helper.my_global.user_database[self.my_auth_helper.email] = password_id_tuple
+        password_id_online_list = {self.my_auth_helper.password, new_user_id,1}
+        self.my_auth_helper.my_global.user_database[self.my_auth_helper.email] = password_id_online_list
         self.my_auth_helper.user_id = new_user_id
 
     def allocate_space_for_new_user(self):

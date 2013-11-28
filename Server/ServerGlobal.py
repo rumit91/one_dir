@@ -6,11 +6,11 @@ from communicator import CommUnit
 class ServerGlobal:
     def __init__(self):
         self.server_global_event_queue = Queue.Queue()
-        #self.server_global_directory = "D:\\dev\\one_dir\\one_dirs\\"
+        self.server_global_directory = "D:\\dev\\one_dir\\one_dirs\\"
         #Timur's Test
         #self.server_global_directory = "C:\\Users\\Timur\\Desktop\\ServerFolder\\"
         #David's Test
-        self.server_global_directory = "C:\\Users\\David\\Desktop\\ServerFolder\\"
+        #self.server_global_directory = "C:\\Users\\David\\Desktop\\ServerFolder\\"
         #Alex's Test
         #self.server_global_directory = "C:\\Users\\Chilaxus\\Desktop\\ServerFolder\\"
         self.global_cur_user_id = ''
