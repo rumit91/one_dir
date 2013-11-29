@@ -9,6 +9,7 @@ from Crypto.Cipher import AES
 import string
 import base64
 import time
+import datetime
 
 #import modules
 PADDING = '{'
@@ -52,11 +53,15 @@ class EventDispatcher(communicator.Messenger):
 
     def run(self):
         def worker():
-            while True:
-                item = self.global_info.client_global_event_queue.get()
-                self.do_work(item)
-                self.global_info.client_global_event_queue.task_done()
-
+            while self.global_info.sync_on and self.global_info.token != None:
+                if self.global_info.client_global_event_queue.empty():
+                    self.global_info.client_operator.my_update_dispatcher.set_token(self.global_info.token)
+                    self.global_info.client_operator.my_update_dispatcher.set_timestamp(str(datetime.datetime.now()))
+                    self.global_info.client_operator.my_update_dispatcher.request_update()
+                else:
+                    item = self.global_info.client_global_event_queue.get()
+                    self.do_work(item)
+                    self.global_info.client_global_event_queue.task_done()
         self.set_num_worker_threads(1)
         for i in range(self.num_worker_threads):
             t = Thread(target=worker())

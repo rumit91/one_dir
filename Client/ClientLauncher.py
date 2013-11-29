@@ -142,13 +142,9 @@ def toggle_sync(client_global):
     if client_global.sync_on:
         #send a message to turn sync off
         print "Turning sync off"
-        sync_off_event = "~SYNCOFF~|" + str(datetime.datetime.now())
-        client_global.client_global_event_queue.put(sync_off_event)
         client_global.sync_on = False
     else:
         print "Turning sync on"
-        sync_on_event = "~SYNCON~|" + str(datetime.datetime.now())
-        client_global.client_global_event_queue.put(sync_on_event)
         client_global.sync_on = True
 
 
