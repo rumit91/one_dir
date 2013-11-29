@@ -7,6 +7,7 @@ class ClientGlobal:
     def __init__(self):
         self.client_global_event_queue = Queue.Queue()
         self.client_global_update_queue = Queue.Queue()
+        self.client_global_share_queue = Queue.Queue()
         #self.client_global_directory = ""
         #Timur's Test
         #self.client_global_directory = "C:\\Users\\Timur\\Desktop\\OneDir"
@@ -16,6 +17,7 @@ class ClientGlobal:
         #self.client_global_directory = "C:\Users\David\Desktop\OneDir1"
         #Alex's Test
         #self.client_global_directory = "C:\\Users\\Chilaxus\\Desktop\\OneDir"
+        self.client_global_directory_actual = self.client_global_directory
         self.email = ""
         self.password = ""
         self.sync_on = True

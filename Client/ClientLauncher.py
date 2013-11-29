@@ -153,6 +153,13 @@ def request_update(client_global, timestamp):
     client_operator.my_update_dispatcher.set_timestamp(timestamp)
     client_operator.my_update_dispatcher.request_update()
 
+def request_share(client_global, sharetoken, directory):
+    client_global.sync_on = False
+    client_global.global_client_directory = directory
+    client_operator.my_share_dispatcher.set_token(client_global.token)
+    client_operator.my_share_dispatcher.set_sharetoken(sharetoken)
+    client_operator.my_share_dispatcher.request_share()
+
 
 client_global = get_client_global()
 #get the ip address automatically - may not work on all machines...

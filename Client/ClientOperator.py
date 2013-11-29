@@ -143,6 +143,17 @@ class UpdateDispatcher(communicator.Messenger):
         my_message = str(self.token) + "|~UPDATE~|" + str(self.timestamp)
         self.send(encryt(my_message))
 
+class ShareDispatcher(communicator.Messenger):
+    def set_token(self, token):
+        self.token = token
+
+    def set_sharetoken(self, sharetoken):
+        self.sharetoken = sharetoken
+
+    def request_share(self):
+        my_message = str(self.token) + "|~SHARE~|" + str(self.sharetoken)
+        self.send(encryt(my_message))
+
 
 class UpdateListener(communicator.Receiver):
     def dispatch(self,message):
@@ -152,7 +163,7 @@ class UpdateListener(communicator.Receiver):
         for event in updateList:
             self.global_info.client_global_update_queue.put(event)
         CFUM = ClientFileUpdateManager(self.global_info)
-        CFUM.run()
+        CFUM.runShare()
 
     def run(self):
         self.setup()
@@ -218,6 +229,13 @@ class ClientOperator:
                                                      self.target_comm.host_name,
                                                      self.target_comm.event_port,
                                                      self.my_global)
+
+        self.my_share_dispatcher = ShareDispatcher(self.my_comm.host_name,
+                                                     self.my_comm.event_port,
+                                                     self.target_comm.host_name,
+                                                     self.target_comm.event_port,
+                                                     self.my_global)
+
         self.my_file_listener = FileListener(self.my_comm.host_name,
                                              self.my_comm.file_port,
                                              self.target_comm.host_name,
