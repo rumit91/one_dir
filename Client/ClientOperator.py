@@ -109,13 +109,17 @@ class AuthenticationDispatcher(communicator.Messenger):
     def set_password(self, password):
         self.password = password
 
+    def set_new_password(self, new_password):
+        self.new_password = new_password
+
     def set_message(self, auth_message):
         self.action = auth_message.action
         self.email = auth_message.email
         self.password = auth_message.password
+        self.new_password = auth_message.new_password
 
     def authenticate(self):
-        my_message = str(self.action) + "|" + self.email + "|" + self.password
+        my_message = str(self.action) + "|" + self.email + "|" + self.password + "|" + self.new_password
         self.send(encryt(my_message))
 
 
@@ -259,10 +263,11 @@ class ClientOperator:
         self.client_operator_thread_5 = myThread(self.my_file_listener)
         self.client_operator_thread_5.start()
 
-    def set_auth_message_with_pieces(self, action, email, password):
+    def set_auth_message_with_pieces(self, action, email, password, new_password):
         self.my_authentication_dispatcher.set_action(action)
         self.my_authentication_dispatcher.set_email(email)
         self.my_authentication_dispatcher.set_password(password)
+        self.my_authentication_dispatcher.set_new_password(new_password)
 
     def set_auth_message_with_full_message(self, auth_message):
         self.my_authentication_dispatcher.set_message(auth_message)
