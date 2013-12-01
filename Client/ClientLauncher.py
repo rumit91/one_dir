@@ -222,7 +222,7 @@ client_directory_watcher_thread.start()
 
 action = "-1"
 while True:
-    action = raw_input("What would you like to do? (0 - update, 1 - logout, 2 - toggle sync, 3 - change password): ")
+    action = raw_input("What would you like to do? (0 - update, 1 - logout, 2 - toggle sync, 3 - change password, 4 - request shared files): ")
     if action == "0":
         #trigger a manual update
         print "Requesting an update..."
@@ -238,6 +238,11 @@ while True:
     elif action == "3":
         #change password
         change_password(client_global)
+    elif action == "4":
+        #change password
+        sharetoken = raw_input("Please enter the share token given to you: ")
+        directory = raw_input("Please enter the directory you would like to save the shared file to: ")
+        request_share(client_global, sharetoken, directory)
     else:
         action = "-1"
         print "Unable to process your input, please try again."
