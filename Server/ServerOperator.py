@@ -140,7 +140,7 @@ class AuthenticationListener(communicator.Receiver):
         else:
             print "Unable to Authenticate"
         #TO-DO: consider creating a dispatcher object in the ServerOperator
-        myAuthenticationDispatcher = communicator.Messenger(target_host_name=self.target_host_name,
+        myAuthenticationDispatcher = communicator.Messenger(target_host_name=self.global_info.active_user_directory[my_authenticator.user_token].host_name,
                                                             target_port=self.global_info.target_comm.authentication_port)
         myAuthenticationDispatcher.send(encryt(str(my_authenticator.user_token) + "|" + my_authenticator.auth_result_message))
 
