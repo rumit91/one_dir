@@ -71,8 +71,9 @@ class EventDispatcher(communicator.Messenger):
 
 class FileRequestListener(communicator.Receiver):
     def dispatch(self, message):
+        print ["New Encrypted Message: ", message]
         message = decrypt(message)
-        print ["New File Request: ", message]
+        print ["Decrypted File Request: ", message]
         my_client_file_update_manager = ClientFileUpdateManager(self.global_info)
         #set up the file dispatcher
         myFileDispatcher = FileDispatcher(target_host_name=self.target_host_name,
@@ -109,13 +110,17 @@ class AuthenticationDispatcher(communicator.Messenger):
     def set_password(self, password):
         self.password = password
 
+    def set_new_password(self, new_password):
+        self.new_password = new_password
+
     def set_message(self, auth_message):
         self.action = auth_message.action
         self.email = auth_message.email
         self.password = auth_message.password
+        self.new_password = auth_message.new_password
 
     def authenticate(self):
-        my_message = str(self.action) + "|" + self.email + "|" + self.password
+        my_message = str(self.action) + "|" + self.email + "|" + self.password + "|" + self.new_password
         self.send(encryt(my_message))
 
 
@@ -142,6 +147,7 @@ class UpdateDispatcher(communicator.Messenger):
     def request_update(self):
         my_message = str(self.token) + "|~UPDATE~|" + str(self.timestamp)
         self.send(encryt(my_message))
+
 
 class ShareDispatcher(communicator.Messenger):
     def set_token(self, token):
@@ -180,8 +186,9 @@ class FileRequestDispatcher(communicator.Messenger):
 
 class FileListener(communicator.Receiver):
     def dispatch(self, message):
+        print ["New Encrypted File: ", message]
         message = decrypt(message)
-        print ["New File: ", message]
+        print ["Decrypted File: ", message]
         print "WRITING"
         self.write_file(message)
         print "finished"
@@ -231,10 +238,10 @@ class ClientOperator:
                                                      self.my_global)
 
         self.my_share_dispatcher = ShareDispatcher(self.my_comm.host_name,
-                                                     self.my_comm.event_port,
-                                                     self.target_comm.host_name,
-                                                     self.target_comm.event_port,
-                                                     self.my_global)
+                                                   self.my_comm.event_port,
+                                                   self.target_comm.host_name,
+                                                   self.target_comm.event_port,
+                                                   self.my_global)
 
         self.my_file_listener = FileListener(self.my_comm.host_name,
                                              self.my_comm.file_port,
@@ -259,10 +266,11 @@ class ClientOperator:
         self.client_operator_thread_5 = myThread(self.my_file_listener)
         self.client_operator_thread_5.start()
 
-    def set_auth_message_with_pieces(self, action, email, password):
+    def set_auth_message_with_pieces(self, action, email, password, new_password):
         self.my_authentication_dispatcher.set_action(action)
         self.my_authentication_dispatcher.set_email(email)
         self.my_authentication_dispatcher.set_password(password)
+        self.my_authentication_dispatcher.set_new_password(new_password)
 
     def set_auth_message_with_full_message(self, auth_message):
         self.my_authentication_dispatcher.set_message(auth_message)

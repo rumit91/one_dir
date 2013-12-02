@@ -47,8 +47,9 @@ class myThread(threading.Thread):
 
 class EventListener(communicator.Receiver):
     def dispatch(self, message):
+        print ["New Encrypted Event: ", message]
         message = decrypt(message)
-        print ["New Event: ", message]
+        print ["Decrypted Event: ", message]
         self.global_info.server_global_event_queue.put(message)
 
     def run(self):
@@ -66,8 +67,9 @@ class FileRequestDispatcher(communicator.Messenger):
 
 class FileListener(communicator.Receiver):
     def dispatch(self, message):
+        print ["New Encrypted File: ", message]
         message = decrypt(message)
-        print ["New File: ", message]
+        print ["Decrypted File: ", message]
         print "WRITING"
         self.write_file(message)
         print "finished"
@@ -86,8 +88,9 @@ class FileListener(communicator.Receiver):
 
 class FileRequestListener(communicator.Receiver):
     def dispatch(self, message):
+        print "New Encrypted File Request: " + message
         message = decrypt(message)
-        print "New File Request: " + message
+        print "Decrypted File Request: " + message
         my_server_file_update_manager = ServerFileUpdateManager(self.global_info)
         #set up the file dispatcher
         message = message.split("|")

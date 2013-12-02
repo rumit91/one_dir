@@ -53,6 +53,38 @@ class LoginStrategy(AuthenticationStrategy):
         return "Login Strategy"
 
 
+class ChangePasswordStrategy(AuthenticationStrategy):
+    def authenticate(self):
+        self.my_auth_helper.my_global.user_database = self.get_user_database()
+        if self.my_auth_helper.my_global.user_database[self.my_auth_helper.email][0] == self.my_auth_helper.password:
+            #change the password
+            self.my_auth_helper.my_global.user_database[self.my_auth_helper.email][0] = self.my_auth_helper.new_password
+            self.my_auth_helper.auth_result_message = "Password changed."
+            print self.my_auth_helper.auth_result_message
+            self.pickle_user_database()
+            self.get_user_token()
+            return self.get_user_token()
+        else:
+            self.my_auth_helper.auth_result_message = "The current password is incorrect."
+            print self.my_auth_helper.auth_result_message
+        return -1
+
+    def get_name(self):
+        return "Change Password Strategy"
+
+    def pickle_user_database(self):
+        output = open('user_database.pkl', 'wb')
+        pickle.dump(self.my_auth_helper.my_global.user_database, output)
+        output.close()
+
+    def get_user_token(self):
+        self.my_auth_helper.acquire_user_id()
+        for token, client_info in self.my_auth_helper.my_global.active_user_directory.items():
+            if client_info.user_id == self.my_auth_helper.user_id:
+                return token
+
+
+
 class CreateAccountStrategy(AuthenticationStrategy):
     def authenticate(self):
         self.my_auth_helper.my_global.user_database = self.get_user_database()
@@ -99,6 +131,7 @@ class AuthenticationHelper:
         self.action = int(message[0])
         self.email = message[1]
         self.password = message[2]
+        self.new_password = message[3]
         self.user_hostname = user_hostname
         self.user_id = -1
         self.user_token = -1
@@ -116,6 +149,8 @@ class AuthenticationHelper:
             my_strategy = LoginStrategy(self)
         elif int(self.action) == 1:
             my_strategy = CreateAccountStrategy(self)
+        elif int(self.action) == 2:
+            my_strategy = ChangePasswordStrategy(self)
         #print my_strategy.get_name()
         self.user_token = my_strategy.authenticate()
 

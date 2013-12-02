@@ -26,6 +26,7 @@ class auth_message:
         self.action = "-1"
         self.email = ""
         self.password = ""
+        self.new_password = ""
 
 # on start up:
 # get the user's ip address
@@ -70,8 +71,12 @@ def manual_log_in(client_global, my_auth_message):
         if save == "y":
             client_global.email = my_auth_message.email
             client_global.password = my_auth_message.password
+            client_global.temp_email = my_auth_message.email
+            client_global.temp_password = my_auth_message.password
         elif save == "n":
             print "Please note that you will have to login again in the future."
+            client_global.temp_email = my_auth_message.email
+            client_global.temp_password = my_auth_message.password
         else:
             save = ""
             print "Unable to process your input, please try again."
@@ -153,12 +158,39 @@ def request_update(client_global, timestamp):
     client_operator.my_update_dispatcher.set_timestamp(timestamp)
     client_operator.my_update_dispatcher.request_update()
 
+
 def request_share(client_global, sharetoken, directory):
     client_global.sync_on = False
     client_global.global_client_directory = directory
     client_operator.my_share_dispatcher.set_token(client_global.token)
     client_operator.my_share_dispatcher.set_sharetoken(sharetoken)
     client_operator.my_share_dispatcher.request_share()
+
+
+def request_password_change(client_global, current_password, new_password):
+    password_message = auth_message()
+    password_message.action = 2
+    password_message.email = client_global.temp_email
+    password_message.password = current_password
+    password_message.new_password = new_password
+    print("Contacting server for a password change...")
+    # TO-DO: Might want to consider adding the client_operator as a parameter to this method
+    client_operator.set_auth_message_with_full_message(password_message)
+    client_operator.my_authentication_dispatcher.authenticate()
+
+
+def change_password(client_global):
+    client_global.token = None
+    current_password = raw_input("Please enter your current password: ")
+    new_password = raw_input('Please enter the new password: ')
+    request_password_change(client_global, current_password, new_password)
+    while client_global.token == None or client_global.token == -1:
+        if client_global.token != None and client_global.token == -1:
+            print "{0} Please try again.".format(client_global.auth_result_message)
+            client_global.token = None
+            client_global.auth_result_message = ''
+            change_password(client_global)
+
 
 
 client_global = get_client_global()
@@ -190,7 +222,7 @@ client_directory_watcher_thread.start()
 
 action = "-1"
 while True:
-    action = raw_input("What would you like to do? (0 - update, 1 - logout, 2 - toggle sync, 3 - change password): ")
+    action = raw_input("What would you like to do? (0 - update, 1 - logout, 2 - toggle sync, 3 - change password, 4 - request shared files): ")
     if action == "0":
         #trigger a manual update
         print "Requesting an update..."
@@ -205,7 +237,12 @@ while True:
         toggle_sync(client_global)
     elif action == "3":
         #change password
-        print "Changing passwords is not currently possible."
+        change_password(client_global)
+    elif action == "4":
+        #change password
+        sharetoken = raw_input("Please enter the share token given to you: ")
+        directory = raw_input("Please enter the directory you would like to save the shared file to: ")
+        request_share(client_global, sharetoken, directory)
     else:
         action = "-1"
         print "Unable to process your input, please try again."

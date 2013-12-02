@@ -10,13 +10,14 @@ class ServerGlobal:
         #Timur's Test
         #self.server_global_directory = "C:\\Users\\Timur\\Desktop\\ServerFolder\\"
         #David's Test
-        self.server_global_directory = "C:\\Users\\David\\Desktop\\ServerFolder\\"
+        #self.server_global_directory = "C:\\Users\\David\\Desktop\\ServerFolder\\"
         #Alex's Test
         #self.server_global_directory = "C:\\Users\\Chilaxus\\Desktop\\ServerFolder\\"
+        self.server_global_directory = "C:\\Users\\Alex Qu\\Desktop\\ServerFolder\\"
         self.global_cur_user_id = ''
         self.global_cur_src_path = ''
         self.server_operator = None
-        self.my_host_name = '192.168.1.104'
+        self.my_host_name = '10.0.0.13'
         self.my_event_port = 22345
         self.my_file_request_port = 22346
         self.my_file_port = 22347
@@ -26,7 +27,7 @@ class ServerGlobal:
                                 self.my_file_request_port,
                                 self.my_file_port,
                                 self.my_authentication_port)
-        self.target_host_name = '192.168.1.104'
+        self.target_host_name = '10.0.0.13'
         self.target_event_port = 12345
         self.target_file_request_port = 12346
         self.target_file_port = 12347
