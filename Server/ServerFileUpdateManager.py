@@ -32,7 +32,12 @@ class ServerFileUpdateManager():
         elif event == "~SHARE~":
             #Need to add some way of verifying that the share token is correct
             #Issue arises when user sharing isn't logged in
-            #self.send_update_list("2010-11-18 12:29:15.998000", sharetoken)
+            user_id = self.get_user_id_from_sharetoken(item[2])
+            self.global_info.global_cur_user_id = str(user_id)
+            self.send_update_list("2010-11-18 12:29:15.998000", token)
+            print "Share Logic"
+        elif event == "~SHARETOGGLE~":
+            self.toggle_sharetoken(item[2], token)
             print "Share Logic"
         else:
             with open(self.global_info.server_global_directory + self.global_info.global_cur_user_id + "\\EventLog.txt", "a") as f:
@@ -165,6 +170,16 @@ class ServerFileUpdateManager():
         except:
             content = ""
         return content
+
+    def toggle_sharetoken(self, sharetoken, token):
+        if sharetoken == "OFF":
+            self.global_info.active_user_directory[token].sharetoken = None
+        else:
+            self.global_info.active_user_directory[token].sharetoken = sharetoken
+
+    def get_user_id_from_sharetoken(self, sharetoken):
+        #INCLUDE LOGIC TO FIND user_id based on sharetoken
+        return
 
     def requestFile(self, src_path, token):
         self.global_info.server_operator.request_file(src_path, token)

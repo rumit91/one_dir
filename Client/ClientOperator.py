@@ -160,6 +160,11 @@ class ShareDispatcher(communicator.Messenger):
         my_message = str(self.token) + "|~SHARE~|" + str(self.sharetoken)
         self.send(encryt(my_message))
 
+    def toggle_share(self):
+        my_message = str(self.token) + "|~SHARETOGGLE~|" + str(self.sharetoken)
+        self.send(encryt(my_message))
+
+
 
 class UpdateListener(communicator.Receiver):
     def dispatch(self,message):

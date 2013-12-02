@@ -145,7 +145,6 @@ def process_user_input(client_global):
 def toggle_sync(client_global):
     print "About to toggle sync"
     if client_global.sync_on:
-        #send a message to turn sync off
         print "Turning sync off"
         client_global.sync_on = False
     else:
@@ -158,6 +157,10 @@ def request_update(client_global, timestamp):
     client_operator.my_update_dispatcher.set_timestamp(timestamp)
     client_operator.my_update_dispatcher.request_update()
 
+def toggle_share(client_global, sharetoken):
+    client_operator.my_share_dispatcher.set_token(client_global.token)
+    client_operator.my_share_dispatcher.set_sharetoken(sharetoken)
+    client_operator.my_share_dispatcher.toggle_share()
 
 def request_share(client_global, sharetoken, directory):
     client_global.sync_on = False
@@ -222,7 +225,7 @@ client_directory_watcher_thread.start()
 
 action = "-1"
 while True:
-    action = raw_input("What would you like to do? (0 - update, 1 - logout, 2 - toggle sync, 3 - change password, 4 - request shared files): ")
+    action = raw_input("What would you like to do? (0 - update, 1 - logout, 2 - toggle sync, 3 - change password, 4- toggle share 5 - request shared files): ")
     if action == "0":
         #trigger a manual update
         print "Requesting an update..."
@@ -239,6 +242,9 @@ while True:
         #change password
         change_password(client_global)
     elif action == "4":
+        sharetoken = raw_input("Please enter a sharetoken value or enter OFF to turn off sharing: ")
+        toggle_share(client_global, sharetoken)
+    elif action == "5":
         #change password
         sharetoken = raw_input("Please enter the share token given to you: ")
         directory = raw_input("Please enter the directory you would like to save the shared file to: ")
