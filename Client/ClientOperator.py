@@ -71,8 +71,9 @@ class EventDispatcher(communicator.Messenger):
 
 class FileRequestListener(communicator.Receiver):
     def dispatch(self, message):
+        print ["New Encrypted Message: ", message]
         message = decrypt(message)
-        print ["New File Request: ", message]
+        print ["Decrypted File Request: ", message]
         my_client_file_update_manager = ClientFileUpdateManager(self.global_info)
         #set up the file dispatcher
         myFileDispatcher = FileDispatcher(target_host_name=self.target_host_name,
@@ -185,8 +186,9 @@ class FileRequestDispatcher(communicator.Messenger):
 
 class FileListener(communicator.Receiver):
     def dispatch(self, message):
+        print ["New Encrypted File: ", message]
         message = decrypt(message)
-        print ["New File: ", message]
+        print ["Decrypted File: ", message]
         print "WRITING"
         self.write_file(message)
         print "finished"

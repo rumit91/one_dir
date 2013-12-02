@@ -9,7 +9,7 @@ aI0
 asS'david'
 p4
 (lp5
-S'test'
+S'pass'
 p6
 aI1
 aI0
