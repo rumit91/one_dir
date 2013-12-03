@@ -191,9 +191,12 @@ def change_password(client_global):
         if client_global.token != None and client_global.token == -1:
             print "{0} Please try again.".format(client_global.auth_result_message)
             client_global.token = None
+            client_global.password = ''
+            client_global.temp_password = ''
             client_global.auth_result_message = ''
             change_password(client_global)
-
+    if client_global.token is not None or client_global.token is not -1:
+        print "Password Changed."
 
 def set_host_names(client_global):
     print "Welcome to OneDir"
@@ -268,6 +271,8 @@ while client_global.token == None or client_global.token == -1:
     if client_global.token != None and client_global.token == -1:
         print "{0} Please try again.".format(client_global.auth_result_message)
         client_global.token = None
+        client_global.password = ''
+        client_global.temp_password = ''
         client_global.auth_result_message = ''
         process_user_input(client_global)
 

@@ -138,7 +138,7 @@ class AuthenticationListener(communicator.Receiver):
         message = message.split("|")
         self.global_info.token = int(message[0])
         self.global_info.auth_result_message = message[1]
-        print message
+        #print message
 
     def run(self):
         self.setup()

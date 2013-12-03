@@ -124,10 +124,11 @@ class FileDispatcher(communicator.Messenger):
 
 class AuthenticationListener(communicator.Receiver):
     def dispatch(self, message):
+        client_host_name = self.addr[0]
         print "New encrypted Auth Request received: " + message
         message = decrypt(message)
         print "Decrpted Auth Request: " + message
-        my_authenticator = AuthenticationHelper(self.global_info, message, self.addr[0])
+        my_authenticator = AuthenticationHelper(self.global_info, message, client_host_name)
         my_authenticator.print_out()
         my_authenticator.authenticate()
         if my_authenticator.user_token != -1:
@@ -139,8 +140,9 @@ class AuthenticationListener(communicator.Receiver):
             self.log_connection_in_table(message, self.addr[0])
         else:
             print "Unable to Authenticate"
-        #TO-DO: consider creating a dispatcher object in the ServerOperator
-        myAuthenticationDispatcher = communicator.Messenger(target_host_name=self.global_info.active_user_directory[my_authenticator.user_token].host_name,
+        # TO-DO: consider creating a dispatcher object in the ServerOperator
+        # make sure we send it back to the user who sent us the auth request
+        myAuthenticationDispatcher = communicator.Messenger(target_host_name=client_host_name,
                                                             target_port=self.global_info.target_comm.authentication_port)
         myAuthenticationDispatcher.send(encryt(str(my_authenticator.user_token) + "|" + my_authenticator.auth_result_message))
 
