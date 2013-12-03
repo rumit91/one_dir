@@ -42,7 +42,8 @@ class ClientGlobal:
                                 self.my_file_port,
                                 self.my_authentication_port,
                                 self.my_update_port)
-        self.target_host_name = '192.168.56.1'
+        #self.target_host_name = '192.168.56.1'
+        self.target_host_name = ''
         self.target_event_port = 22345
         self.target_file_request_port = 22346
         self.target_file_port = 22347

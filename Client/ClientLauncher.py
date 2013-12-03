@@ -111,6 +111,23 @@ def send_auth_message_to_server(my_auth_message):
     client_operator.my_authentication_dispatcher.authenticate()
 
 
+def set_host_names(client_global):
+    print "Welcome to OneDir"
+    try:
+        #get the ip address automatically - may not work on all machines...
+        client_global.my_host_name = socket.gethostbyname(socket.getfqdn())
+    except:
+        client_global.my_host_name = raw_input("Please enter the your ip address: ")
+    if client_global.target_host_name == "":
+        client_global.target_host_name = raw_input("Please enter the server's ip address: ")
+    client_global.my_comm.host_name = client_global.my_host_name
+    client_global.target_comm.host_name = client_global.target_host_name
+    print client_global.my_host_name
+    print client_global.target_host_name
+    print client_global.my_comm.host_name
+    print client_global.target_comm.host_name
+
+
 def process_user_input(client_global):
     if client_global.email == "":
         my_auth_message = auth_message()
@@ -197,8 +214,7 @@ def change_password(client_global):
 
 
 client_global = get_client_global()
-#get the ip address automatically - may not work on all machines...
-#client_global.my_host_name = socket.gethostbyname(socket.getfqdn())
+set_host_names(client_global)
 client_operator = ClientOperator.ClientOperator(client_global.my_comm, client_global.target_comm, client_global)
 client_global.client_operator = client_operator
 client_operator.run()
