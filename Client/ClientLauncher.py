@@ -113,11 +113,7 @@ def send_auth_message_to_server(my_auth_message):
 
 def set_host_names(client_global):
     print "Welcome to OneDir"
-    try:
-        #get the ip address automatically - may not work on all machines...
-        client_global.my_host_name = socket.gethostbyname(socket.getfqdn())
-    except:
-        client_global.my_host_name = raw_input("Please enter the your ip address: ")
+    client_global.my_host_name = raw_input("Please enter the your ip address: ")
     if client_global.target_host_name == "":
         client_global.target_host_name = raw_input("Please enter the server's ip address: ")
     client_global.my_comm.host_name = client_global.my_host_name

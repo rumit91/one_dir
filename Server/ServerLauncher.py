@@ -60,20 +60,16 @@ def ask_to_reset():
 
 
 def confirm_host_name(server_global):
-    try:
-        #get the ip address automatically - may not work on all machines...
-        server_global.my_host_name = socket.gethostbyname(socket.getfqdn())
-    except:
-        action = "-1"
-        while action == "-1":
-            action = raw_input("The current server ip address is {0}. Is this correct? (y or n): ".format(server_global.my_host_name))
-            if action == 'y':
-                print "Continuing..."
-            elif action == 'n':
-                server_global.my_host_name = raw_input("Please enter the server ip address: ")
-            else:
-                action = '-1'
-                print "Unable to process your input, please try again."
+    action = "-1"
+    while action == "-1":
+        action = raw_input("The current server ip address is {0}. Is this correct? (y or n): ".format(server_global.my_host_name))
+        if action == 'y':
+            print "Continuing..."
+        elif action == 'n':
+            server_global.my_host_name = raw_input("Please enter the server ip address: ")
+        else:
+            action = '-1'
+            print "Unable to process your input, please try again."
     server_global.my_comm.host_name = server_global.my_host_name
 
 

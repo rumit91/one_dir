@@ -17,7 +17,7 @@ class ServerGlobal:
         self.global_cur_user_id = ''
         self.global_cur_src_path = ''
         self.server_operator = None
-        self.my_host_name = '172.27.99.158'
+        self.my_host_name = '172.25.109.165'
         self.my_event_port = 22345
         self.my_file_request_port = 22346
         self.my_file_port = 22347
