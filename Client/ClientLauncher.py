@@ -111,19 +111,6 @@ def send_auth_message_to_server(my_auth_message):
     client_operator.my_authentication_dispatcher.authenticate()
 
 
-def set_host_names(client_global):
-    print "Welcome to OneDir"
-    client_global.my_host_name = raw_input("Please enter the your ip address: ")
-    if client_global.target_host_name == "":
-        client_global.target_host_name = raw_input("Please enter the server's ip address: ")
-    client_global.my_comm.host_name = client_global.my_host_name
-    client_global.target_comm.host_name = client_global.target_host_name
-    print client_global.my_host_name
-    print client_global.target_host_name
-    print client_global.my_comm.host_name
-    print client_global.target_comm.host_name
-
-
 def process_user_input(client_global):
     if client_global.email == "":
         my_auth_message = auth_message()
@@ -206,6 +193,51 @@ def change_password(client_global):
             client_global.token = None
             client_global.auth_result_message = ''
             change_password(client_global)
+
+
+def set_host_names(client_global):
+    print "Welcome to OneDir"
+    set_my_host_name(client_global)
+    set_target_host_name(client_global)
+    #print client_global.my_host_name
+    #print client_global.target_host_name
+    #print client_global.my_comm.host_name
+    #print client_global.target_comm.host_name
+
+
+def set_my_host_name(client_global):
+    if client_global.my_host_name == "":
+        client_global.my_host_name = raw_input("Please enter the your ip address: ")
+    else:
+        action = "-1"
+        while action == "-1":
+            action = raw_input("Your current ip address is set to {0}. Is this correct? (y or n): ".format(client_global.my_host_name))
+            if action == 'y':
+                print "Continuing..."
+            elif action == 'n':
+                client_global.my_host_name = raw_input("Please enter your ip address: ")
+            else:
+                action = '-1'
+                print "Unable to process your input, please try again."
+    client_global.my_comm.host_name = client_global.my_host_name
+
+
+def set_target_host_name(client_global):
+    if client_global.target_host_name == "":
+        client_global.target_host_name = raw_input("Please enter the server's ip address: ")
+    else:
+        action = "-1"
+        while action == "-1":
+            action = raw_input("The current server ip address is {0}. Is this correct? (y or n): ".format(client_global.target_host_name))
+            if action == 'y':
+                print "Continuing..."
+            elif action == 'n':
+                client_global.target_host_name = raw_input("Please enter the server ip address: ")
+            else:
+                action = '-1'
+                print "Unable to process your input, please try again."
+
+    client_global.target_comm.host_name = client_global.target_host_name
 
 
 def confirm_client_directory(client_global):
