@@ -214,7 +214,7 @@ while client_global.token == None or client_global.token == -1:
         process_user_input(client_global)
 
 print '{0} About to request updates from server.'.format(client_global.auth_result_message)
-request_update(client_global, "2013-11-16 16:36:39.753000")
+request_update(client_global, client_global.lastupdate)
 
 #print "WAITING 10 SECONDS TO START DIRECTORY WATCHER AFTER UPDATING ENDS"
 #time.sleep(10)
@@ -229,7 +229,7 @@ while True:
     if action == "0":
         #trigger a manual update
         print "Requesting an update..."
-        request_update(client_global, str(datetime.datetime.now()))
+        request_update(client_global, client_global.lastupdate)
     elif action == "1":
         #logout
         os.remove("client_global.pkl")

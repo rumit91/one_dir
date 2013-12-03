@@ -23,6 +23,7 @@ class ServerFileUpdateManager():
             t.start()
 
     def process_event_for_updates(self, item):
+        print item
         item = item.split("|")
         event = item[1]
         token = int(item[0])

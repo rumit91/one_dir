@@ -12,12 +12,12 @@ class ClientGlobal:
         #Timur's Test
         #self.client_global_directory = "C:\\Users\\Timur\\Desktop\\OneDir"
         #David's Test
-        #self.client_global_directory = "C:\\Users\\David\\Desktop\\OneDir"
+        self.client_global_directory = "C:\\Users\\David\\Desktop\\OneDir"
         #David's Test 2
         #self.client_global_directory = "C:\Users\David\Desktop\OneDir1"
         #Alex's Test
         #self.client_global_directory = "C:\\Users\\Chilaxus\\Desktop\\OneDir"
-        self.client_global_directory = "C:\\Users\\Alex Qu\\Desktop\\OneDir"
+        #self.client_global_directory = "C:\\Users\\Alex Qu\\Desktop\\OneDir"
         self.client_global_directory_actual = self.client_global_directory
         self.email = ""
         self.password = ""
@@ -30,7 +30,7 @@ class ClientGlobal:
         self.client_operator = None
         self.token = None
         self.auth_result_message = ''
-        self.my_host_name = '10.0.0.13'
+        self.my_host_name = '192.168.56.1'
         self.my_event_port = 12345
         self.my_file_request_port = 12346
         self.my_file_port = 12347
@@ -42,7 +42,7 @@ class ClientGlobal:
                                 self.my_file_port,
                                 self.my_authentication_port,
                                 self.my_update_port)
-        self.target_host_name = '10.0.0.13'
+        self.target_host_name = '192.168.56.1'
         self.target_event_port = 22345
         self.target_file_request_port = 22346
         self.target_file_port = 22347
@@ -52,6 +52,7 @@ class ClientGlobal:
                                     self.target_file_request_port,
                                     self.target_file_port,
                                     self.target_authentication_port)
+        self.lastupdate = "2010-11-18 12:29:15.998000"
 
     def __getstate__(self):
         odict = self.__dict__.copy()    # copy the dict since we change it

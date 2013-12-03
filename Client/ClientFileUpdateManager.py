@@ -2,6 +2,8 @@ __author__ = 'David'
 import time
 import os
 from threading import Thread
+import datetime
+import pickle
 #TO BE DELETED LATER
 
 class ClientFileUpdateManager():
@@ -11,25 +13,16 @@ class ClientFileUpdateManager():
 
     def run(self):
         def worker():
-            while not self.global_info.updating:
-                self.global_info.updating = True
-                item = self.global_info.client_global_update_queue.get()
-                self.process_event_for_updates(item)
-                self.global_info.client_global_update_queue.task_done()
-
-        for i in range(1):
-            t = Thread(target=worker())
-            t.daemon = True
-            t.start()
-
-    def runShare(self):
-        def worker():
             while not self.global_info.client_global_update_queue.empty():
+                print self.global_info.client_global_update_queue
                 while not self.global_info.updating:
                     self.global_info.updating = True
                     item = self.global_info.client_global_update_queue.get()
                     self.process_event_for_updates(item)
                     self.global_info.client_global_update_queue.task_done()
+            self.global_info.lastupdate = str(datetime.datetime.now())
+            output = open('client_global.pkl', 'wb')
+            pickle.dump(self.global_info, output)
             self.global_info.sync_on = True
             self.global_info.client_global_directory = self.global_info.client_global_directory_actual
 

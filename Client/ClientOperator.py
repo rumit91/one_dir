@@ -10,6 +10,7 @@ import string
 import base64
 import time
 import datetime
+import pickle
 
 #import modules
 PADDING = '{'
@@ -48,20 +49,27 @@ class EventDispatcher(communicator.Messenger):
         self.num_worker_threads= num_worker_threads
 
     def do_work(self, event):
+        self.global_info.lastupdate = str(datetime.datetime.now())
+        output = open('client_global.pkl', 'wb')
+        pickle.dump(self.global_info, output)
         self.send(encryt(str(self.global_info.token) + "|" + event))
         print "sent an token + event"
 
     def run(self):
         def worker():
-            while self.global_info.sync_on and self.global_info.token != None:
-                if self.global_info.client_global_event_queue.empty():
-                    self.global_info.client_operator.my_update_dispatcher.set_token(self.global_info.token)
-                    self.global_info.client_operator.my_update_dispatcher.set_timestamp(str(datetime.datetime.now()))
-                    self.global_info.client_operator.my_update_dispatcher.request_update()
-                else:
-                    item = self.global_info.client_global_event_queue.get()
-                    self.do_work(item)
-                    self.global_info.client_global_event_queue.task_done()
+            while(True):
+                while self.global_info.sync_on and self.global_info.token != None:
+                    if self.global_info.client_global_event_queue.empty():
+                        """
+                        self.global_info.client_operator.my_update_dispatcher.set_token(self.global_info.token)
+                        self.global_info.client_operator.my_update_dispatcher.set_timestamp(str(datetime.datetime.now()))
+                        self.global_info.client_operator.my_update_dispatcher.request_update()
+                        time.sleep(1)
+                        """
+                    else:
+                        item = self.global_info.client_global_event_queue.get()
+                        self.do_work(item)
+                        self.global_info.client_global_event_queue.task_done()
         self.set_num_worker_threads(1)
         for i in range(self.num_worker_threads):
             t = Thread(target=worker())
@@ -170,11 +178,12 @@ class UpdateListener(communicator.Receiver):
     def dispatch(self,message):
         message = decrypt(message)
         print message
-        updateList = message.split("|")
-        for event in updateList:
-            self.global_info.client_global_update_queue.put(event)
-        CFUM = ClientFileUpdateManager(self.global_info)
-        CFUM.runShare()
+        if message != "":
+            updateList = message.split("|")
+            for event in updateList:
+                self.global_info.client_global_update_queue.put(event)
+            CFUM = ClientFileUpdateManager(self.global_info)
+            CFUM.run()
 
     def run(self):
         self.setup()
