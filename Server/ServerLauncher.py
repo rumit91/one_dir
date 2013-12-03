@@ -3,6 +3,9 @@ import ServerFileUpdateManager
 import ServerGlobal
 import ServerOperator
 import threading
+import os
+import pickle
+import socket
 
 
 class myThread(threading.Thread):
@@ -16,7 +19,82 @@ class myThread(threading.Thread):
         print "Ending"
 
 
+def create_user_database():
+    user_database = {'david': ['pass', 1,0], 'david1': ['pass2', 2,0]}
+    output = open('user_database.pkl', 'wb')
+    pickle.dump(user_database, output)
+    output.close()
+
+
+def create_user_connection_log():
+    ActiveUserLog = {'user' : (('address','timestamp'))}
+    output = open('user_connection_log.pkl', 'wb')
+    pickle.dump(ActiveUserLog, output)
+    output.close()
+
+
+def ask_to_reset():
+    action = "-1"
+    while action == "-1":
+        action = raw_input("Would you like to reset the server? (y or n): ")
+        if action == 'y':
+            print "Resetting..."
+            try:
+                os.remove("user_database.pkl")
+                print "Deleted the user database"
+            except:
+                print "Database is already removed"
+            try:
+                os.remove("user_connection_log.pkl")
+                print "Deleted the user connection log"
+            except:
+                print "User connection log is already removed"
+            create_user_database()
+            create_user_connection_log()
+            print "Reset complete."
+        elif action == 'n':
+            print "Continuing..."
+        else:
+            action = "-1"
+            print "Unable to process your input, please try again."
+
+
+def confirm_host_name(server_global):
+    try:
+        #get the ip address automatically - may not work on all machines...
+        server_global.my_host_name = socket.gethostbyname(socket.getfqdn())
+    except:
+        action = "-1"
+        while action == "-1":
+            action = raw_input("The current server ip address is {0}. Is this correct? (y or n): ".format(server_global.my_host_name))
+            if action == 'y':
+                print "Continuing..."
+            elif action == 'n':
+                server_global.my_host_name = raw_input("Please enter the server ip address: ")
+            else:
+                action = '-1'
+                print "Unable to process your input, please try again."
+    server_global.my_comm.host_name = server_global.my_host_name
+
+
+def confirm_server_directory(server_global):
+    action = "-1"
+    while action == "-1":
+        action = raw_input("The current directory is {0}. Is this correct? (y or n): ".format(server_global.server_global_directory))
+        if action == 'y':
+            print "Continuing..."
+        elif action == 'n':
+            server_global.server_global_directory = raw_input("Please enter the server directory: ")
+            print "Set the server directory to {0}".format(server_global.server_global_directory)
+        else:
+            action = '-1'
+            print "Unable to process your input, please try again."
+
+
+ask_to_reset()
 server_global = ServerGlobal.ServerGlobal()
+confirm_host_name(server_global)
+confirm_server_directory(server_global)
 server_operator = ServerOperator.ServerOperator(server_global.my_comm, server_global.target_comm, server_global)
 server_global.server_operator = server_operator
 server_file_update_manager = ServerFileUpdateManager.ServerFileUpdateManager(server_global)

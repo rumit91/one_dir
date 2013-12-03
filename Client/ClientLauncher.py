@@ -212,9 +212,23 @@ def change_password(client_global):
             change_password(client_global)
 
 
+def confirm_client_directory(client_global):
+    action = "-1"
+    while action == "-1":
+        action = raw_input("The current directory is {0}. Is this correct? (y or n): ".format(client_global.client_global_directory))
+        if action == 'y':
+            print "Continuing..."
+        elif action == 'n':
+            client_global.client_global_directory = raw_input("Please enter the client directory: ")
+            print "Set the client directory to {0}".format(client_global.client_global_directory)
+        else:
+            action = '-1'
+            print "Unable to process your input, please try again."
+
 
 client_global = get_client_global()
 set_host_names(client_global)
+confirm_client_directory(client_global)
 client_operator = ClientOperator.ClientOperator(client_global.my_comm, client_global.target_comm, client_global)
 client_global.client_operator = client_operator
 client_operator.run()
