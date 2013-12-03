@@ -34,6 +34,8 @@ class ServerFileUpdateManager():
             #Need to add some way of verifying that the share token is correct
             #Issue arises when user sharing isn't logged in
             user_id = self.get_user_id_from_sharetoken(item[2])
+            if user_id == -1:
+                return
             self.global_info.global_cur_user_id = str(user_id)
             self.send_update_list("2010-11-18 12:29:15.998000", token)
             print "Share Logic"
@@ -180,7 +182,11 @@ class ServerFileUpdateManager():
 
     def get_user_id_from_sharetoken(self, sharetoken):
         #INCLUDE LOGIC TO FIND user_id based on sharetoken
-        return
+        for key in self.global_info.active_user_directory:
+            if key.sharetoken != None:
+                if key.sharetoken == sharetoken:
+                    return key.user_id
+        return -1
 
     def requestFile(self, src_path, token):
         self.global_info.server_operator.request_file(src_path, token)
