@@ -57,6 +57,9 @@ class LoginStrategy(AuthenticationStrategy):
 class ChangePasswordStrategy(AuthenticationStrategy):
     def authenticate(self):
         self.my_auth_helper.my_global.user_database = self.get_user_database()
+        print self.my_auth_helper.my_global.user_database
+        print self.my_auth_helper.email
+        print self.my_auth_helper.password
         if self.my_auth_helper.my_global.user_database[self.my_auth_helper.email][0] == self.my_auth_helper.password:
             #change the password
             self.my_auth_helper.my_global.user_database[self.my_auth_helper.email][0] = self.my_auth_helper.new_password

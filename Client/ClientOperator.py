@@ -60,12 +60,10 @@ class EventDispatcher(communicator.Messenger):
             while(True):
                 while self.global_info.sync_on and self.global_info.token != None:
                     if self.global_info.client_global_event_queue.empty():
-                        """
                         self.global_info.client_operator.my_update_dispatcher.set_token(self.global_info.token)
                         self.global_info.client_operator.my_update_dispatcher.set_timestamp(str(datetime.datetime.now()))
                         self.global_info.client_operator.my_update_dispatcher.request_update()
-                        time.sleep(1)
-                        """
+                        time.sleep(5)
                     else:
                         item = self.global_info.client_global_event_queue.get()
                         self.do_work(item)
