@@ -64,13 +64,7 @@ class ServerFileUpdateManager():
             elif eventType == "FileMovedEvent":
                 print "delete file"
                 srcPath = self.getServerFilePathMoved(event)
-                try:
-                    if "." not in srcPath:
-                        os.rmdir(self.global_info.server_global_directory + self.global_info.global_cur_user_id + "\\OneDir\\" + srcPath)
-                    else:
-                        os.remove(self.global_info.server_global_directory + self.global_info.global_cur_user_id + "\\OneDir\\" + srcPath)
-                except:
-                    print "Error"
+                os.remove(self.global_info.server_global_directory + self.global_info.global_cur_user_id + "\\OneDir\\" + srcPath)
             elif eventType == "FileDeletedEvent":
                 print "delete file"
                 srcPath = self.getServerFilePath(event)
@@ -80,17 +74,13 @@ class ServerFileUpdateManager():
                     else:
                         os.remove(self.global_info.server_global_directory + self.global_info.global_cur_user_id + "\\OneDir\\" + srcPath)
                 except:
-                        print "Error"
+                    print "Error"
             elif eventType == "DirCreatedEvent":
                 print "create dir"
                 srcPath = self.getServerFilePath(event)
                 os.mkdir(self.global_info.server_global_directory + self.global_info.global_cur_user_id + "\\OneDir\\" + srcPath)
             elif eventType == "DirMovedEvent":
-                srcPath = self.getServerFilePathMoved(event)
-                try:
-                    os.rmdir(self.global_info.server_global_directory + self.global_info.global_cur_user_id + "\\OneDir\\" + srcPath)
-                except:
-                    print "Error"
+                print "TBD"
             #TBD
             elif eventType == "DirDeletedEvent":
                 srcPath = self.getServerFilePath(event)
@@ -98,7 +88,6 @@ class ServerFileUpdateManager():
                     os.rmdir(self.global_info.server_global_directory + self.global_info.global_cur_user_id + "\\OneDir\\" + srcPath)
                 except:
                     print "Error"
-                #DeleteDir
 
     """
     def test_process_events_for_updates(self, updateID):
