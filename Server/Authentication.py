@@ -6,6 +6,7 @@ import pickle
 from ClientInfoObj import ClientInfoObj
 from random import randint
 import os
+from sys import platform as _platform
 
 
 class AuthenticationStrategy:
@@ -115,11 +116,18 @@ class CreateAccountStrategy(AuthenticationStrategy):
         self.my_auth_helper.user_id = new_user_id
 
     def allocate_space_for_new_user(self):
-        folder_path = self.my_auth_helper.my_global.server_global_directory + "\\" + str(self.my_auth_helper.user_id)
+        slash_char = self.get_slash_char()
+        folder_path = self.my_auth_helper.my_global.server_global_directory + slash_char + str(self.my_auth_helper.user_id)
         os.mkdir(folder_path)
-        os.mkdir(folder_path + "\\OneDir")
-        event_log = open(folder_path + "\\" + 'EventLog.txt', 'wb')
+        os.mkdir(folder_path + slash_char + "OneDir")
+        event_log = open(folder_path + slash_char + 'EventLog.txt', 'wb')
         event_log.close()
+
+    def get_slash_char(self):
+        if _platform == "linux" or _platform == "linux2":
+            return "/"
+        elif _platform == "win32":
+            return "\\"
 
     def get_name(self):
         return "Create Account Strategy"

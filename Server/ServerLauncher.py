@@ -1,11 +1,13 @@
 __author__ = 'Timur'
 import ServerFileUpdateManager
+import LinuxServerFileUpdateManager
 import ServerGlobal
 import ServerOperator
 import threading
 import os
 import pickle
 import socket
+from sys import platform as _platform
 
 
 class myThread(threading.Thread):
@@ -93,7 +95,11 @@ confirm_host_name(server_global)
 confirm_server_directory(server_global)
 server_operator = ServerOperator.ServerOperator(server_global.my_comm, server_global.target_comm, server_global)
 server_global.server_operator = server_operator
-server_file_update_manager = ServerFileUpdateManager.ServerFileUpdateManager(server_global)
+
+if _platform == "linux" or _platform == "linux2":
+    server_file_update_manager = LinuxServerFileUpdateManager.LinuxServerFileUpdateManager(server_global)
+elif _platform == "win32":
+    server_file_update_manager = ServerFileUpdateManager.ServerFileUpdateManager(server_global)
 #For use of testing eventLog parsing
 #print server_file_update_manager.get_events_since_last_update("2013-11-10 11:58:48.335000")
 print 'about to run the server_operator'

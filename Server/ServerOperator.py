@@ -6,6 +6,7 @@ from ClientInfoObj import ClientInfoObj
 from ServerFileUpdateManager import ServerFileUpdateManager
 import socket
 import pickle
+from sys import platform as _platform
 
 from Crypto.Cipher import AES
 from Crypto import Random
@@ -22,6 +23,7 @@ EncodeAES = lambda c, s: base64.b64encode(c.encrypt(pad(s)))
 DecodeAES = lambda c, e: c.decrypt(base64.b64decode(e)).rstrip(PADDING)
 #set encryption/decryption variables
 private_key = "CS-3240-team-No8"
+
 
 def encryt(data):
     cipher = AES.new(private_key)
@@ -82,12 +84,19 @@ class FileListener(communicator.Receiver):
         print "finished"
 
     def write_file(self, message):
+        slash_char = self.get_slash_char()
         with open(self.global_info.server_global_directory +
-                          self.global_info.global_cur_user_id +
-                          "\\OneDir\\" +
+                          self.global_info.global_cur_user_id + slash_char +
+                          "OneDir" + slash_char +
                           self.global_info.global_cur_src_path,
                   "wb") as f:
             f.write(encryptFile(message))
+
+    def get_slash_char(self):
+        if _platform == "linux" or _platform == "linux2":
+            return "/"
+        elif _platform == "win32":
+            return "\\"
 
     def run(self):
         self.setup()
