@@ -81,6 +81,7 @@ class ClientFileUpdateManager():
             #TBD
         elif eventType == "DirDeletedEvent":
             print "delete dir"
+            os.rmdir(self.global_info.client_global_directory + srcPath)
             self.global_info.updating = False
             #DeleteDir
 

@@ -77,6 +77,7 @@ class ServerFileUpdateManager():
                 print "TBD"
             #TBD
             elif eventType == "DirDeletedEvent":
+                os.rmdir(self.global_info.server_global_directory + self.global_info.global_cur_user_id + "\\OneDir\\" + srcPath)
                 print "delete dir"
                 #DeleteDir
 
