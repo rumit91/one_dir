@@ -189,6 +189,7 @@ def request_password_change(client_global, current_password, new_password):
 
 
 def change_password(client_global):
+    client_global.sync_on = False
     client_global.token = None
     current_password = raw_input("Please enter your current password: ")
     new_password = raw_input('Please enter the new password: ')
@@ -203,6 +204,7 @@ def change_password(client_global):
             change_password(client_global)
     if client_global.token is not None or client_global.token is not -1:
         print "Password Changed."
+        client_global.sync_on = True
 
 def set_host_names(client_global):
     print "Welcome to OneDir"
