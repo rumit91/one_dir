@@ -213,6 +213,7 @@ class FileListener(communicator.Receiver):
                   "wb") as f:
             f.write(message)
         self.global_info.updating = False
+        print self.global_info.updating
 
     def run(self):
         self.setup()

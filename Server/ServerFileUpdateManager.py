@@ -193,9 +193,9 @@ class ServerFileUpdateManager():
     def get_user_id_from_sharetoken(self, sharetoken):
         #INCLUDE LOGIC TO FIND user_id based on sharetoken
         for key in self.global_info.active_user_directory:
-            if key.sharetoken != None:
-                if key.sharetoken == sharetoken:
-                    return key.user_id
+            if self.global_info.active_user_directory[key].sharetoken != None:
+                if self.global_info.active_user_directory[key].sharetoken == sharetoken:
+                    return self.global_info.active_user_directory[key].user_id
         return -1
 
     def requestFile(self, src_path, token):

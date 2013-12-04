@@ -14,12 +14,14 @@ class ClientFileUpdateManager():
     def run(self):
         def worker():
             while not self.global_info.client_global_update_queue.empty():
-                print self.global_info.client_global_update_queue
                 while not self.global_info.updating:
                     self.global_info.updating = True
                     item = self.global_info.client_global_update_queue.get()
                     self.process_event_for_updates(item)
-                    self.global_info.client_global_update_queue.task_done()
+                    if self.global_info.client_global_update_queue.empty():
+                        break
+                    #self.global_info.client_global_update_queue.task_done()
+            print "Finished Updating"
             self.global_info.lastupdate = str(datetime.datetime.now())
             output = open('client_global.pkl', 'wb')
             pickle.dump(self.global_info, output)
@@ -32,6 +34,10 @@ class ClientFileUpdateManager():
             t.start()
 
     def process_event_for_updates(self, item):
+        print "Event: " + item
+        if item == "":
+            self.global_info.updating = False
+            return
         eventType = self.getEventType(item)
         srcPath = self.getFilePath(item)
         #Call Correct Method Depending On Event Tye
