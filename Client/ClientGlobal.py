@@ -14,7 +14,7 @@ class ClientGlobal:
         #David's Test
         #self.client_global_directory = "C:\\Users\\David\\Desktop\\OneDir"
         #David's Test 2
-        self.client_global_directory = "C:\Users\David\Desktop\OneDir1"
+        self.client_global_directory = "C:\Users\David\Desktop\OneDir"
         #Alex's Test
         #self.client_global_directory = "C:\\Users\\Chilaxus\\Desktop\\OneDir"
         #self.client_global_directory = "C:\\Users\\Alex Qu\\Desktop\\OneDir"
@@ -31,7 +31,7 @@ class ClientGlobal:
         self.client_operator = None
         self.token = None
         self.auth_result_message = ''
-        self.my_host_name = '172.25.98.180'
+        self.my_host_name = '172.27.123.247'
         self.my_event_port = 12345
         self.my_file_request_port = 12346
         self.my_file_port = 12347
@@ -43,7 +43,7 @@ class ClientGlobal:
                                 self.my_file_port,
                                 self.my_authentication_port,
                                 self.my_update_port)
-        self.target_host_name = '172.25.98.180'
+        self.target_host_name = '172.27.122.81'
         self.my_event_port = 22345
         self.target_event_port = 22345
         self.target_file_request_port = 22346
