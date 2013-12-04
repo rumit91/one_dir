@@ -1,16 +1,2 @@
 (dp0
-S'testemail2'
-p1
-(lp2
-S'pass2'
-p3
-aI11
-aI1
-asS'testemail'
-p4
-(lp5
-S'test'
-p6
-aI10
-aI1
-as.
+.
