@@ -65,6 +65,11 @@ def manual_log_in(client_global, my_auth_message):
     print "Logging in:"
     my_auth_message.email = raw_input("Please enter your email address: ")
     my_auth_message.password = raw_input("Please enter your password: ")
+    client_global.email = my_auth_message.email
+    client_global.password = my_auth_message.password
+    client_global.temp_email = my_auth_message.email
+    client_global.temp_password = my_auth_message.password
+    '''
     save = ""
     while save == "":
         save = raw_input("Would you like your credentials to be saved (y or n): ")
@@ -80,6 +85,7 @@ def manual_log_in(client_global, my_auth_message):
         else:
             save = ""
             print "Unable to process your input, please try again."
+    '''
     send_auth_message_to_server(my_auth_message)
 
 
