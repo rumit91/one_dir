@@ -152,7 +152,6 @@ class UpdateDispatcher(communicator.Messenger):
 
     def request_update(self):
         my_message = str(self.token) + "|~UPDATE~|" + str(self.timestamp)
-        print my_message
         self.send(encryt(my_message))
 
 
