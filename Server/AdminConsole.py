@@ -190,7 +190,7 @@ def main():
             change_user_password(parse[1],parse[2])
         
         elif parse[0] == "removefiles":
-            view_user_files(parse[1],server_info.server_global_directory,True)
+            view_user_files(parse[1],True)
 
         elif parse[0] == "exit":
             print "exiting console"
