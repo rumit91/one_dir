@@ -25,6 +25,7 @@ class ClientGlobal:
         self.temp_email = ""
         self.temp_password = ""
         self.sync_on = True
+        self.auto_update = False
         self.updating = False
         self.client_global_file_ignore = ''
         self.global_cur_src_path = ''
