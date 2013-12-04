@@ -31,12 +31,6 @@ def encryt(data):
     encoded = EncodeAES(cipher, data)
     return encoded
 
-def encryptFile(message):
-    # passphrase MUST be 16, 24 or 32 bytes long, how can I do that ?
-    IV = Random.new().read(16)
-    aes = AES.new(private_key, AES.MODE_CFB, IV)
-    return base64.b64encode(aes.encrypt(message))
-
 def decrypt(encoded):
     cipher = AES.new(private_key)
     decoded = DecodeAES(cipher, encoded)
@@ -79,6 +73,7 @@ class FileListener(communicator.Receiver):
         print ["New Encrypted File: ", message]
         message = decrypt(message)
         print ["Decrypted File: ", message]
+        message = encryptFile(message)
         print "WRITING"
         self.write_file(message)
         print "finished"
@@ -90,7 +85,7 @@ class FileListener(communicator.Receiver):
                           "OneDir" + slash_char +
                           self.global_info.global_cur_src_path,
                   "wb") as f:
-            f.write(encryptFile(message))
+            f.write(message)
 
     def get_slash_char(self):
         if _platform == "linux" or _platform == "linux2":
@@ -135,6 +130,7 @@ class FileDispatcher(communicator.Messenger):
 
     def get_file(self):
         my_file = self.my_file_update_manager.get_file(self.token, self.my_file_path)
+        my_file = decryptFile(my_file)
         self.send(encryt(my_file))
 
 
@@ -246,4 +242,15 @@ class ServerOperator:
         my_update_dispatcher.send(encryt(updateListString))
         print "Sending Update List"
 
+privatekey = "Encryption_key_1"
+def encryptFile(message):
+    # passphrase MUST be 16, 24 or 32 bytes long, how can I do that ?
+    cipher = AES.new(privatekey)
+    # encode a string
+    encoded = EncodeAES(cipher, message)
+    return encoded
 
+def decryptFile(encrypted):
+    cipher = AES.new(privatekey)
+    decoded = DecodeAES(cipher, encrypted)
+    return decoded

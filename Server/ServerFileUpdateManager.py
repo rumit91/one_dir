@@ -179,7 +179,7 @@ class ServerFileUpdateManager():
         try:
             with open(self.global_info.server_global_directory + str(self.global_info.active_user_directory[token].user_id) + "\\OneDir\\" + srcPath, 'rb') as f:
                 content = f.read()
-                content = self.decryptFile(content)
+                #content = self.decryptFile(content)
         except:
             content = ""
         return content
