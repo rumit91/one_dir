@@ -68,13 +68,7 @@ class ServerFileUpdateManager():
             elif eventType == "FileDeletedEvent":
                 print "delete file"
                 srcPath = self.getServerFilePath(event)
-                try:
-                    if "." not in srcPath:
-                        os.rmdir(self.global_info.server_global_directory + self.global_info.global_cur_user_id + "\\OneDir\\" + srcPath)
-                    else:
-                        os.remove(self.global_info.server_global_directory + self.global_info.global_cur_user_id + "\\OneDir\\" + srcPath)
-                except:
-                    print "Error"
+                os.remove(self.global_info.server_global_directory + self.global_info.global_cur_user_id + "\\OneDir\\" + srcPath)
             elif eventType == "DirCreatedEvent":
                 print "create dir"
                 srcPath = self.getServerFilePath(event)
@@ -83,11 +77,8 @@ class ServerFileUpdateManager():
                 print "TBD"
             #TBD
             elif eventType == "DirDeletedEvent":
-                srcPath = self.getServerFilePath(event)
-                try:
-                    os.rmdir(self.global_info.server_global_directory + self.global_info.global_cur_user_id + "\\OneDir\\" + srcPath)
-                except:
-                    print "Error"
+                print "delete dir"
+                #DeleteDir
 
     """
     def test_process_events_for_updates(self, updateID):
