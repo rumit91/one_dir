@@ -100,6 +100,7 @@ def automatic_log_in(client_global):
 def create_new_account(client_global, my_auth_message):
     print "Creating a new account:"
     my_auth_message.email = raw_input("Please enter an email address: ")
+    client_global.email = my_auth_message.email
     my_auth_message.password = 'x'
     password_confirmation = 'y'
     while my_auth_message.password != password_confirmation:
@@ -179,7 +180,8 @@ def request_share(client_global, sharetoken, directory):
 def request_password_change(client_global, current_password, new_password):
     password_message = auth_message()
     password_message.action = 2
-    password_message.email = client_global.temp_email
+    password_message.email = client_global.email
+    print client_global.email
     password_message.password = current_password
     password_message.new_password = new_password
     print("Contacting server for a password change...")
@@ -266,6 +268,16 @@ def confirm_client_directory(client_global):
             print "Unable to process your input, please try again."
 
 
+def toggle_auto_update(client_global):
+    print "About to toggle auto update"
+    if client_global.auto_update:
+        print "Turning auto update off"
+        client_global.auto_update = False
+    else:
+        print "Turning auto update on"
+        client_global.auto_update = True
+
+
 client_global = get_client_global()
 set_host_names(client_global)
 confirm_client_directory(client_global)
@@ -297,7 +309,7 @@ client_directory_watcher_thread.start()
 
 action = "-1"
 while True:
-    action = raw_input("What would you like to do? (0 - update, 1 - logout, 2 - toggle sync, 3 - change password, 4- toggle share 5 - request shared files): ")
+    action = raw_input("What would you like to do? (0 - update, 1 - logout, 2 - toggle sync, 3 - change password, 4- toggle share, 5 - request shared files, 6 - auto update): ")
     if action == "0":
         #trigger a manual update
         print "Requesting an update..."
@@ -321,6 +333,8 @@ while True:
         sharetoken = raw_input("Please enter the share token given to you: ")
         directory = raw_input("Please enter the directory you would like to save the shared file to: ")
         request_share(client_global, sharetoken, directory)
+    elif action == "6":
+        toggle_auto_update(client_global)
     else:
         action = "-1"
         print "Unable to process your input, please try again."
