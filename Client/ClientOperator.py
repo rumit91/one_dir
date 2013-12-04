@@ -62,7 +62,7 @@ class EventDispatcher(communicator.Messenger):
                     if self.global_info.client_global_event_queue.empty():
                         time.sleep(5)
                         self.global_info.client_operator.my_update_dispatcher.set_token(self.global_info.token)
-                        self.global_info.client_operator.my_update_dispatcher.set_timestamp(str(datetime.datetime.now()))
+                        self.global_info.client_operator.my_update_dispatcher.set_timestamp(str(self.global_info.lastupdate))
                         self.global_info.client_operator.my_update_dispatcher.request_update()
                     else:
                         item = self.global_info.client_global_event_queue.get()

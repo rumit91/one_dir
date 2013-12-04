@@ -38,7 +38,7 @@ class ClientFileUpdateManager():
     def process_event_for_updates(self, item):
         print "Event: " + item
         if item == "":
-            time.sleep(.5)
+            time.sleep(3)
             self.global_info.updating = False
             return
         eventType = self.getEventType(item)
