@@ -64,20 +64,40 @@ class ServerFileUpdateManager():
             elif eventType == "FileMovedEvent":
                 print "delete file"
                 srcPath = self.getServerFilePathMoved(event)
-                os.remove(self.global_info.server_global_directory + self.global_info.global_cur_user_id + "\\OneDir\\" + srcPath)
+                try:
+                    if "." not in srcPath:
+                        os.rmdir(self.global_info.server_global_directory + self.global_info.global_cur_user_id + "\\OneDir\\" + srcPath)
+                    else:
+                        os.remove(self.global_info.server_global_directory + self.global_info.global_cur_user_id + "\\OneDir\\" + srcPath)
+                except:
+                    print "Error"
             elif eventType == "FileDeletedEvent":
                 print "delete file"
                 srcPath = self.getServerFilePath(event)
-                os.remove(self.global_info.server_global_directory + self.global_info.global_cur_user_id + "\\OneDir\\" + srcPath)
+                try:
+                    if "." not in srcPath:
+                        os.rmdir(self.global_info.server_global_directory + self.global_info.global_cur_user_id + "\\OneDir\\" + srcPath)
+                    else:
+                        os.remove(self.global_info.server_global_directory + self.global_info.global_cur_user_id + "\\OneDir\\" + srcPath)
+                except:
+                        print "Error"
             elif eventType == "DirCreatedEvent":
                 print "create dir"
                 srcPath = self.getServerFilePath(event)
                 os.mkdir(self.global_info.server_global_directory + self.global_info.global_cur_user_id + "\\OneDir\\" + srcPath)
             elif eventType == "DirMovedEvent":
-                print "TBD"
+                srcPath = self.getServerFilePathMoved(event)
+                try:
+                    os.rmdir(self.global_info.server_global_directory + self.global_info.global_cur_user_id + "\\OneDir\\" + srcPath)
+                except:
+                    print "Error"
             #TBD
             elif eventType == "DirDeletedEvent":
-                print "delete dir"
+                srcPath = self.getServerFilePath(event)
+                try:
+                    os.rmdir(self.global_info.server_global_directory + self.global_info.global_cur_user_id + "\\OneDir\\" + srcPath)
+                except:
+                    print "Error"
                 #DeleteDir
 
     """
