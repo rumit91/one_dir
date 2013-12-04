@@ -7,7 +7,7 @@ class ClientGlobal:
     def __init__(self):
         self.client_global_event_queue = Queue.Queue()
         self.client_global_update_queue = Queue.Queue()
-        self.client_global_share_queue = Queue.Queue()
+        #self.client_global_share_queue = Queue.Queue()
         #self.client_global_directory = ""
         #Timur's Test
         #self.client_global_directory = "C:\\Users\\Timur\\Desktop\\OneDir"
@@ -19,6 +19,7 @@ class ClientGlobal:
         #self.client_global_directory = "C:\\Users\\Chilaxus\\Desktop\\OneDir"
         #self.client_global_directory = "C:\\Users\\Alex Qu\\Desktop\\OneDir"
         self.client_global_directory_actual = self.client_global_directory
+        self.client_global_share = ""
         self.email = ""
         self.password = ""
         self.temp_email = ""
@@ -64,7 +65,6 @@ class ClientGlobal:
         del odict['client_operator']
         del odict['client_global_event_queue']
         del odict['client_global_update_queue']
-        del odict['client_global_share_queue']
         del odict['temp_email']
         del odict['temp_password']
         return odict
@@ -73,7 +73,6 @@ class ClientGlobal:
         self.__dict__.update(dict)
         self.client_global_event_queue = Queue.Queue()
         self.client_global_update_queue = Queue.Queue()
-        self.client_global_share_queue = Queue.Queue()
         self.token = None
         self.sync_on = True
         self.updating = False

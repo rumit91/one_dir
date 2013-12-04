@@ -4,6 +4,7 @@ import os
 from threading import Thread
 import datetime
 import pickle
+import time
 #TO BE DELETED LATER
 
 class ClientFileUpdateManager():
@@ -22,11 +23,12 @@ class ClientFileUpdateManager():
                         break
                     #self.global_info.client_global_update_queue.task_done()
             print "Finished Updating"
-            self.global_info.lastupdate = str(datetime.datetime.now())
-            output = open('client_global.pkl', 'wb')
-            pickle.dump(self.global_info, output)
+            if self.global_info.client_global_directory == self.global_info.client_global_directory_actual:
+                self.global_info.lastupdate = str(datetime.datetime.now())
             self.global_info.sync_on = True
             self.global_info.client_global_directory = self.global_info.client_global_directory_actual
+            output = open('client_global.pkl', 'wb')
+            pickle.dump(self.global_info, output)
 
         for i in range(1):
             t = Thread(target=worker())
@@ -36,6 +38,7 @@ class ClientFileUpdateManager():
     def process_event_for_updates(self, item):
         print "Event: " + item
         if item == "":
+            time.sleep(.5)
             self.global_info.updating = False
             return
         eventType = self.getEventType(item)

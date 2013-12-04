@@ -170,7 +170,7 @@ def toggle_share(client_global, sharetoken):
 
 def request_share(client_global, sharetoken, directory):
     client_global.sync_on = False
-    client_global.global_client_directory = directory
+    client_global.client_global_directory = directory
     client_operator.my_share_dispatcher.set_token(client_global.token)
     client_operator.my_share_dispatcher.set_sharetoken(sharetoken)
     client_operator.my_share_dispatcher.request_share()
@@ -256,7 +256,8 @@ def confirm_client_directory(client_global):
         if action == 'y':
             print "Continuing..."
         elif action == 'n':
-            client_global.client_global_directory = raw_input("Please enter the client directory: ")
+            client_global.client_global_directory_actual = raw_input("Please enter the client directory: ")
+            client_global.client_global_directory = client_global.client_global_directory_actual
             print "Set the client directory to {0}".format(client_global.client_global_directory)
         else:
             action = '-1'

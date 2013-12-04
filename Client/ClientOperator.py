@@ -209,6 +209,7 @@ class FileListener(communicator.Receiver):
 
     def write_file(self, message):
         print message
+        print self.global_info.client_global_directory
         with open(self.global_info.client_global_directory + self.global_info.global_cur_src_path,
                   "wb") as f:
             f.write(message)
