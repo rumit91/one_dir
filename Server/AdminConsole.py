@@ -1,15 +1,21 @@
 __author__ = 'Kevin'
 
+import os, sys
+lib_path = os.path.abspath('../../../lib')
+sys.path.append(lib_path)
+
 import pickle
 import ServerGlobal
 import string
 import sys
 import os
 
+
 source_users = 'user_database.pkl'
 source_connections = 'user_connection_log.pkl'
 
-
+server_info = ServerGlobal.ServerGlobal()
+gpath = server_info.server_global_directory
 
 def load_users():
     global user_database
@@ -17,6 +23,7 @@ def load_users():
         with open('user_database.pkl'):
             print "Reading from database"
             user_database = pickle.load(open(source_users, 'rb'))
+		
     except IOError:
         print "No previous user database was found"
     
@@ -74,14 +81,30 @@ def change_user_password(user,npword):
         return True
     return False
 
-def view_user_files(user,path,remove):
+def view_user(user):
+    if user_database[user][2] == 1:
+        on = "ONLINE"
+    else:
+        on = "OFFLINE"
+    
+	print string.rjust(user,1), string.rjust(str(user_database[user][0]),2), string.rjust(str(user_database[user][1]),3),string.rjust(on,4)
+    view_user_files(user,False)
+
+def view_user_log(user):
+    if user_database[user] != None:
+        view_user(user)
+    f = open(gpath+str(user_database[2])+"\\EventLog.txt", "r")
+    f.read()
+    f.close()
+	
+def view_user_files(user,remove):
     load_users()
     if user_database[user] != None:
         print "Found user {}".format(user)
         id = user_database[user][1]
-        view_files(path+str(id)+'\\one_dir\\')
+        view_files(gpath+str(id)+'\\one_dir\\')
         if remove == True:
-            delete_user_files(path+str(id)+'\\one_dir\\')
+            delete_user_files(gpath+str(id)+'\\one_dir\\')
     else:
         print "user not found"
 			
@@ -113,14 +136,9 @@ def view_users():
     load_users()
     print string.rjust("username",1), string.rjust("password",2), string.rjust("id",3),string.rjust("online status",4)
     for i in user_database:
-        if user_database[i][2] == 1:
-            on = "ONLINE"
-        else:
-            on = "OFFLINE"
-        print string.rjust(i,1), string.rjust(str(user_database[i][0]),2), string.rjust(str(user_database[i][1]),3),string.rjust(on,4)
+        view_user(i)
 	
 def main():
-    server_info = ServerGlobal.ServerGlobal()
     print "OneDir Console v.9 \"help\" for usage information."
     
     
@@ -139,6 +157,14 @@ def main():
         elif parse[0] == "view":
             if parse[1] == "users":
                 view_users()
+            if parse[1] == "user":
+                if parse[2] == None:
+                    print "please specify a user"
+                else:
+                    if parse[2] == "log":
+                         view_user_log(parse[1])
+                    else:
+                        view_user(parse[2])
             elif parse[1] == "connections":
                 load_connection_history()
                 print connection_database
@@ -152,7 +178,7 @@ def main():
     
         elif parse[0] == "removeuser":
             if parse[2] == "-f":
-                view_user_files(parse[1],server_info.server_global_directory,True)
+                view_user_files(parse[1],True)
 				
             remove_user_from_db(parse[1])
         

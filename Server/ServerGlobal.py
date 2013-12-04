@@ -1,5 +1,6 @@
 __author__ = 'David'
 import Queue
+
 from communicator import CommUnit
 
 
