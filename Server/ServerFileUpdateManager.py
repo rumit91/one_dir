@@ -19,6 +19,7 @@ class ServerFileUpdateManager():
             while True:
                 item = self.global_info.server_global_event_queue.get()
                 self.process_event_for_updates(item)
+                time.sleep(1)
                 self.global_info.server_global_event_queue.task_done()
 
         for i in range(1):
