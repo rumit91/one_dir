@@ -8,6 +8,7 @@ import socket
 import pickle
 
 from Crypto.Cipher import AES
+from Crypto import Random
 import string
 import base64
 import time
@@ -27,6 +28,12 @@ def encryt(data):
     # encode a string
     encoded = EncodeAES(cipher, data)
     return encoded
+
+def encryptFile(message):
+    # passphrase MUST be 16, 24 or 32 bytes long, how can I do that ?
+    IV = Random.new().read(16)
+    aes = AES.new(private_key, AES.MODE_CFB, IV)
+    return base64.b64encode(aes.encrypt(message))
 
 def decrypt(encoded):
     cipher = AES.new(private_key)
@@ -80,7 +87,7 @@ class FileListener(communicator.Receiver):
                           "\\OneDir\\" +
                           self.global_info.global_cur_src_path,
                   "wb") as f:
-            f.write(message)
+            f.write(encryptFile(message))
 
     def run(self):
         self.setup()

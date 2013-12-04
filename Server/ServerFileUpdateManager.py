@@ -4,7 +4,11 @@ import datetime
 import os
 from threading import Thread
 import Queue
-
+from Crypto.Cipher import AES
+from Crypto import Random
+import string
+import base64
+private_key = "CS-3240-team-No8"
 
 class ServerFileUpdateManager():
     def __init__(self, global_info):
@@ -166,10 +170,16 @@ class ServerFileUpdateManager():
                     timestampList.append(event[:event.find("<")])
         return timestampList
 
+    def decryptFile(encrypted):
+        IV = Random.new().read(16)
+        aes = AES.new(private_key, AES.MODE_CFB, IV)
+        return aes.decrypt(base64.b64decode(encrypted))
+
     def get_file(self, token, srcPath):
         try:
             with open(self.global_info.server_global_directory + str(self.global_info.active_user_directory[token].user_id) + "\\OneDir\\" + srcPath, 'rb') as f:
                 content = f.read()
+                content = self.decryptFile(content)
         except:
             content = ""
         return content
@@ -193,3 +203,4 @@ class ServerFileUpdateManager():
 
     def getEventType(self, event):
         return event[event.find("<") + 1:event.find(": ")]
+
