@@ -172,12 +172,13 @@ class AuthenticationListener(communicator.Receiver):
                 inputf.close()
         except IOError:
             print "No previous log was found. Creating a new one"
-            log = {'user': (('address', 'timestamp'))}
+            log = {'timestamp': (('address', 'user'))}
             #output = open('user_connection_log.pkl', 'wb')
             #pickle.dump(log, output)
             #output.close()
         email = message.split("|")[1]
-        log[email] = (user_hostname, datetime.datetime.utcnow())
+        time = str(datetime.datetime.utcnow())
+        log[time] = (user_hostname, email)
         output = open('user_connection_log.pkl', 'wb')
         pickle.dump(log, output)
         output.close()

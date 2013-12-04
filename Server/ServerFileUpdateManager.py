@@ -28,8 +28,11 @@ class ServerFileUpdateManager():
             t.start()
 
     def process_event_for_updates(self, item):
-        print item
         item = item.split("|")
+        if item[0] == 'None' or item[1] == 'None' :
+		    return
+        print item
+        
         event = item[1]
         token = int(item[0])
         self.global_info.global_cur_user_id = str(self.global_info.active_user_directory[token].user_id)

@@ -47,10 +47,8 @@ def print_users():
         print k
 #L(1/2)    
 def print_connections():
-    for k,v in connection_database:
-        print k
-        for i,j in v:
-            print j[0],j[1] #print connection history in list
+    for k in connection_database:
+        print k, connection_database[k][0], connection_database[k][1] #print connection history in list
 
             
 def shell_mode():
@@ -64,7 +62,7 @@ def shell_mode():
 
 def remove_user_from_db(user):
     load_users()
-    if user_database[user] != None:
+    if user in user_database:
         del user_database[user]
         save_users()
         print "User \'{}\' removed".format(user)
@@ -74,7 +72,7 @@ def remove_user_from_db(user):
 #K    
 def change_user_password(user,npword):
     load_users()
-    if user_database[user] != None:
+    if user in user_database:
         user_database[user][0] = npword
         save_users()
         print "{}'s password changed!".format(user)
@@ -87,28 +85,30 @@ def view_user(user):
     else:
         on = "OFFLINE"
     
-	print string.rjust(user,1), string.rjust(str(user_database[user][0]),2), string.rjust(str(user_database[user][1]),3),string.rjust(on,4)
+    print string.rjust(user,1), string.rjust(str(user_database[user][0]),2), string.rjust(str(user_database[user][1]),3),string.rjust(on,4)
     view_user_files(user,False)
 
 def view_user_log(user):
-    if user_database[user] != None:
+    if user in user_database:
         view_user(user)
-    f = open(gpath+str(user_database[2])+"\\EventLog.txt", "r")
+    f = open(gpath+str(user_database[user][1])+"\\EventLog.txt", "r")
     f.read()
     f.close()
 	
 def view_user_files(user,remove):
     load_users()
-    if user_database[user] != None:
+    if user in user_database:
         print "Found user {}".format(user)
         id = user_database[user][1]
-        view_files(gpath+str(id)+'\\one_dir\\')
+        view_files(gpath+str(id)+'\\oneDir\\')
         if remove == True:
-            delete_user_files(gpath+str(id)+'\\one_dir\\')
+            delete_user_files(gpath+str(id))
+            os.rmdir(gpath+str(id))
     else:
         print "user not found"
 			
 def delete_user_files(path):
+    print path
     for root, dirs, files in os.walk(path, topdown=False):
         for name in files:
             print "deleting file at {}".format(os.path.join(root,name))
@@ -120,6 +120,7 @@ def delete_user_files(path):
 def view_files(path):
     count = 0
     size = 0
+    print path
     for root, dirs, files in os.walk(path):
         level = root.replace(path, '').count(os.sep)
         indent = ' ' * 4 * (level)
@@ -128,8 +129,8 @@ def view_files(path):
         for f in files:
             print('{}{}'.format(subindent, f))
             count = count+1
-            size = size + os.path.getsize(path)
-    
+            size += os.path.getsize(os.path.join(root,f))
+            
     print "Directory has {} files and contains {} bytes".format(count,size)
 
 def view_users():
@@ -157,7 +158,7 @@ def main():
         elif parse[0] == "view":
             if parse[1] == "users":
                 view_users()
-            if parse[1] == "user":
+            elif parse[1] == "user":
                 if parse[2] == None:
                     print "please specify a user"
                 else:
@@ -167,20 +168,23 @@ def main():
                         view_user(parse[2])
             elif parse[1] == "connections":
                 load_connection_history()
-                print connection_database
+                print_connections()
             elif parse[1] == "files":
                 view_files(server_info.server_global_directory)
             else:
-                print "invalid command"
+                print "invalid command1"
                 
         elif parse[0] == "shellmode":
             shell_mode()
     
         elif parse[0] == "removeuser":
-            if parse[2] == "-f":
-                view_user_files(parse[1],True)
-				
-            remove_user_from_db(parse[1])
+            if len(parse) == 3:
+                if parse[2] == "-f":
+                    view_user_files(parse[1],True)
+            if len(parse) == 2:	
+                remove_user_from_db(parse[1])
+            else:
+                print "missing parameter"
         
         elif parse[0] == "changepword":
             change_user_password(parse[1],parse[2])
